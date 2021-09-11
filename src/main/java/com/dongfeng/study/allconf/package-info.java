@@ -5,7 +5,7 @@
 package com.dongfeng.study.allconf;
 
 /**
- *
+ * GitHub地址：
  * https://github.com/eastFeng/springboot-study.git
  *
  */
