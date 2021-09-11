@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- POM(Project Object Mode, 项目对象模型)是Maven工程的基本工作单元，是一个XML文件，
+    包含了项目的基本信息，用于描述项目如何构建，声明项目依赖等等 -->
+
+    <!--模型版本 ，声明项目描述符遵循哪一个POM模型版本-->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--属性-->
+    <!--通过properties元素用户可以自定义一个或多个Maven属性，然后在POM的其他地方使用**${属性名}**的方式引用该属性。
+    这种做法的最大意义在于消除重复和统一管理。
+    -->
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <!--父项目的坐标。如果项目中没有规定某个元素的值，那么父项目中的对应值即为项目的默认值。
+     坐标包括groupID，artifactId和version  -->
+    <parent>
+        <!--父项目的groupId-->
+        <groupId>org.springframework.boot</groupId>
+        <!--父项目的artifactId-->
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <!--父项目的version-->
+        <version>2.3.3.RELEASE</version>
+        <!--父项目的pom.xml文件的相对路径。相对路径允许你选择一个不同的路径。默认值是../pom.xml。
+        Maven首先在构建当前项目的地方寻找父项目的pom，其次在文件系统的这个位置（relativePath位置），
+        然后在本地仓库，最后在远程仓库寻找父项目的pom。-->
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <!--公司或者组织的唯一标志，并且配置时生成的路径也由此生成。
+    maven会将该项目打成的jar包放在本地路径：/com/dongfeng-->
+    <groupId>com.dongfeng</groupId>
+    <!--项目的唯一ID，一个groupId下面可能有多个项目，就是靠artifactId区分的-->
+    <artifactId>study</artifactId>
+    <!--工程的版本号-->
+    <version>0.0.1-SNAPSHOT</version>
+    <!--项目的名称，Maven产生的文档用-->
+    <name>study</name>
+    <!--项目的详细描述, Maven 产生的文档用-->
+    <description>Demo project for Spring Boot</description>
+
+    <!--项目开发者列表-->
+    <developers>
+        <!--某一个项目开发者的信息-->
+        <developer>
+            <id>DongFeng</id>
+            <name>eastFeng</name>
+            <email>460373645@qq.com</email>
+        </developer>
+    </developers>
+
+    <!--该元素描述了项目相关的所有依赖-->
+    <dependencies>
+        <!-- Alipay Easy SDK -->
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-easysdk</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+
+        <!--com.google.zxing 生成二维码-->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+
+        <dependency>
+            <!--依赖的group ID-->
+            <groupId>com.dongfeng.study</groupId>
+            <!--依赖的artifact ID-->
+            <artifactId>sign</artifactId>
+            <!--依赖的版本号-->
+            <version>1.4</version>
+            <!--依赖范围。
+            compile : 默认范围，用于编译
+            provided : 类似于编译，但支持你期待jdk或者容器提供，类似于classpath
+            runtime : 在执行时需要使用
+            test : 用于test任务时使用
+            system : 需要外在提供相应的元素。通过systemPath来取得
+            optional : 当项目自身被依赖时，标注依赖是否传递。用于连续依赖时使用
+            -->
+            <scope>system</scope>
+            <!--仅供system范围使用。
+            注意，不鼓励使用这个元素，并且在新的版本中该元素可能被覆盖掉。
+            该元素为依赖规定了文件系统上的路径。需要绝对路径而不是相对路径。推荐使用属性匹配绝对路径，例如${java.home}-->
+            <systemPath>${project.basedir}/src/main/resources/lib/sign_v1.4.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dongfeng.study</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/gson-2.8.0.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.dongfeng.study</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.10.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/okhttp-3.10.0.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.dongfeng.study</groupId>
+            <artifactId>okio</artifactId>
+            <version>1.14.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/okio-1.14.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dongfeng.study</groupId>
+            <artifactId>oos</artifactId>
+            <version>6.5.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/oos-sdk-6.5.0.jar</systemPath>
+        </dependency>
+
+        <!--RabbitMQ Java客户端及其公共API-->
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>5.10.0</version>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.elasticsearch.client</groupId>-->
+<!--            <artifactId>elasticsearch-rest-high-level-client</artifactId>-->
+<!--            <version>7.6.0</version>-->
+<!--        </dependency>-->
+
+        <!--spring默认使用yml中的配置，但有时候要用传统的xml或properties配置，就需要使用spring-boot-configuration-processor了-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+<!--        &lt;!&ndash;mongodb依赖&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-mongodb</artifactId>-->
+<!--        </dependency>-->
+
+        <!--天翼云 需要的依赖  start-->
+        <!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.10.7</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.12</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.12</version>
+        </dependency>
+        <!--天翼云 需要的依赖  end-->
+
+        <!--MyExcel-->
+        <dependency>
+            <groupId>com.github.liaochong</groupId>
+            <artifactId>myexcel</artifactId>
+            <version>3.9.6</version>
+        </dependency>
+        <dependency>
+            <groupId>me.zhyd.oauth</groupId>
+            <artifactId>JustAuth</artifactId>
+            <version>1.15.7</version>
+        </dependency>
+
+        <!--sentinel提供的一个微服务开发的起步依赖-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+            <version>0.9.0.RELEASE</version>
+        </dependency>
+        <!--lang3工具-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.11</version>
+        </dependency>
+        <!--hutool-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.6.2</version>
+        </dependency>
+        <!--alibaba fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.73</version>
+        </dependency>
+        <!--guava工具-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>29.0-jre</version>
+        </dependency>
+
+
+        <!-- 图片处理工具: https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.11</version>
+        </dependency>
+
+        <!--druid数据库连接池: https://mvnrepository.com/artifact/com.alibaba/druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.22</version>
+        </dependency>
+        <!--c3p0数据库连接池: https://mvnrepository.com/artifact/com.mchange/c3p0 -->
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.5.5</version>
+        </dependency>
+        <!--org.apache.commons.dbutils-->
+        <dependency>
+            <groupId>commons-dbutils</groupId>
+            <artifactId>commons-dbutils</artifactId>
+            <version>1.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+        <!--lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>2.3.3.RELEASE</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.data</groupId>-->
+<!--            <artifactId>spring-data-redis</artifactId>-->
+<!--            <version>2.3.3.RELEASE</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-security</artifactId>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web-services</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <!--当计算传递依赖时，从依赖构件列表里，列出被排除的依赖构件集。
+            即告诉maven你只依赖指定的项目，不依赖项目的依赖。此元素主要用于解决版本冲突问题-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!--构建项目需要的信息-->
+    <build>
+        <!--使用的插件列表-->
+        <plugins>
+            <!--plugin元素描述插件所需要的信息-->
+            <plugin>
+                <!--插件在仓库的group ID-->
+                <groupId>org.springframework.boot</groupId>
+                <!--插件在仓库的artifact ID-->
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--作为DOM对象的配置-->
+                <configuration>
+                    <mainClass>com.dongfeng.study.StudyApplication</mainClass>
+                    <!--includeSystemScope 设为true是指打包时包含scope为system的第三方jar包-->
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

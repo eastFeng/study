@@ -1,0 +1,644 @@
+2021-04-09 02:07:07.690  INFO 25292 --- [main] com.dongfeng.study.StudyApplication      : Starting StudyApplication on LAPTOP-HNOF7VBA with PID 25292 (D:\Wstudy\springboot-study\target\classes started by 46037 in D:\Wstudy\springboot-study)
+2021-04-09 02:07:07.692  INFO 25292 --- [main] com.dongfeng.study.StudyApplication      : No active profile set, falling back to default profiles: default
+2021-04-09 02:07:08.401  INFO 25292 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-04-09 02:07:08.404  INFO 25292 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-04-09 02:07:08.453  INFO 25292 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 33ms. Found 0 Redis repository interfaces.
+2021-04-09 02:07:08.662  INFO 25292 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$a78379f2] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:07:08.708  INFO 25292 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-04-09 02:07:08.861  INFO 25292 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.sentinel-org.springframework.cloud.alibaba.sentinel.SentinelProperties' of type [org.springframework.cloud.alibaba.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:07:08.868  INFO 25292 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration' of type [org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration$$EnhancerBySpringCGLIB$$c0568116] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:07:09.103  INFO 25292 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-04-09 02:07:09.115  INFO 25292 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-04-09 02:07:09.116  INFO 25292 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-04-09 02:07:09.274  INFO 25292 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-04-09 02:07:09.275  INFO 25292 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1548 ms
+2021-04-09 02:07:09.290  INFO 25292 --- [main] o.s.c.a.s.SentinelWebAutoConfiguration   : [Sentinel Starter] register Sentinel with urlPatterns: [/*].
+2021-04-09 02:07:10.349  INFO 25292 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-04-09 02:07:10.430  INFO 25292 --- [main] c.d.s.m.s.f.redis.RedisLimiterAspect     : 【RedisLimiterAspect】分布式限流处理lua脚本加载完成
+2021-04-09 02:07:10.929  INFO 25292 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-04-09 02:07:10.941  INFO 25292 --- [main] com.dongfeng.study.StudyApplication      : Started StudyApplication in 3.607 seconds (JVM running for 4.711)
+2021-04-09 02:11:51.239  INFO 25292 --- [http-nio-8081-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-04-09 02:11:51.239  INFO 25292 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-04-09 02:11:51.249  INFO 25292 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 10 ms
+2021-04-09 02:11:51.366  INFO 25292 --- [http-nio-8081-exec-2] c.d.s.m.interceptor.LoginInterceptor     : ------登录拦截器 方法执行前------
+2021-04-09 02:11:51.366  INFO 25292 --- [http-nio-8081-exec-2] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:null
+2021-04-09 02:13:02.040  INFO 25292 --- [http-nio-8081-exec-5] c.d.s.m.interceptor.LoginInterceptor     : ------登录拦截器 方法执行前------
+2021-04-09 02:13:02.040  INFO 25292 --- [http-nio-8081-exec-5] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:testToken
+2021-04-09 02:13:02.041  INFO 25292 --- [http-nio-8081-exec-5] c.d.s.m.interceptor.TraceIdInterceptor   : userIp:0:0:0:0:0:0:0:1
+2021-04-09 02:13:12.950  WARN 25292 --- [lettuce-nioEventLoop-4-3] i.l.c.c.topology.ClusterTopologyRefresh  : Unable to connect to [10.200.2.105:7002]: connection timed out: /10.200.2.105:7002
+2021-04-09 02:13:12.950  WARN 25292 --- [lettuce-nioEventLoop-4-5] i.l.c.c.topology.ClusterTopologyRefresh  : Unable to connect to [10.200.2.105:7004]: connection timed out: /10.200.2.105:7004
+2021-04-09 02:13:12.950  WARN 25292 --- [lettuce-nioEventLoop-4-1] i.l.c.c.topology.ClusterTopologyRefresh  : Unable to connect to [10.200.2.105:7000]: connection timed out: /10.200.2.105:7000
+2021-04-09 02:13:12.950  WARN 25292 --- [lettuce-nioEventLoop-4-6] i.l.c.c.topology.ClusterTopologyRefresh  : Unable to connect to [10.200.2.105:7005]: connection timed out: /10.200.2.105:7005
+2021-04-09 02:13:12.950  WARN 25292 --- [lettuce-nioEventLoop-4-4] i.l.c.c.topology.ClusterTopologyRefresh  : Unable to connect to [10.200.2.105:7003]: connection timed out: /10.200.2.105:7003
+2021-04-09 02:13:12.950  WARN 25292 --- [lettuce-nioEventLoop-4-2] i.l.c.c.topology.ClusterTopologyRefresh  : Unable to connect to [10.200.2.105:7001]: connection timed out: /10.200.2.105:7001
+2021-04-09 02:13:12.991 ERROR 25292 --- [http-nio-8081-exec-5] c.d.s.m.s.f.redis.RedisLimiterAspect     : error:Unable to connect to Redis; nested exception is io.lettuce.core.RedisException: Cannot retrieve initial cluster partitions from initial URIs [RedisURI [host='10.200.2.105', port=7000], RedisURI [host='10.200.2.105', port=7001], RedisURI [host='10.200.2.105', port=7002], RedisURI [host='10.200.2.105', port=7003], RedisURI [host='10.200.2.105', port=7004], RedisURI [host='10.200.2.105', port=7005]]
+
+org.springframework.data.redis.RedisConnectionFailureException: Unable to connect to Redis; nested exception is io.lettuce.core.RedisException: Cannot retrieve initial cluster partitions from initial URIs [RedisURI [host='10.200.2.105', port=7000], RedisURI [host='10.200.2.105', port=7001], RedisURI [host='10.200.2.105', port=7002], RedisURI [host='10.200.2.105', port=7003], RedisURI [host='10.200.2.105', port=7004], RedisURI [host='10.200.2.105', port=7005]]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$ExceptionTranslatingConnectionProvider.translateException(LettuceConnectionFactory.java:1534) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$ExceptionTranslatingConnectionProvider.getConnection(LettuceConnectionFactory.java:1442) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$SharedConnection.getNativeConnection(LettuceConnectionFactory.java:1228) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$SharedConnection.getConnection(LettuceConnectionFactory.java:1211) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getClusterConnection(LettuceConnectionFactory.java:379) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getConnection(LettuceConnectionFactory.java:356) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at org.springframework.data.redis.core.RedisConnectionUtils.doGetConnection(RedisConnectionUtils.java:134) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at org.springframework.data.redis.core.RedisConnectionUtils.getConnection(RedisConnectionUtils.java:97) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at org.springframework.data.redis.core.RedisConnectionUtils.getConnection(RedisConnectionUtils.java:84) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:215) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:188) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:175) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at org.springframework.data.redis.core.script.DefaultScriptExecutor.execute(DefaultScriptExecutor.java:58) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at org.springframework.data.redis.core.script.DefaultScriptExecutor.execute(DefaultScriptExecutor.java:52) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:350) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at com.dongfeng.study.allconf.aop.flowlimit.RedisLimiterAspect.interceptor(RedisLimiterAspect.java:81) ~[classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_251]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_251]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_251]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_251]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:644) [spring-aop-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:633) [spring-aop-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:70) [spring-aop-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175) [spring-aop-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749) [spring-aop-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:95) [spring-aop-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) [spring-aop-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749) [spring-aop-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:691) [spring-aop-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at com.dongfeng.study.controller.LimiterTestController$$EnhancerBySpringCGLIB$$799ea15d.redisLimiterTest(<generated>) [classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_251]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_251]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_251]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_251]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190) [spring-web-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138) [spring-web-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105) [spring-webmvc-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:878) [spring-webmvc-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:792) [spring-webmvc-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) [spring-webmvc-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040) [spring-webmvc-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943) [spring-webmvc-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) [spring-webmvc-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) [spring-webmvc-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:626) [tomcat-embed-core-9.0.37.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) [spring-webmvc-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733) [tomcat-embed-core-9.0.37.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) [tomcat-embed-websocket-9.0.37.jar:9.0.37]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) [spring-web-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) [spring-web-5.2.8.RELEASE.jar:5.2.8.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at com.alibaba.csp.sentinel.adapter.servlet.CommonFilter.doFilter(CommonFilter.java:89) [sentinel-web-servlet-1.5.2.jar:na]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:373) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1589) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_251]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_251]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.37.jar:9.0.37]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_251]
+Caused by: io.lettuce.core.RedisException: Cannot retrieve initial cluster partitions from initial URIs [RedisURI [host='10.200.2.105', port=7000], RedisURI [host='10.200.2.105', port=7001], RedisURI [host='10.200.2.105', port=7002], RedisURI [host='10.200.2.105', port=7003], RedisURI [host='10.200.2.105', port=7004], RedisURI [host='10.200.2.105', port=7005]]
+	at io.lettuce.core.cluster.RedisClusterClient.loadPartitions(RedisClusterClient.java:862) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+	at io.lettuce.core.cluster.RedisClusterClient.initializePartitions(RedisClusterClient.java:816) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+	at io.lettuce.core.cluster.RedisClusterClient.getPartitions(RedisClusterClient.java:826) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+	at org.springframework.data.redis.connection.lettuce.ClusterConnectionProvider.getConnectionAsync(ClusterConnectionProvider.java:92) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at org.springframework.data.redis.connection.lettuce.ClusterConnectionProvider.getConnectionAsync(ClusterConnectionProvider.java:40) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionProvider.getConnection(LettuceConnectionProvider.java:53) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$ExceptionTranslatingConnectionProvider.getConnection(LettuceConnectionFactory.java:1440) ~[spring-data-redis-2.3.3.RELEASE.jar:2.3.3.RELEASE]
+	... 73 common frames omitted
+Caused by: io.lettuce.core.RedisConnectionException: Unable to establish a connection to Redis Cluster at [RedisURI [host='10.200.2.105', port=7000], RedisURI [host='10.200.2.105', port=7001], RedisURI [host='10.200.2.105', port=7002], RedisURI [host='10.200.2.105', port=7003], RedisURI [host='10.200.2.105', port=7004], RedisURI [host='10.200.2.105', port=7005]]
+	at io.lettuce.core.cluster.topology.AsyncConnections.get(AsyncConnections.java:92) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+	at io.lettuce.core.cluster.topology.ClusterTopologyRefresh.loadViews(ClusterTopologyRefresh.java:78) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+	at io.lettuce.core.cluster.RedisClusterClient.doLoadPartitions(RedisClusterClient.java:868) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+	at io.lettuce.core.cluster.RedisClusterClient.loadPartitions(RedisClusterClient.java:841) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+	... 79 common frames omitted
+	Suppressed: io.lettuce.core.RedisConnectionException: Unable to connect to [10.200.2.105:7004]: connection timed out: /10.200.2.105:7004
+		at io.lettuce.core.cluster.topology.ClusterTopologyRefresh.lambda$getConnections$0(ClusterTopologyRefresh.java:300) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+		at java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:774) ~[na:1.8.0_251]
+		at java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:750) ~[na:1.8.0_251]
+		at java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:488) ~[na:1.8.0_251]
+		at java.util.concurrent.CompletableFuture.completeExceptionally(CompletableFuture.java:1990) ~[na:1.8.0_251]
+		at io.lettuce.core.AbstractRedisClient.lambda$initializeChannelAsync0$3(AbstractRedisClient.java:338) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+		at io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:577) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:551) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:490) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setValue0(DefaultPromise.java:615) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setFailure0(DefaultPromise.java:608) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.tryFailure(DefaultPromise.java:117) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.lettuce.core.AbstractRedisClient.lambda$initializeChannelAsync0$5(AbstractRedisClient.java:351) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+		at io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:577) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListeners0(DefaultPromise.java:570) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:549) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:490) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setValue0(DefaultPromise.java:615) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setFailure0(DefaultPromise.java:608) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.tryFailure(DefaultPromise.java:117) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe$1.run(AbstractNioChannel.java:263) ~[netty-transport-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.PromiseTask.runTask(PromiseTask.java:98) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.ScheduledFutureTask.run(ScheduledFutureTask.java:170) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:164) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:472) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:500) ~[netty-transport-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		... 1 common frames omitted
+	Caused by: io.netty.channel.ConnectTimeoutException: connection timed out: /10.200.2.105:7004
+		at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe$1.run(AbstractNioChannel.java:261)
+		... 9 common frames omitted
+	Suppressed: io.lettuce.core.RedisConnectionException: Unable to connect to [10.200.2.105:7000]: connection timed out: /10.200.2.105:7000
+		at io.lettuce.core.cluster.topology.ClusterTopologyRefresh.lambda$getConnections$0(ClusterTopologyRefresh.java:300) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+		at java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:774) ~[na:1.8.0_251]
+		at java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:750) ~[na:1.8.0_251]
+		at java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:488) ~[na:1.8.0_251]
+		at java.util.concurrent.CompletableFuture.completeExceptionally(CompletableFuture.java:1990) ~[na:1.8.0_251]
+		at io.lettuce.core.AbstractRedisClient.lambda$initializeChannelAsync0$3(AbstractRedisClient.java:338) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+		at io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:577) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:551) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:490) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setValue0(DefaultPromise.java:615) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setFailure0(DefaultPromise.java:608) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.tryFailure(DefaultPromise.java:117) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.lettuce.core.AbstractRedisClient.lambda$initializeChannelAsync0$5(AbstractRedisClient.java:351) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+		at io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:577) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListeners0(DefaultPromise.java:570) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:549) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:490) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setValue0(DefaultPromise.java:615) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setFailure0(DefaultPromise.java:608) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.tryFailure(DefaultPromise.java:117) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe$1.run(AbstractNioChannel.java:263) ~[netty-transport-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.PromiseTask.runTask(PromiseTask.java:98) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.ScheduledFutureTask.run(ScheduledFutureTask.java:170) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:164) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:472) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:500) ~[netty-transport-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		... 1 common frames omitted
+	Caused by: io.netty.channel.ConnectTimeoutException: connection timed out: /10.200.2.105:7000
+		at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe$1.run(AbstractNioChannel.java:261)
+		... 9 common frames omitted
+	Suppressed: io.lettuce.core.RedisConnectionException: Unable to connect to [10.200.2.105:7005]: connection timed out: /10.200.2.105:7005
+		at io.lettuce.core.cluster.topology.ClusterTopologyRefresh.lambda$getConnections$0(ClusterTopologyRefresh.java:300) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+		at java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:774) ~[na:1.8.0_251]
+		at java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:750) ~[na:1.8.0_251]
+		at java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:488) ~[na:1.8.0_251]
+		at java.util.concurrent.CompletableFuture.completeExceptionally(CompletableFuture.java:1990) ~[na:1.8.0_251]
+		at io.lettuce.core.AbstractRedisClient.lambda$initializeChannelAsync0$3(AbstractRedisClient.java:338) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+		at io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:577) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:551) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:490) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setValue0(DefaultPromise.java:615) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setFailure0(DefaultPromise.java:608) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.tryFailure(DefaultPromise.java:117) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.lettuce.core.AbstractRedisClient.lambda$initializeChannelAsync0$5(AbstractRedisClient.java:351) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+		at io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:577) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListeners0(DefaultPromise.java:570) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:549) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:490) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setValue0(DefaultPromise.java:615) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setFailure0(DefaultPromise.java:608) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.tryFailure(DefaultPromise.java:117) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe$1.run(AbstractNioChannel.java:263) ~[netty-transport-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.PromiseTask.runTask(PromiseTask.java:98) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.ScheduledFutureTask.run(ScheduledFutureTask.java:170) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:164) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:472) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:500) ~[netty-transport-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		... 1 common frames omitted
+	Caused by: io.netty.channel.ConnectTimeoutException: connection timed out: /10.200.2.105:7005
+		at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe$1.run(AbstractNioChannel.java:261)
+		... 9 common frames omitted
+	Suppressed: io.lettuce.core.RedisConnectionException: Unable to connect to [10.200.2.105:7003]: connection timed out: /10.200.2.105:7003
+		at io.lettuce.core.cluster.topology.ClusterTopologyRefresh.lambda$getConnections$0(ClusterTopologyRefresh.java:300) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+		at java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:774) ~[na:1.8.0_251]
+		at java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:750) ~[na:1.8.0_251]
+		at java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:488) ~[na:1.8.0_251]
+		at java.util.concurrent.CompletableFuture.completeExceptionally(CompletableFuture.java:1990) ~[na:1.8.0_251]
+		at io.lettuce.core.AbstractRedisClient.lambda$initializeChannelAsync0$3(AbstractRedisClient.java:338) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+		at io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:577) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:551) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:490) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setValue0(DefaultPromise.java:615) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setFailure0(DefaultPromise.java:608) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.tryFailure(DefaultPromise.java:117) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.lettuce.core.AbstractRedisClient.lambda$initializeChannelAsync0$5(AbstractRedisClient.java:351) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+		at io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:577) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListeners0(DefaultPromise.java:570) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:549) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:490) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setValue0(DefaultPromise.java:615) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setFailure0(DefaultPromise.java:608) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.tryFailure(DefaultPromise.java:117) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe$1.run(AbstractNioChannel.java:263) ~[netty-transport-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.PromiseTask.runTask(PromiseTask.java:98) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.ScheduledFutureTask.run(ScheduledFutureTask.java:170) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:164) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:472) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:500) ~[netty-transport-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		... 1 common frames omitted
+	Caused by: io.netty.channel.ConnectTimeoutException: connection timed out: /10.200.2.105:7003
+		at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe$1.run(AbstractNioChannel.java:261)
+		... 9 common frames omitted
+	Suppressed: io.lettuce.core.RedisConnectionException: Unable to connect to [10.200.2.105:7001]: connection timed out: /10.200.2.105:7001
+		at io.lettuce.core.cluster.topology.ClusterTopologyRefresh.lambda$getConnections$0(ClusterTopologyRefresh.java:300) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+		at java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:774) ~[na:1.8.0_251]
+		at java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:750) ~[na:1.8.0_251]
+		at java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:488) ~[na:1.8.0_251]
+		at java.util.concurrent.CompletableFuture.completeExceptionally(CompletableFuture.java:1990) ~[na:1.8.0_251]
+		at io.lettuce.core.AbstractRedisClient.lambda$initializeChannelAsync0$3(AbstractRedisClient.java:338) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+		at io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:577) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:551) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:490) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setValue0(DefaultPromise.java:615) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setFailure0(DefaultPromise.java:608) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.tryFailure(DefaultPromise.java:117) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.lettuce.core.AbstractRedisClient.lambda$initializeChannelAsync0$5(AbstractRedisClient.java:351) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+		at io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:577) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListeners0(DefaultPromise.java:570) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:549) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:490) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setValue0(DefaultPromise.java:615) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.setFailure0(DefaultPromise.java:608) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.DefaultPromise.tryFailure(DefaultPromise.java:117) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe$1.run(AbstractNioChannel.java:263) ~[netty-transport-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.PromiseTask.runTask(PromiseTask.java:98) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.ScheduledFutureTask.run(ScheduledFutureTask.java:170) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:164) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:472) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:500) ~[netty-transport-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+		... 1 common frames omitted
+	Caused by: io.netty.channel.ConnectTimeoutException: connection timed out: /10.200.2.105:7001
+		at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe$1.run(AbstractNioChannel.java:261)
+		... 9 common frames omitted
+Caused by: io.lettuce.core.RedisConnectionException: Unable to connect to [10.200.2.105:7002]: connection timed out: /10.200.2.105:7002
+	at io.lettuce.core.cluster.topology.ClusterTopologyRefresh.lambda$getConnections$0(ClusterTopologyRefresh.java:300) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+	at java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:774) ~[na:1.8.0_251]
+	at java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:750) ~[na:1.8.0_251]
+	at java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:488) ~[na:1.8.0_251]
+	at java.util.concurrent.CompletableFuture.completeExceptionally(CompletableFuture.java:1990) ~[na:1.8.0_251]
+	at io.lettuce.core.AbstractRedisClient.lambda$initializeChannelAsync0$3(AbstractRedisClient.java:338) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+	at io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:577) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:551) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:490) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.concurrent.DefaultPromise.setValue0(DefaultPromise.java:615) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.concurrent.DefaultPromise.setFailure0(DefaultPromise.java:608) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.concurrent.DefaultPromise.tryFailure(DefaultPromise.java:117) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.lettuce.core.AbstractRedisClient.lambda$initializeChannelAsync0$5(AbstractRedisClient.java:351) ~[lettuce-core-5.3.3.RELEASE.jar:5.3.3.RELEASE]
+	at io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:577) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.concurrent.DefaultPromise.notifyListeners0(DefaultPromise.java:570) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:549) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:490) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.concurrent.DefaultPromise.setValue0(DefaultPromise.java:615) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.concurrent.DefaultPromise.setFailure0(DefaultPromise.java:608) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.concurrent.DefaultPromise.tryFailure(DefaultPromise.java:117) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe$1.run(AbstractNioChannel.java:263) ~[netty-transport-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.concurrent.PromiseTask.runTask(PromiseTask.java:98) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.concurrent.ScheduledFutureTask.run(ScheduledFutureTask.java:170) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:164) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:472) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:500) ~[netty-transport-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.51.Final.jar:4.1.51.Final]
+	... 1 common frames omitted
+Caused by: io.netty.channel.ConnectTimeoutException: connection timed out: /10.200.2.105:7002
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe$1.run(AbstractNioChannel.java:261) ~[netty-transport-4.1.51.Final.jar:4.1.51.Final]
+	... 9 common frames omitted
+
+2021-04-09 02:13:13.002  INFO 25292 --- [http-nio-8081-exec-5] c.d.s.controller.LimiterTestController   : -----redisLimiterTest start
+2021-04-09 02:13:13.002  INFO 25292 --- [http-nio-8081-exec-5] c.d.s.controller.LimiterTestController   : 0
+2021-04-09 02:13:13.002  INFO 25292 --- [http-nio-8081-exec-5] c.d.s.controller.LimiterTestController   : 1
+2021-04-09 02:13:13.002  INFO 25292 --- [http-nio-8081-exec-5] c.d.s.controller.LimiterTestController   : 2
+2021-04-09 02:13:13.002  INFO 25292 --- [http-nio-8081-exec-5] c.d.s.controller.LimiterTestController   : 3
+2021-04-09 02:13:13.002  INFO 25292 --- [http-nio-8081-exec-5] c.d.s.controller.LimiterTestController   : 4
+2021-04-09 02:13:13.003  INFO 25292 --- [http-nio-8081-exec-5] c.d.s.controller.LimiterTestController   : 5
+2021-04-09 02:13:13.003  INFO 25292 --- [http-nio-8081-exec-5] c.d.s.controller.LimiterTestController   : 6
+2021-04-09 02:13:13.003  INFO 25292 --- [http-nio-8081-exec-5] c.d.s.controller.LimiterTestController   : 7
+2021-04-09 02:13:13.003  INFO 25292 --- [http-nio-8081-exec-5] c.d.s.controller.LimiterTestController   : 8
+2021-04-09 02:13:13.003  INFO 25292 --- [http-nio-8081-exec-5] c.d.s.controller.LimiterTestController   : 9
+2021-04-09 02:16:54.745  INFO 25292 --- [http-nio-8081-exec-8] c.d.s.m.interceptor.TraceIdInterceptor   : userIp:0:0:0:0:0:0:0:1
+2021-04-09 02:16:54.745  INFO 25292 --- [http-nio-8081-exec-8] c.d.study.controller.TestController      : hello测试开始======
+2021-04-09 02:22:41.334  INFO 7664 --- [main] com.dongfeng.study.StudyApplication      : Starting StudyApplication on LAPTOP-HNOF7VBA with PID 7664 (D:\Wstudy\springboot-study\target\classes started by 46037 in D:\Wstudy\springboot-study)
+2021-04-09 02:22:41.337  INFO 7664 --- [main] com.dongfeng.study.StudyApplication      : No active profile set, falling back to default profiles: default
+2021-04-09 02:22:42.114  INFO 7664 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-04-09 02:22:42.116  INFO 7664 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-04-09 02:22:42.167  INFO 7664 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 37ms. Found 0 Redis repository interfaces.
+2021-04-09 02:22:42.408  INFO 7664 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$3afe48c8] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:22:42.466  INFO 7664 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-04-09 02:22:42.630  INFO 7664 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.sentinel-org.springframework.cloud.alibaba.sentinel.SentinelProperties' of type [org.springframework.cloud.alibaba.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:22:42.636  INFO 7664 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration' of type [org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration$$EnhancerBySpringCGLIB$$53d14fec] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:22:42.903  INFO 7664 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-04-09 02:22:42.913  INFO 7664 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-04-09 02:22:42.914  INFO 7664 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-04-09 02:22:43.074  INFO 7664 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-04-09 02:22:43.074  INFO 7664 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1682 ms
+2021-04-09 02:22:43.090  INFO 7664 --- [main] o.s.c.a.s.SentinelWebAutoConfiguration   : [Sentinel Starter] register Sentinel with urlPatterns: [/*].
+2021-04-09 02:22:44.034  INFO 7664 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-04-09 02:22:44.120  INFO 7664 --- [main] c.d.s.m.s.f.redis.RedisLimiterAspect     : 【RedisLimiterAspect】分布式限流处理lua脚本加载完成
+2021-04-09 02:22:44.754  INFO 7664 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-04-09 02:22:44.767  INFO 7664 --- [main] com.dongfeng.study.StudyApplication      : Started StudyApplication in 3.909 seconds (JVM running for 5.063)
+2021-04-09 02:32:10.583  INFO 7664 --- [http-nio-8081-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-04-09 02:32:10.584  INFO 7664 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-04-09 02:32:10.593  INFO 7664 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 9 ms
+2021-04-09 02:32:10.712  INFO 7664 --- [http-nio-8081-exec-2] c.d.s.m.interceptor.TraceIdInterceptor   : 日志traceId:3acacad6005245968561c8157e05c38e
+2021-04-09 02:32:10.713  INFO 7664 --- [http-nio-8081-exec-2] c.d.s.m.interceptor.TraceIdInterceptor   : userIp:0:0:0:0:0:0:0:1
+2021-04-09 02:32:10.733  INFO 7664 --- [http-nio-8081-exec-2] c.d.study.controller.TestController      : 【token:null, userKey:111】
+2021-04-09 02:43:29.463  INFO 24036 --- [main] com.dongfeng.study.StudyApplication      : Starting StudyApplication on LAPTOP-HNOF7VBA with PID 24036 (D:\Wstudy\springboot-study\target\classes started by 46037 in D:\Wstudy\springboot-study)
+2021-04-09 02:43:29.466  INFO 24036 --- [main] com.dongfeng.study.StudyApplication      : No active profile set, falling back to default profiles: default
+2021-04-09 02:43:30.209  INFO 24036 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-04-09 02:43:30.212  INFO 24036 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-04-09 02:43:30.259  INFO 24036 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 33ms. Found 0 Redis repository interfaces.
+2021-04-09 02:43:30.523  INFO 24036 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$98be914d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:43:30.573  INFO 24036 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-04-09 02:43:30.744  INFO 24036 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.sentinel-org.springframework.cloud.alibaba.sentinel.SentinelProperties' of type [org.springframework.cloud.alibaba.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:43:30.751  INFO 24036 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration' of type [org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration$$EnhancerBySpringCGLIB$$b1919871] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:43:31.018  INFO 24036 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-04-09 02:43:31.028  INFO 24036 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-04-09 02:43:31.028  INFO 24036 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-04-09 02:43:31.178  INFO 24036 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-04-09 02:43:31.179  INFO 24036 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1659 ms
+2021-04-09 02:43:31.192  INFO 24036 --- [main] o.s.c.a.s.SentinelWebAutoConfiguration   : [Sentinel Starter] register Sentinel with urlPatterns: [/*].
+2021-04-09 02:43:32.090  INFO 24036 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-04-09 02:43:32.179  INFO 24036 --- [main] c.d.s.m.s.f.redis.RedisLimiterAspect     : 【RedisLimiterAspect】分布式限流处理lua脚本加载完成
+2021-04-09 02:43:32.785  INFO 24036 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-04-09 02:43:32.796  INFO 24036 --- [main] com.dongfeng.study.StudyApplication      : Started StudyApplication in 3.746 seconds (JVM running for 5.418)
+2021-04-09 02:44:52.459  INFO 24036 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService
+2021-04-09 02:44:59.613  INFO 3820 --- [main] com.dongfeng.study.StudyApplication      : Starting StudyApplication on LAPTOP-HNOF7VBA with PID 3820 (D:\Wstudy\springboot-study\target\classes started by 46037 in D:\Wstudy\springboot-study)
+2021-04-09 02:44:59.617  INFO 3820 --- [main] com.dongfeng.study.StudyApplication      : No active profile set, falling back to default profiles: default
+2021-04-09 02:45:00.272  INFO 3820 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-04-09 02:45:00.274  INFO 3820 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-04-09 02:45:00.316  INFO 3820 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 30ms. Found 0 Redis repository interfaces.
+2021-04-09 02:45:00.522  INFO 3820 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$4bd1d312] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:45:00.566  INFO 3820 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-04-09 02:45:00.719  INFO 3820 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.sentinel-org.springframework.cloud.alibaba.sentinel.SentinelProperties' of type [org.springframework.cloud.alibaba.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:45:00.725  INFO 3820 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration' of type [org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration$$EnhancerBySpringCGLIB$$64a4da36] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:45:00.955  INFO 3820 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-04-09 02:45:00.964  INFO 3820 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-04-09 02:45:00.964  INFO 3820 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-04-09 02:45:01.100  INFO 3820 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-04-09 02:45:01.100  INFO 3820 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1432 ms
+2021-04-09 02:45:01.111  INFO 3820 --- [main] o.s.c.a.s.SentinelWebAutoConfiguration   : [Sentinel Starter] register Sentinel with urlPatterns: [/*].
+2021-04-09 02:45:01.880  INFO 3820 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-04-09 02:45:01.952  INFO 3820 --- [main] c.d.s.m.s.f.redis.RedisLimiterAspect     : 【RedisLimiterAspect】分布式限流处理lua脚本加载完成
+2021-04-09 02:45:02.447  INFO 3820 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-04-09 02:45:02.457  INFO 3820 --- [main] com.dongfeng.study.StudyApplication      : Started StudyApplication in 3.22 seconds (JVM running for 4.335)
+2021-04-09 02:45:24.597  INFO 3820 --- [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-04-09 02:45:24.598  INFO 3820 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-04-09 02:45:24.606  INFO 3820 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
+2021-04-09 02:45:24.720  INFO 3820 --- [http-nio-8081-exec-1] c.d.s.m.interceptor.LoginInterceptor     : ------登录拦截器 方法执行前------
+2021-04-09 02:45:24.720  INFO 3820 --- [http-nio-8081-exec-1] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:null
+2021-04-09 02:45:50.307  INFO 3820 --- [http-nio-8081-exec-3] c.d.s.m.interceptor.LoginInterceptor     : ------登录拦截器 方法执行前------
+2021-04-09 02:45:50.308  INFO 3820 --- [http-nio-8081-exec-3] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:13154
+2021-04-09 02:45:50.308  INFO 3820 --- [http-nio-8081-exec-3] c.d.s.m.interceptor.TraceIdInterceptor   : 日志traceId:b80822363c2d436c87ad7aedbca88686
+2021-04-09 02:45:50.308  INFO 3820 --- [http-nio-8081-exec-3] c.d.s.m.interceptor.TraceIdInterceptor   : userIp:0:0:0:0:0:0:0:1
+2021-04-09 02:45:50.325  INFO 3820 --- [http-nio-8081-exec-3] c.d.study.controller.TestController      : 【token:13154, userKey:111】
+2021-04-09 02:46:02.919  INFO 3820 --- [http-nio-8081-exec-4] c.d.s.m.interceptor.LoginInterceptor     : ------登录拦截器 方法执行前------
+2021-04-09 02:46:02.920  INFO 3820 --- [http-nio-8081-exec-4] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:null
+2021-04-09 02:47:40.572  INFO 8584 --- [main] com.dongfeng.study.StudyApplication      : Starting StudyApplication on LAPTOP-HNOF7VBA with PID 8584 (D:\Wstudy\springboot-study\target\classes started by 46037 in D:\Wstudy\springboot-study)
+2021-04-09 02:47:40.575  INFO 8584 --- [main] com.dongfeng.study.StudyApplication      : No active profile set, falling back to default profiles: default
+2021-04-09 02:47:41.250  INFO 8584 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-04-09 02:47:41.252  INFO 8584 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-04-09 02:47:41.297  INFO 8584 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 32ms. Found 0 Redis repository interfaces.
+2021-04-09 02:47:41.507  INFO 8584 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$4bd1d312] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:47:41.554  INFO 8584 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-04-09 02:47:41.702  INFO 8584 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.sentinel-org.springframework.cloud.alibaba.sentinel.SentinelProperties' of type [org.springframework.cloud.alibaba.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:47:41.707  INFO 8584 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration' of type [org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration$$EnhancerBySpringCGLIB$$64a4da36] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:47:41.936  INFO 8584 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-04-09 02:47:41.945  INFO 8584 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-04-09 02:47:41.945  INFO 8584 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-04-09 02:47:42.083  INFO 8584 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-04-09 02:47:42.083  INFO 8584 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1454 ms
+2021-04-09 02:47:42.095  INFO 8584 --- [main] o.s.c.a.s.SentinelWebAutoConfiguration   : [Sentinel Starter] register Sentinel with urlPatterns: [/*].
+2021-04-09 02:47:42.900  INFO 8584 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-04-09 02:47:42.972  INFO 8584 --- [main] c.d.s.m.s.f.redis.RedisLimiterAspect     : 【RedisLimiterAspect】分布式限流处理lua脚本加载完成
+2021-04-09 02:47:43.484  INFO 8584 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-04-09 02:47:43.495  INFO 8584 --- [main] com.dongfeng.study.StudyApplication      : Started StudyApplication in 3.299 seconds (JVM running for 4.405)
+2021-04-09 02:52:16.266  INFO 19692 --- [main] com.dongfeng.study.StudyApplication      : Starting StudyApplication on LAPTOP-HNOF7VBA with PID 19692 (D:\Wstudy\springboot-study\target\classes started by 46037 in D:\Wstudy\springboot-study)
+2021-04-09 02:52:16.270  INFO 19692 --- [main] com.dongfeng.study.StudyApplication      : No active profile set, falling back to default profiles: default
+2021-04-09 02:52:16.955  INFO 19692 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-04-09 02:52:16.957  INFO 19692 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-04-09 02:52:17.010  INFO 19692 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 37ms. Found 0 Redis repository interfaces.
+2021-04-09 02:52:17.236  INFO 19692 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$4bd1d312] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:52:17.285  INFO 19692 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-04-09 02:52:17.432  INFO 19692 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.sentinel-org.springframework.cloud.alibaba.sentinel.SentinelProperties' of type [org.springframework.cloud.alibaba.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:52:17.438  INFO 19692 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration' of type [org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration$$EnhancerBySpringCGLIB$$64a4da36] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:52:17.668  INFO 19692 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-04-09 02:52:17.676  INFO 19692 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-04-09 02:52:17.677  INFO 19692 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-04-09 02:52:17.812  INFO 19692 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-04-09 02:52:17.812  INFO 19692 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1490 ms
+2021-04-09 02:52:17.824  INFO 19692 --- [main] o.s.c.a.s.SentinelWebAutoConfiguration   : [Sentinel Starter] register Sentinel with urlPatterns: [/*].
+2021-04-09 02:52:18.615  INFO 19692 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-04-09 02:52:18.688  INFO 19692 --- [main] c.d.s.m.s.f.redis.RedisLimiterAspect     : 【RedisLimiterAspect】分布式限流处理lua脚本加载完成
+2021-04-09 02:52:19.207  INFO 19692 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-04-09 02:52:19.217  INFO 19692 --- [main] com.dongfeng.study.StudyApplication      : Started StudyApplication in 3.371 seconds (JVM running for 4.501)
+2021-04-09 02:52:32.545  INFO 19692 --- [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-04-09 02:52:32.545  INFO 19692 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-04-09 02:52:32.554  INFO 19692 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 9 ms
+2021-04-09 02:52:32.659  INFO 19692 --- [http-nio-8081-exec-1] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:null
+2021-04-09 02:57:25.065  INFO 22044 --- [main] com.dongfeng.study.StudyApplication      : Starting StudyApplication on LAPTOP-HNOF7VBA with PID 22044 (D:\Wstudy\springboot-study\target\classes started by 46037 in D:\Wstudy\springboot-study)
+2021-04-09 02:57:25.069  INFO 22044 --- [main] com.dongfeng.study.StudyApplication      : No active profile set, falling back to default profiles: default
+2021-04-09 02:57:25.746  INFO 22044 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-04-09 02:57:25.748  INFO 22044 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-04-09 02:57:25.792  INFO 22044 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 32ms. Found 0 Redis repository interfaces.
+2021-04-09 02:57:26.005  INFO 22044 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$a474bef9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:57:26.055  INFO 22044 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-04-09 02:57:26.208  INFO 22044 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.sentinel-org.springframework.cloud.alibaba.sentinel.SentinelProperties' of type [org.springframework.cloud.alibaba.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:57:26.214  INFO 22044 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration' of type [org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration$$EnhancerBySpringCGLIB$$bd47c61d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:57:26.449  INFO 22044 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-04-09 02:57:26.461  INFO 22044 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-04-09 02:57:26.461  INFO 22044 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-04-09 02:57:26.600  INFO 22044 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-04-09 02:57:26.600  INFO 22044 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1482 ms
+2021-04-09 02:57:26.613  INFO 22044 --- [main] o.s.c.a.s.SentinelWebAutoConfiguration   : [Sentinel Starter] register Sentinel with urlPatterns: [/*].
+2021-04-09 02:57:27.440  INFO 22044 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-04-09 02:57:27.516  INFO 22044 --- [main] c.d.s.m.s.f.redis.RedisLimiterAspect     : 【RedisLimiterAspect】分布式限流处理lua脚本加载完成
+2021-04-09 02:57:28.049  INFO 22044 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-04-09 02:57:28.061  INFO 22044 --- [main] com.dongfeng.study.StudyApplication      : Started StudyApplication in 3.432 seconds (JVM running for 4.631)
+2021-04-09 02:58:03.321  INFO 22044 --- [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-04-09 02:58:03.321  INFO 22044 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-04-09 02:58:03.329  INFO 22044 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
+2021-04-09 02:58:03.430  INFO 22044 --- [http-nio-8081-exec-1] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:null
+2021-04-09 02:58:22.012  INFO 22044 --- [http-nio-8081-exec-3] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:111111
+2021-04-09 02:58:22.012  INFO 22044 --- [http-nio-8081-exec-3] c.d.s.m.interceptor.TraceIdInterceptor   : 日志traceId:4b50b2ed75c54ff498f05834fc0700ff
+2021-04-09 02:58:22.013  INFO 22044 --- [http-nio-8081-exec-3] c.d.s.m.interceptor.TraceIdInterceptor   : userIp:0:0:0:0:0:0:0:1
+2021-04-09 02:59:13.665  INFO 19416 --- [main] com.dongfeng.study.StudyApplication      : Starting StudyApplication on LAPTOP-HNOF7VBA with PID 19416 (D:\Wstudy\springboot-study\target\classes started by 46037 in D:\Wstudy\springboot-study)
+2021-04-09 02:59:13.669  INFO 19416 --- [main] com.dongfeng.study.StudyApplication      : No active profile set, falling back to default profiles: default
+2021-04-09 02:59:14.321  INFO 19416 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-04-09 02:59:14.323  INFO 19416 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-04-09 02:59:14.365  INFO 19416 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 30ms. Found 0 Redis repository interfaces.
+2021-04-09 02:59:14.592  INFO 19416 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$4bd1d312] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:59:14.638  INFO 19416 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-04-09 02:59:14.790  INFO 19416 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.sentinel-org.springframework.cloud.alibaba.sentinel.SentinelProperties' of type [org.springframework.cloud.alibaba.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:59:14.797  INFO 19416 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration' of type [org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration$$EnhancerBySpringCGLIB$$64a4da36] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 02:59:15.029  INFO 19416 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-04-09 02:59:15.038  INFO 19416 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-04-09 02:59:15.038  INFO 19416 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-04-09 02:59:15.172  INFO 19416 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-04-09 02:59:15.173  INFO 19416 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1453 ms
+2021-04-09 02:59:15.184  INFO 19416 --- [main] o.s.c.a.s.SentinelWebAutoConfiguration   : [Sentinel Starter] register Sentinel with urlPatterns: [/*].
+2021-04-09 02:59:16.064  INFO 19416 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-04-09 02:59:16.140  INFO 19416 --- [main] c.d.s.m.s.f.redis.RedisLimiterAspect     : 【RedisLimiterAspect】分布式限流处理lua脚本加载完成
+2021-04-09 02:59:16.687  INFO 19416 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-04-09 02:59:16.697  INFO 19416 --- [main] com.dongfeng.study.StudyApplication      : Started StudyApplication in 3.416 seconds (JVM running for 4.547)
+2021-04-09 02:59:20.488  INFO 19416 --- [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-04-09 02:59:20.489  INFO 19416 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-04-09 02:59:20.496  INFO 19416 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 7 ms
+2021-04-09 02:59:20.605  INFO 19416 --- [http-nio-8081-exec-1] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:111111
+2021-04-09 02:59:20.612  INFO 19416 --- [http-nio-8081-exec-1] c.d.s.m.interceptor.TraceIdInterceptor   : 日志traceId:96050d36c9304ad7a8334a269446bb14
+2021-04-09 02:59:20.612  INFO 19416 --- [http-nio-8081-exec-1] c.d.s.m.interceptor.TraceIdInterceptor   : userIp:0:0:0:0:0:0:0:1
+2021-04-09 02:59:23.297  INFO 19416 --- [http-nio-8081-exec-3] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:null
+2021-04-09 02:59:34.503  INFO 19416 --- [http-nio-8081-exec-4] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:111111
+2021-04-09 02:59:34.504  INFO 19416 --- [http-nio-8081-exec-4] c.d.s.m.interceptor.TraceIdInterceptor   : 日志traceId:1c5e96651e3c46a3a5070a047a3e8868
+2021-04-09 02:59:34.504  INFO 19416 --- [http-nio-8081-exec-4] c.d.s.m.interceptor.TraceIdInterceptor   : userIp:0:0:0:0:0:0:0:1
+2021-04-09 03:00:01.406  INFO 1444 --- [main] com.dongfeng.study.StudyApplication      : Starting StudyApplication on LAPTOP-HNOF7VBA with PID 1444 (D:\Wstudy\springboot-study\target\classes started by 46037 in D:\Wstudy\springboot-study)
+2021-04-09 03:00:01.409  INFO 1444 --- [main] com.dongfeng.study.StudyApplication      : No active profile set, falling back to default profiles: default
+2021-04-09 03:00:02.119  INFO 1444 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-04-09 03:00:02.121  INFO 1444 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-04-09 03:00:02.168  INFO 1444 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 33ms. Found 0 Redis repository interfaces.
+2021-04-09 03:00:02.395  INFO 1444 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$4bd1d312] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 03:00:02.443  INFO 1444 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-04-09 03:00:02.598  INFO 1444 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.sentinel-org.springframework.cloud.alibaba.sentinel.SentinelProperties' of type [org.springframework.cloud.alibaba.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 03:00:02.605  INFO 1444 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration' of type [org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration$$EnhancerBySpringCGLIB$$64a4da36] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 03:00:02.835  INFO 1444 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-04-09 03:00:02.843  INFO 1444 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-04-09 03:00:02.844  INFO 1444 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-04-09 03:00:02.994  INFO 1444 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-04-09 03:00:02.995  INFO 1444 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1534 ms
+2021-04-09 03:00:03.008  INFO 1444 --- [main] o.s.c.a.s.SentinelWebAutoConfiguration   : [Sentinel Starter] register Sentinel with urlPatterns: [/*].
+2021-04-09 03:00:03.817  INFO 1444 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-04-09 03:00:03.892  INFO 1444 --- [main] c.d.s.m.s.f.redis.RedisLimiterAspect     : 【RedisLimiterAspect】分布式限流处理lua脚本加载完成
+2021-04-09 03:00:04.413  INFO 1444 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-04-09 03:00:04.423  INFO 1444 --- [main] com.dongfeng.study.StudyApplication      : Started StudyApplication in 3.428 seconds (JVM running for 4.578)
+2021-04-09 03:00:08.857  INFO 1444 --- [http-nio-8081-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-04-09 03:00:08.857  INFO 1444 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-04-09 03:00:08.865  INFO 1444 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
+2021-04-09 03:00:08.974  INFO 1444 --- [http-nio-8081-exec-2] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:111111
+2021-04-09 03:00:08.980  INFO 1444 --- [http-nio-8081-exec-2] c.d.s.m.interceptor.TraceIdInterceptor   : 日志traceId:d53559ffa1dc47c6b3ae7279e68fbb6d
+2021-04-09 03:00:08.981  INFO 1444 --- [http-nio-8081-exec-2] c.d.s.m.interceptor.TraceIdInterceptor   : userIp:0:0:0:0:0:0:0:1
+2021-04-09 03:00:10.977  INFO 1444 --- [http-nio-8081-exec-3] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:null
+2021-04-09 03:28:07.314  INFO 16952 --- [main] com.dongfeng.study.StudyApplication      : Starting StudyApplication on LAPTOP-HNOF7VBA with PID 16952 (D:\Wstudy\springboot-study\target\classes started by 46037 in D:\Wstudy\springboot-study)
+2021-04-09 03:28:07.317  INFO 16952 --- [main] com.dongfeng.study.StudyApplication      : No active profile set, falling back to default profiles: default
+2021-04-09 03:28:08.130  INFO 16952 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-04-09 03:28:08.134  INFO 16952 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-04-09 03:28:08.188  INFO 16952 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 38ms. Found 0 Redis repository interfaces.
+2021-04-09 03:28:08.482  INFO 16952 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$fafb5949] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 03:28:08.536  INFO 16952 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-04-09 03:28:08.723  INFO 16952 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.sentinel-org.springframework.cloud.alibaba.sentinel.SentinelProperties' of type [org.springframework.cloud.alibaba.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 03:28:08.730  INFO 16952 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration' of type [org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration$$EnhancerBySpringCGLIB$$13ce606d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 03:28:09.017  INFO 16952 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-04-09 03:28:09.029  INFO 16952 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-04-09 03:28:09.029  INFO 16952 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-04-09 03:28:09.194  INFO 16952 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-04-09 03:28:09.195  INFO 16952 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1829 ms
+2021-04-09 03:28:09.209  INFO 16952 --- [main] o.s.c.a.s.SentinelWebAutoConfiguration   : [Sentinel Starter] register Sentinel with urlPatterns: [/*].
+2021-04-09 03:28:10.159  INFO 16952 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-04-09 03:28:10.260  INFO 16952 --- [main] c.d.s.m.s.f.redis.RedisLimiterAspect     : 【RedisLimiterAspect】分布式限流处理lua脚本加载完成
+2021-04-09 03:28:10.939  INFO 16952 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-04-09 03:28:10.951  INFO 16952 --- [main] com.dongfeng.study.StudyApplication      : Started StudyApplication in 4.151 seconds (JVM running for 5.551)
+2021-04-09 03:30:57.665  INFO 16952 --- [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-04-09 03:30:57.665  INFO 16952 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-04-09 03:30:57.674  INFO 16952 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 9 ms
+2021-04-09 03:30:57.815  INFO 16952 --- [http-nio-8081-exec-1] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:null
+2021-04-09 03:31:07.981  INFO 16952 --- [http-nio-8081-exec-3] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:111111
+2021-04-09 03:31:07.981  INFO 16952 --- [http-nio-8081-exec-3] c.d.s.m.interceptor.TraceIdInterceptor   : 日志traceId:eccc7563e2e642f1bcce1f526f3f00a6
+2021-04-09 03:31:07.982  INFO 16952 --- [http-nio-8081-exec-3] c.d.s.m.interceptor.TraceIdInterceptor   : userIp:0:0:0:0:0:0:0:1
+2021-04-09 03:35:40.634  INFO 16952 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService
+2021-04-09 03:38:08.514  INFO 21628 --- [main] com.dongfeng.study.StudyApplication      : Starting StudyApplication on LAPTOP-HNOF7VBA with PID 21628 (D:\Wstudy\springboot-study\target\classes started by 46037 in D:\Wstudy\springboot-study)
+2021-04-09 03:38:08.516  INFO 21628 --- [main] com.dongfeng.study.StudyApplication      : No active profile set, falling back to default profiles: default
+2021-04-09 03:38:09.220  INFO 21628 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-04-09 03:38:09.223  INFO 21628 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-04-09 03:38:09.276  INFO 21628 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 36ms. Found 0 Redis repository interfaces.
+2021-04-09 03:38:09.500  INFO 21628 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$a474bef9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 03:38:09.547  INFO 21628 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-04-09 03:38:09.694  INFO 21628 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.sentinel-org.springframework.cloud.alibaba.sentinel.SentinelProperties' of type [org.springframework.cloud.alibaba.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 03:38:09.700  INFO 21628 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration' of type [org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration$$EnhancerBySpringCGLIB$$bd47c61d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 03:38:09.931  INFO 21628 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-04-09 03:38:09.940  INFO 21628 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-04-09 03:38:09.940  INFO 21628 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-04-09 03:38:10.076  INFO 21628 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-04-09 03:38:10.076  INFO 21628 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1510 ms
+2021-04-09 03:38:10.087  INFO 21628 --- [main] o.s.c.a.s.SentinelWebAutoConfiguration   : [Sentinel Starter] register Sentinel with urlPatterns: [/*].
+2021-04-09 03:38:10.923  INFO 21628 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-04-09 03:38:10.998  INFO 21628 --- [main] c.d.s.m.s.f.redis.RedisLimiterAspect     : 【RedisLimiterAspect】分布式限流处理lua脚本加载完成
+2021-04-09 03:38:11.538  INFO 21628 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-04-09 03:38:11.549  INFO 21628 --- [main] com.dongfeng.study.StudyApplication      : Started StudyApplication in 3.477 seconds (JVM running for 4.706)
+2021-04-09 03:38:17.508  INFO 21628 --- [http-nio-8081-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-04-09 03:38:17.508  INFO 21628 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-04-09 03:38:17.514  INFO 21628 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+2021-04-09 03:38:17.612  INFO 21628 --- [http-nio-8081-exec-2] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:111111
+2021-04-09 03:38:17.618  INFO 21628 --- [http-nio-8081-exec-2] c.d.s.m.interceptor.TraceIdInterceptor   : 日志traceId:aaf8b629b5b04e8e834afe448ebf15c0
+2021-04-09 03:38:17.618  INFO 21628 --- [http-nio-8081-exec-2] c.d.s.m.interceptor.TraceIdInterceptor   : userIp:0:0:0:0:0:0:0:1
+2021-04-09 03:41:36.856  INFO 21308 --- [main] com.dongfeng.study.StudyApplication      : Starting StudyApplication on LAPTOP-HNOF7VBA with PID 21308 (D:\Wstudy\springboot-study\target\classes started by 46037 in D:\Wstudy\springboot-study)
+2021-04-09 03:41:36.859  INFO 21308 --- [main] com.dongfeng.study.StudyApplication      : No active profile set, falling back to default profiles: default
+2021-04-09 03:41:37.605  INFO 21308 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-04-09 03:41:37.607  INFO 21308 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-04-09 03:41:37.653  INFO 21308 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 32ms. Found 0 Redis repository interfaces.
+2021-04-09 03:41:37.888  INFO 21308 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$3afe48c8] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 03:41:37.940  INFO 21308 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-04-09 03:41:38.102  INFO 21308 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.sentinel-org.springframework.cloud.alibaba.sentinel.SentinelProperties' of type [org.springframework.cloud.alibaba.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 03:41:38.108  INFO 21308 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration' of type [org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration$$EnhancerBySpringCGLIB$$53d14fec] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 03:41:38.355  INFO 21308 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-04-09 03:41:38.365  INFO 21308 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-04-09 03:41:38.365  INFO 21308 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-04-09 03:41:38.551  INFO 21308 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-04-09 03:41:38.551  INFO 21308 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1636 ms
+2021-04-09 03:41:38.567  INFO 21308 --- [main] o.s.c.a.s.SentinelWebAutoConfiguration   : [Sentinel Starter] register Sentinel with urlPatterns: [/*].
+2021-04-09 03:41:39.548  INFO 21308 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-04-09 03:41:39.623  INFO 21308 --- [main] c.d.s.m.s.f.redis.RedisLimiterAspect     : 【RedisLimiterAspect】分布式限流处理lua脚本加载完成
+2021-04-09 03:41:40.201  INFO 21308 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-04-09 03:41:40.210  INFO 21308 --- [main] com.dongfeng.study.StudyApplication      : Started StudyApplication in 3.81 seconds (JVM running for 5.008)
+2021-04-09 03:48:20.383  INFO 25448 --- [main] com.dongfeng.study.StudyApplication      : Starting StudyApplication on LAPTOP-HNOF7VBA with PID 25448 (D:\Wstudy\springboot-study\target\classes started by 46037 in D:\Wstudy\springboot-study)
+2021-04-09 03:48:20.386  INFO 25448 --- [main] com.dongfeng.study.StudyApplication      : No active profile set, falling back to default profiles: default
+2021-04-09 03:48:20.888  INFO 25448 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-04-09 03:48:20.889  INFO 25448 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-04-09 03:48:20.922  INFO 25448 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 24ms. Found 0 Redis repository interfaces.
+2021-04-09 03:48:21.079  INFO 25448 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$638cdb2a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 03:48:21.115  INFO 25448 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-04-09 03:48:21.228  INFO 25448 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.sentinel-org.springframework.cloud.alibaba.sentinel.SentinelProperties' of type [org.springframework.cloud.alibaba.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 03:48:21.233  INFO 25448 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration' of type [org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration$$EnhancerBySpringCGLIB$$7c5fe24e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-04-09 03:48:21.398  INFO 25448 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-04-09 03:48:21.404  INFO 25448 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-04-09 03:48:21.404  INFO 25448 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-04-09 03:48:21.512  INFO 25448 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-04-09 03:48:21.513  INFO 25448 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1088 ms
+2021-04-09 03:48:21.521  INFO 25448 --- [main] o.s.c.a.s.SentinelWebAutoConfiguration   : [Sentinel Starter] register Sentinel with urlPatterns: [/*].
+2021-04-09 03:48:22.088  INFO 25448 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-04-09 03:48:22.145  INFO 25448 --- [main] c.d.s.m.s.f.redis.RedisLimiterAspect     : 【RedisLimiterAspect】分布式限流处理lua脚本加载完成
+2021-04-09 03:48:22.528  INFO 25448 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-04-09 03:48:22.536  INFO 25448 --- [main] com.dongfeng.study.StudyApplication      : Started StudyApplication in 2.48 seconds (JVM running for 3.236)
+2021-04-09 03:50:58.376  INFO 25448 --- [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-04-09 03:50:58.376  INFO 25448 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-04-09 03:50:58.381  INFO 25448 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2021-04-09 03:50:58.454  INFO 25448 --- [http-nio-8081-exec-1] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:111111
+2021-04-09 03:50:58.458  INFO 25448 --- [http-nio-8081-exec-1] c.d.s.m.interceptor.TraceIdInterceptor   : 日志traceId:e66761c9ae544ba3b4d87e4b9dde7c9e
+2021-04-09 03:50:58.459  INFO 25448 --- [http-nio-8081-exec-1] c.d.s.m.interceptor.TraceIdInterceptor   : userIp:0:0:0:0:0:0:0:1
+2021-04-09 03:50:58.465  INFO 25448 --- [http-nio-8081-exec-1] c.d.study.controller.TestController      : log test!!!
+2021-04-09 03:51:02.653  INFO 25448 --- [http-nio-8081-exec-3] c.d.s.m.interceptor.LoginInterceptor     : 登录拦截器 请求头中token:111111
+2021-04-09 03:51:02.653  INFO 25448 --- [http-nio-8081-exec-3] c.d.s.m.interceptor.TraceIdInterceptor   : 日志traceId:640b0d72ecb24980a6e91e0a18effa3e
+2021-04-09 03:51:02.653  INFO 25448 --- [http-nio-8081-exec-3] c.d.s.m.interceptor.TraceIdInterceptor   : userIp:0:0:0:0:0:0:0:1
+2021-04-09 03:51:02.653  INFO 25448 --- [http-nio-8081-exec-3] c.d.study.controller.TestController      : log test!!!

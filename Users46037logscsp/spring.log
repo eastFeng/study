@@ -1,0 +1,112 @@
+2021-03-02 15:49:21.408  INFO 2084 --- [main] com.dongfeng.study.StudyApplication      : Starting StudyApplication on LAPTOP-HNOF7VBA with PID 2084 (D:\Wstudy\springboot-study\target\classes started by 46037 in D:\Wstudy\springboot-study)
+2021-03-02 15:49:21.430  INFO 2084 --- [main] com.dongfeng.study.StudyApplication      : No active profile set, falling back to default profiles: default
+2021-03-02 15:49:22.000  INFO 2084 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-03-02 15:49:22.000  INFO 2084 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-03-02 15:49:22.047  INFO 2084 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25ms. Found 0 Redis repository interfaces.
+2021-03-02 15:49:22.235  INFO 2084 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$f504315d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-02 15:49:22.266  INFO 2084 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-03-02 15:49:22.394  INFO 2084 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.sentinel-org.springframework.cloud.alibaba.sentinel.SentinelProperties' of type [org.springframework.cloud.alibaba.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-02 15:49:22.400  INFO 2084 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration' of type [org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration$$EnhancerBySpringCGLIB$$dd73881] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-02 15:49:22.596  INFO 2084 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-03-02 15:49:22.596  INFO 2084 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-03-02 15:49:22.596  INFO 2084 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-03-02 15:49:22.706  INFO 2084 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-03-02 15:49:22.706  INFO 2084 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1253 ms
+2021-03-02 15:49:22.721  INFO 2084 --- [main] o.s.c.a.s.SentinelWebAutoConfiguration   : [Sentinel Starter] register Sentinel with urlPatterns: [/*].
+2021-03-02 15:49:23.489  INFO 2084 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-03-02 15:49:23.568  INFO 2084 --- [main] c.d.s.s.f.redis.RedisLimiterAspect       : 【RedisLimiterAspect】分布式限流处理lua脚本加载完成
+2021-03-02 15:49:23.725  INFO 2084 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-03-02 15:49:24.068  INFO 2084 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-03-02 15:49:24.084  INFO 2084 --- [main] com.dongfeng.study.StudyApplication      : Started StudyApplication in 3.017 seconds (JVM running for 4.517)
+2021-03-02 15:50:58.167  INFO 2084 --- [http-nio-8081-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-03-02 15:50:58.167  INFO 2084 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-03-02 15:50:58.173  INFO 2084 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+2021-03-02 15:50:58.270  INFO 2084 --- [http-nio-8081-exec-2] c.d.study.controller.RabbitMqController  : receive queueName:dongfeng_test_queue_name
+2021-03-02 15:50:58.277  INFO 2084 --- [http-nio-8081-exec-2] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [10.200.5.117:5672]
+2021-03-02 15:50:58.302  INFO 2084 --- [http-nio-8081-exec-2] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#21ea996f:0/SimpleConnection@2c6543d [delegate=amqp://admin@10.200.5.117:5672/, localPort= 55109]
+2021-03-02 15:52:29.451  INFO 2084 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-03-02 15:52:29.465  INFO 2084 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService
+2021-03-02 15:52:39.084  INFO 3240 --- [main] com.dongfeng.study.StudyApplication      : Starting StudyApplication on LAPTOP-HNOF7VBA with PID 3240 (D:\Wstudy\springboot-study\target\classes started by 46037 in D:\Wstudy\springboot-study)
+2021-03-02 15:52:39.084  INFO 3240 --- [main] com.dongfeng.study.StudyApplication      : No active profile set, falling back to default profiles: default
+2021-03-02 15:52:39.631  INFO 3240 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-03-02 15:52:39.631  INFO 3240 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-03-02 15:52:39.662  INFO 3240 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 24ms. Found 0 Redis repository interfaces.
+2021-03-02 15:52:39.842  INFO 3240 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$3d68f805] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-02 15:52:39.873  INFO 3240 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-03-02 15:52:39.991  INFO 3240 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.sentinel-org.springframework.cloud.alibaba.sentinel.SentinelProperties' of type [org.springframework.cloud.alibaba.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-02 15:52:39.995  INFO 3240 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration' of type [org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration$$EnhancerBySpringCGLIB$$563bff29] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-02 15:52:40.168  INFO 3240 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-03-02 15:52:40.168  INFO 3240 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-03-02 15:52:40.168  INFO 3240 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-03-02 15:52:40.278  INFO 3240 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-03-02 15:52:40.278  INFO 3240 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1147 ms
+2021-03-02 15:52:40.293  INFO 3240 --- [main] o.s.c.a.s.SentinelWebAutoConfiguration   : [Sentinel Starter] register Sentinel with urlPatterns: [/*].
+2021-03-02 15:52:40.941  INFO 3240 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-03-02 15:52:41.003  INFO 3240 --- [main] c.d.s.s.f.redis.RedisLimiterAspect       : 【RedisLimiterAspect】分布式限流处理lua脚本加载完成
+2021-03-02 15:52:41.128  INFO 3240 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-03-02 15:52:41.464  INFO 3240 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-03-02 15:52:41.473  INFO 3240 --- [main] com.dongfeng.study.StudyApplication      : Started StudyApplication in 2.71 seconds (JVM running for 3.596)
+2021-03-02 15:52:50.310  INFO 3240 --- [http-nio-8081-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-03-02 15:52:50.311  INFO 3240 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-03-02 15:52:50.316  INFO 3240 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2021-03-02 15:52:50.409  INFO 3240 --- [http-nio-8081-exec-2] c.d.study.controller.RabbitMqController  : receive queueName:dongfeng_test_queue_name
+2021-03-02 15:52:50.417  INFO 3240 --- [http-nio-8081-exec-2] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [10.200.5.117:5672]
+2021-03-02 15:52:50.445  INFO 3240 --- [http-nio-8081-exec-2] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#55acec99:0/SimpleConnection@6b8fb076 [delegate=amqp://admin@10.200.5.117:5672/, localPort= 55254]
+2021-03-02 15:53:22.034  INFO 3240 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-03-02 15:53:22.041  INFO 3240 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService
+2021-03-02 15:53:26.485  INFO 17348 --- [main] com.dongfeng.study.StudyApplication      : Starting StudyApplication on LAPTOP-HNOF7VBA with PID 17348 (D:\Wstudy\springboot-study\target\classes started by 46037 in D:\Wstudy\springboot-study)
+2021-03-02 15:53:26.485  INFO 17348 --- [main] com.dongfeng.study.StudyApplication      : No active profile set, falling back to default profiles: default
+2021-03-02 15:53:27.017  INFO 17348 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-03-02 15:53:27.017  INFO 17348 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-03-02 15:53:27.048  INFO 17348 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 24ms. Found 0 Redis repository interfaces.
+2021-03-02 15:53:27.236  INFO 17348 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$ffb5e140] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-02 15:53:27.267  INFO 17348 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-03-02 15:53:27.376  INFO 17348 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.sentinel-org.springframework.cloud.alibaba.sentinel.SentinelProperties' of type [org.springframework.cloud.alibaba.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-02 15:53:27.395  INFO 17348 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration' of type [org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration$$EnhancerBySpringCGLIB$$1888e864] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-02 15:53:27.565  INFO 17348 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-03-02 15:53:27.565  INFO 17348 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-03-02 15:53:27.565  INFO 17348 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-03-02 15:53:27.674  INFO 17348 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-03-02 15:53:27.674  INFO 17348 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1157 ms
+2021-03-02 15:53:27.690  INFO 17348 --- [main] o.s.c.a.s.SentinelWebAutoConfiguration   : [Sentinel Starter] register Sentinel with urlPatterns: [/*].
+2021-03-02 15:53:28.362  INFO 17348 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-03-02 15:53:28.434  INFO 17348 --- [main] c.d.s.s.f.redis.RedisLimiterAspect       : 【RedisLimiterAspect】分布式限流处理lua脚本加载完成
+2021-03-02 15:53:28.553  INFO 17348 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-03-02 15:53:28.873  INFO 17348 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-03-02 15:53:28.873  INFO 17348 --- [main] com.dongfeng.study.StudyApplication      : Started StudyApplication in 2.705 seconds (JVM running for 3.609)
+2021-03-02 15:55:33.253  INFO 17348 --- [http-nio-8081-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-03-02 15:55:33.253  INFO 17348 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-03-02 15:55:33.259  INFO 17348 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+2021-03-02 15:55:33.361  INFO 17348 --- [http-nio-8081-exec-2] c.d.study.controller.RabbitMqController  : send req:MqSendReq(exchange=null, routingKey=null, msg=null)
+2021-03-02 15:55:54.605  INFO 17348 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-03-02 15:55:54.613  INFO 17348 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService
+2021-03-02 15:55:59.287  INFO 10996 --- [main] com.dongfeng.study.StudyApplication      : Starting StudyApplication on LAPTOP-HNOF7VBA with PID 10996 (D:\Wstudy\springboot-study\target\classes started by 46037 in D:\Wstudy\springboot-study)
+2021-03-02 15:55:59.287  INFO 10996 --- [main] com.dongfeng.study.StudyApplication      : No active profile set, falling back to default profiles: default
+2021-03-02 15:55:59.862  INFO 10996 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-03-02 15:55:59.878  INFO 10996 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-03-02 15:55:59.909  INFO 10996 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23ms. Found 0 Redis repository interfaces.
+2021-03-02 15:56:00.081  INFO 10996 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$a600cabc] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-02 15:56:00.127  INFO 10996 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-03-02 15:56:00.237  INFO 10996 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.sentinel-org.springframework.cloud.alibaba.sentinel.SentinelProperties' of type [org.springframework.cloud.alibaba.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-02 15:56:00.237  INFO 10996 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration' of type [org.springframework.cloud.alibaba.sentinel.custom.SentinelAutoConfiguration$$EnhancerBySpringCGLIB$$bed3d1e0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-02 15:56:00.432  INFO 10996 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-03-02 15:56:00.439  INFO 10996 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-03-02 15:56:00.440  INFO 10996 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-03-02 15:56:00.548  INFO 10996 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-03-02 15:56:00.548  INFO 10996 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1214 ms
+2021-03-02 15:56:00.557  INFO 10996 --- [main] o.s.c.a.s.SentinelWebAutoConfiguration   : [Sentinel Starter] register Sentinel with urlPatterns: [/*].
+2021-03-02 15:56:01.221  INFO 10996 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2021-03-02 15:56:01.282  INFO 10996 --- [main] c.d.s.s.f.redis.RedisLimiterAspect       : 【RedisLimiterAspect】分布式限流处理lua脚本加载完成
+2021-03-02 15:56:01.409  INFO 10996 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-03-02 15:56:01.737  INFO 10996 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-03-02 15:56:01.753  INFO 10996 --- [main] com.dongfeng.study.StudyApplication      : Started StudyApplication in 2.776 seconds (JVM running for 3.691)
+2021-03-02 15:56:13.395  INFO 10996 --- [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-03-02 15:56:13.395  INFO 10996 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-03-02 15:56:13.401  INFO 10996 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+2021-03-02 15:56:13.539  INFO 10996 --- [http-nio-8081-exec-1] c.d.study.controller.RabbitMqController  : send req:MqSendReq(exchange=dongfeng_test_exchange, routingKey=dongfeng_test_routing_key, msg=东风20210302测试)
+2021-03-02 15:56:13.549  INFO 10996 --- [http-nio-8081-exec-1] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [10.200.5.117:5672]
+2021-03-02 15:56:13.577  INFO 10996 --- [http-nio-8081-exec-1] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#2bb41f5c:0/SimpleConnection@77574adf [delegate=amqp://admin@10.200.5.117:5672/, localPort= 55443]
+2021-03-02 15:56:16.465  INFO 10996 --- [http-nio-8081-exec-3] c.d.study.controller.RabbitMqController  : receive queueName:dongfeng_test_queue_name
+2021-03-02 15:56:16.500  INFO 10996 --- [http-nio-8081-exec-3] c.d.study.controller.RabbitMqController  : receive result:"东风20210302测试"
+2021-03-02 15:57:16.774  INFO 10996 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-03-02 15:57:16.781  INFO 10996 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService
