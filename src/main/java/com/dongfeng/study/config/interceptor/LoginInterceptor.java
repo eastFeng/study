@@ -1,4 +1,4 @@
-package com.dongfeng.study.allconf.interceptor;
+package com.dongfeng.study.config.interceptor;
 
 import com.dongfeng.study.bean.base.Constants;
 import lombok.extern.slf4j.Slf4j;

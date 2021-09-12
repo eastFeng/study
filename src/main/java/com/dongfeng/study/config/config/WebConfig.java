@@ -1,7 +1,7 @@
-package com.dongfeng.study.allconf.config;
+package com.dongfeng.study.config.config;
 
-import com.dongfeng.study.allconf.interceptor.LoginInterceptor;
-import com.dongfeng.study.allconf.interceptor.TraceIdInterceptor;
+import com.dongfeng.study.config.interceptor.LoginInterceptor;
+import com.dongfeng.study.config.interceptor.TraceIdInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

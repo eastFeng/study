@@ -2,7 +2,7 @@
  * @author eastFeng
  * @date 2021-04-08 23:03
  */
-package com.dongfeng.study.allconf.filter;
+package com.dongfeng.study.config.filter;
 /*
  *
  * 过滤器

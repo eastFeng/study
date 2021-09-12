@@ -1,4 +1,4 @@
-package com.dongfeng.study.allconf.config;
+package com.dongfeng.study.config.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

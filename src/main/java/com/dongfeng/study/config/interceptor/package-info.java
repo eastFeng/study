@@ -18,4 +18,4 @@
  * @author eastFeng
  * @date 2021-04-08 22:58
  */
-package com.dongfeng.study.allconf.interceptor;
+package com.dongfeng.study.config.interceptor;

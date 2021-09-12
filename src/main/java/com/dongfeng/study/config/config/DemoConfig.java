@@ -1,4 +1,4 @@
-package com.dongfeng.study.allconf.config;
+package com.dongfeng.study.config.config;
 
 import com.dongfeng.study.bean.vo.TestVo;
 import com.dongfeng.study.bean.vo.UserPunch;

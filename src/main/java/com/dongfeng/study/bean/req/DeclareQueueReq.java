@@ -5,6 +5,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
+ * <b> 声明topic类型交换器、队列的参数 </b>
+ *
  * @author eastFeng
  * @date 2021-03-02 15:21
  */

@@ -3,7 +3,7 @@ package com.dongfeng.study.service;
 import com.dongfeng.study.bean.base.Response;
 import com.dongfeng.study.bean.vo.InterfaceA;
 import com.dongfeng.study.bean.vo.TestVo;
-import com.dongfeng.study.allconf.interceptor.LoginInterceptor;
+import com.dongfeng.study.config.interceptor.LoginInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

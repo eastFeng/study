@@ -1,4 +1,4 @@
-package com.dongfeng.study.allconf.filter;
+package com.dongfeng.study.config.filter;
 
 import javax.servlet.*;
 import java.io.IOException;

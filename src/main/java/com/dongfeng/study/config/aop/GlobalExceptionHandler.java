@@ -1,4 +1,4 @@
-package com.dongfeng.study.allconf.aop;
+package com.dongfeng.study.config.aop;
 
 import com.dongfeng.study.bean.base.BizException;
 import com.dongfeng.study.bean.base.Response;

@@ -18,7 +18,7 @@ public class JDBCUtil {
         //1. 加载驱动
         Class.forName("com.mysql.jdbc.Driver");
 
-        /**
+        /*
          * 获取连接所需要的url,用户名和密码
          *
          * 提供要连接的数据库

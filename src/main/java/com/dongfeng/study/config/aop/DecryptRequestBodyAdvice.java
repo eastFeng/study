@@ -1,4 +1,4 @@
-package com.dongfeng.study.allconf.aop;
+package com.dongfeng.study.config.aop;
 
 import cn.hutool.core.codec.Base64;
 import org.springframework.core.MethodParameter;

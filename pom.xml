@@ -339,6 +339,10 @@
                 </configuration>
             </plugin>
         </plugins>
+
+        <resources>
+
+        </resources>
     </build>
 
 </project>
