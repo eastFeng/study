@@ -1,4 +1,4 @@
-package com.dongfeng.study.allconf.aop.flowlimit;
+package com.dongfeng.study.config.aop.flowlimit;
 
 import com.dongfeng.study.bean.base.Response;
 import com.dongfeng.study.util.MethodUtil;
@@ -52,7 +52,7 @@ public class RedisLimiterAspect{
     /**
      * 定义切点
      */
-    @Pointcut("@annotation(com.dongfeng.study.allconf.aop.flowlimit.RedisLimiter)")
+    @Pointcut("@annotation(com.dongfeng.study.config.aop.flowlimit.RedisLimiter)")
     public void redisLimiter(){}
 
     /**

@@ -30,9 +30,7 @@ public class C3P0Demo {
 
             Connection connection = comboPooledDataSource.getConnection();
             System.out.println(connection);
-        } catch (PropertyVetoException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (PropertyVetoException | SQLException e) {
             e.printStackTrace();
         }
     }

@@ -1,4 +1,4 @@
-package com.dongfeng.study.allconf.aop.flowlimit;
+package com.dongfeng.study.config.aop.flowlimit;
 
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;

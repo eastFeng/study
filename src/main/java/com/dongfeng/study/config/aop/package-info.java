@@ -562,7 +562,7 @@
  *
  *
  */
-package com.dongfeng.study.allconf.aop;
+package com.dongfeng.study.config.aop;
 
 /*
  *

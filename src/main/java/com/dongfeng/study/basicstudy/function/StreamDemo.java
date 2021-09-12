@@ -89,13 +89,21 @@ public class StreamDemo {
      * <p> 注: 因为可以根据T的所有属性进行过滤,所以是输入是: ? super T
      */
     private static void testFilter(List<Goods> goodsList){
-        //test1 过滤出所有满足条件的数据
+        // 过滤出所有满足条件的数据
         List<Goods> goods = goodsList.stream().filter(T -> T.getPrice() <= 10).collect(Collectors.toList());
         System.out.println(goods);
 
+        // 根据条件返回一个数据
+        Goods goods1 = goodsList.stream().filter(T -> T.getType().equals("电脑")).findFirst().orElse(null);
+        if (goods1 == null){
+            System.out.println("no goods type is 电脑");
+        }else {
+            System.out.println(goods1);
+        }
         List<String> stringList = new ArrayList<>(10);
-        //test2 根据条件返回一个数据
+        // 根据条件返回一个数据
         String hh = stringList.stream().filter(T -> T.equals("hh")).findFirst().orElse(null);
+        System.out.println(hh);
     }
 
     /**
@@ -115,7 +123,7 @@ public class StreamDemo {
      */
     public static void test_sorted(List<Goods> goodsList){
         // test1
-        List<Goods> goods = goodsList.stream().sorted(Comparator.comparing(Goods::getPrice)).collect(Collectors.toList());
+        List<Goods> goods = goodsList.stream().sorted(Comparator.comparingDouble(Goods::getPrice)).collect(Collectors.toList());
         System.out.println(goods);
 
         List<Integer> integerList = Arrays.asList(1, 2, 7, 8, 9, 3, 2);
@@ -137,7 +145,6 @@ public class StreamDemo {
         for (Goods goods : goodsList) {
             System.out.println(goods);
         }
-
     }
 
     /**
@@ -171,9 +178,11 @@ public class StreamDemo {
         // 形式一: 默认的List接口的实现类是ArrayList
         List<Goods> sortedList = goodsList.stream().sorted(Comparator.comparing(Goods::getPrice)).collect(Collectors.toList());
 
-        // 形式一: 自定义List接口的实现类
+        // 形式二: 自定义List接口的实现类
         LinkedList<Goods> goodsLinkedList =
-                goodsList.stream().sorted(Comparator.comparing(Goods::getPrice)).collect(Collectors.toCollection(LinkedList::new));
+                goodsList.stream().
+                        sorted(Comparator.comparing(Goods::getPrice))
+                        .collect(Collectors.toCollection(LinkedList::new));
 
         // Accumulate names into a List
         List<String> nameList = goodsList.stream().map(Goods::getName).collect(Collectors.toList());
@@ -191,7 +200,8 @@ public class StreamDemo {
 
         //形式二: 可以自定义Set接口的实现类
         TreeSet<String> typeTreeSet =
-                goodsList.stream().map(Goods::getType).collect(Collectors.toCollection(TreeSet::new));
+                goodsList.stream().map(Goods::getType)
+                        .collect(Collectors.toCollection(TreeSet::new));
         System.out.println(typeTreeSet);
     }
 
@@ -199,15 +209,16 @@ public class StreamDemo {
      * Collectors.toMap
      */
     private static void test_Collectors_map(List<Goods> goodsList){
-        Map<Integer, Double> collect = goodsList.stream().collect(Collectors.toMap(goods -> goods.getNumber(),
-                Goods::getPrice));
+        Map<Integer, Double> collect = goodsList.stream().
+                collect(Collectors.toMap(goods -> goods.getNumber(), Goods::getPrice));
         collect.forEach((k,v)->{
             System.out.println(k+" = "+"["+v+"]");
         });
         System.out.println();
 
         // key是Goods的name, Value是Goods本身(Function.identity())
-        Map<String, Goods> goodsMap = goodsList.stream().collect(Collectors.toMap(Goods::getName, Function.identity()));
+        Map<String, Goods> goodsMap = goodsList.stream()
+                .collect(Collectors.toMap(Goods::getName, Function.identity()));
         goodsMap.forEach((k,v)->{
             System.out.println(k+" = "+v);
         });
@@ -223,17 +234,19 @@ public class StreamDemo {
         System.out.println("totalPrices: "+ MathUtil.round(totalPrices,2));
 
         // 计算所有商品的数量总和
-        Integer totalNumber = goodsList.stream().collect(Collectors.summingInt(Goods::getNumber));
+        int totalNumber = goodsList.stream().mapToInt(Goods::getNumber).sum();
         System.out.println("totalNumber: "+totalNumber);
     }
 
     /**
+     * <p> 分组 </p>
      * Collectors.groupingBy ----挺有用
      */
     private static void test_Collectors_group(List<Goods> goodsList){
         List<String> stringList = Arrays.asList("河南", "河南", "河南", "上海", "上海", "山西");
         // 根据字符串分组并计算每个分组的个数
-        Map<String, Long> stringLongMap = stringList.stream().collect(Collectors.groupingBy(String::new, Collectors.counting()));
+        Map<String, Long> stringLongMap = stringList.stream()
+                .collect(Collectors.groupingBy(String::new, Collectors.counting()));
         stringLongMap.forEach((k,v)->{
             System.out.println(k+" : "+v);
         });
@@ -248,7 +261,8 @@ public class StreamDemo {
 
         // 按类型计算商品总数量
         Map<String, Integer> totalNumByType =
-                goodsList.stream().collect(Collectors.groupingBy(Goods::getType, Collectors.summingInt(Goods::getNumber)));
+                goodsList.stream()
+                        .collect(Collectors.groupingBy(Goods::getType, Collectors.summingInt(Goods::getNumber)));
         totalNumByType.forEach((k,v) -> {
             System.out.println(k+" : "+v);
         });

@@ -1,4 +1,4 @@
-package com.dongfeng.study.allconf.interceptor;
+package com.dongfeng.study.config.interceptor;
 
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.ModelAndView;

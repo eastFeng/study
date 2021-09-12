@@ -1,4 +1,4 @@
-package com.dongfeng.study.allconf.aop;
+package com.dongfeng.study.config.aop;
 
 import com.dongfeng.study.util.MethodUtil;
 import org.apache.commons.lang3.StringUtils;

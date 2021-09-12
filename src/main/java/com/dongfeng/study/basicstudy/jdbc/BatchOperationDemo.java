@@ -12,13 +12,13 @@ import java.sql.PreparedStatement;
  */
 public class BatchOperationDemo {
     public static void main(String[] args) {
-        test_batchInsert_3();
+        batchInsert3();
     }
 
     /**
      * 批量插入方式一: 时间太慢
      */
-    private static void test_batchInsert_1(){
+    private static void batchInsert1(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -56,7 +56,7 @@ public class BatchOperationDemo {
      * 2.
      * 3.
      */
-    private static void test_batchInsert_2(){
+    private static void batchInsert_2(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -102,7 +102,7 @@ public class BatchOperationDemo {
     /**
      * 批量插入方式三: 三种方式中时间最快
      */
-    private static void test_batchInsert_3(){
+    private static void batchInsert3(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {

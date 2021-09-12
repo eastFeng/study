@@ -1,6 +1,5 @@
-package com.dongfeng.study.allconf.aop.flowlimit;
+package com.dongfeng.study.config.aop.flowlimit;
 
-import com.dongfeng.study.allconf.aop.flowlimit.ARateLimiter;
 import com.dongfeng.study.bean.base.Response;
 import com.google.common.util.concurrent.RateLimiter;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +30,7 @@ public class RateLimitAspect {
     /**
      * 指定注解作为切点
      */
-    @Pointcut("@annotation(com.dongfeng.study.allconf.aop.flowlimit.ARateLimiter)")
+    @Pointcut("@annotation(com.dongfeng.study.config.aop.flowlimit.ARateLimiter)")
     public void rateLimit(){}
 
     @Around("rateLimit()")
