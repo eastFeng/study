@@ -51,9 +51,9 @@ public class ByteStream {
         /*
          * 在Java IO中，流是一个核心的概念。
          * 【流从概念上来说是一个连续的数据流】。【既可以从流中读取数据，也可以往流中写数据。】
-         * 流与数据源或者数据流向的媒介相关联。
          * 在Java IO中流既可以是字节流(以字节为单位进行读写)，也可以是字符流(以char为单位进行读写)。
          *
+         * 流与数据源或者数据流向的媒介相关联：
          * 输入流（InputStream或Reader）是和数据源相关的，输出流（OutputStream或Writer）是和目标媒介相关的。
          * 一个程序需要InputStream或者Reader从数据源读取数据，需要OutputStream或者Writer将数据写入到目标媒介中。
          * 如下所示：
@@ -89,7 +89,8 @@ public class ByteStream {
          * 3）可以对流进行压缩和解压缩的子类有GZIPInputStream、ZipInputStream、GZIPOutput-Stream和ZipOutputStream。
          * 4）可以将基本类型、对象输出为其字符串表示的子类有PrintStream。
          *
-         * 众多的装饰类使得整个类结构变得比较复杂，完成基本的操作也需要比较多的代码；其优点是非常灵活，在解决某些问题时也很优雅。
+         * 众多的装饰类使得整个类结构变得比较复杂，完成基本的操作也需要比较多的代码；
+         * 其优点是非常灵活，在解决某些问题时也很优雅。
          */
     }
 
@@ -102,7 +103,7 @@ public class ByteStream {
          *
          * InputStream主要方法有：
          * 1. public int read() throws IOException;
-         * 【从输入流中读取】下一个字节的数据。返回类型是int，但取值是0~255。
+         * 【从输入流中读取】下一个字节的数据。返回类型是int，但取值是0~255（11111111=2^8-1=255）。
          * 如果由于到达流的结尾而没有字节可用，则返回值-1。
          * 此方法会阻塞，直到数据到来、检测到流结束或引发异常为止。
          * read是一个抽象方法，具体子类必须实现。
@@ -191,7 +192,7 @@ public class ByteStream {
 //        for(int i=0; i<bytes.length; i++){
 //            bytes[i] = 1;
 //        }
-        String path = "D:\\Wstudy\\test.txt";
+        String path = "D:\\Wstudy\\JavaIOTest.txt";
         try (FileOutputStream output = new FileOutputStream(path, true)) {
             System.out.println("bytes length:"+bytes.length);
             output.write(bytes);
@@ -234,7 +235,7 @@ public class ByteStream {
         FileInputStream input = null;
         // 字节输出流，往目标媒介中写入数据
         FileOutputStream output = null;
-        String path = "D:\\Wstudy\\test.txt";
+        String path = "D:\\Wstudy\\JavaIOTest.txt";
         try {
             // 新建一个文件字节输入流
             input = new FileInputStream(path);
@@ -260,7 +261,7 @@ public class ByteStream {
                 String s = new String(buf, 0, bytesRead, StandardCharsets.UTF_8);
                 sb.append(s);
             }
-            System.out.println(sb.toString());
+            System.out.println(sb);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -271,7 +272,7 @@ public class ByteStream {
                     e.printStackTrace();
                 }
             }
-            if (input!=null){
+            if (input != null){
                 try {
                     input.close();
                 } catch (IOException e) {
@@ -311,7 +312,7 @@ public class ByteStream {
          * public synchronized void reset() ：重置字节个数count为0
          */
 
-        String path = "D:\\Wstudy\\test.txt";
+        String path = "D:\\Wstudy\\JavaIOTest.txt";
         // 使用ByteArrayOutputStream，我们可以改进前面的读文件代码，确保将所有文件内容读取：
         try (ByteArrayOutputStream output = new ByteArrayOutputStream();
              FileInputStream input = new FileInputStream(path)) {
@@ -435,7 +436,7 @@ public class ByteStream {
          * 在使用FileInputStream/FileOutputStream时，应该几乎总是在它的外面包上对应的缓冲类。
          *
          */
-        String path = "D:\\Wstudy\\test.txt";
+        String path = "D:\\Wstudy\\JavaIOTest.txt";
         try (BufferedInputStream bufferedInput = new BufferedInputStream(new FileInputStream(path))) {
             System.out.println("test");
         }catch (Exception e){
@@ -447,7 +448,7 @@ public class ByteStream {
      * 实用方法
      */
     public static void practicalMethod(){
-        /**
+        /*
          * 可以看出，即使只是按二进制字节读写流，Java也包括了很多的类，虽然很灵活，但对于一些简单的需求，却需要写很多代码。
          * 实际开发中，经常需要将一些常用功能进行封装，提供更为简单的接口。
          */

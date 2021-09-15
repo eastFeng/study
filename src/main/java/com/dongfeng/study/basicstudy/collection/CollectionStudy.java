@@ -13,13 +13,11 @@ public class CollectionStudy {
     }
 
     public static void test(){
-        /**
+        /*
          *
          * Java 集合框架主要包括两种类型的容器，一种是集合（Collection），存储一个元素集合，另一种是图（Map），存储键/值对映射。
          * Collection 接口又有 3 种子类型，List、Set 和 Queue，再下面是一些抽象类，最后是具体实现类，
          * 常用的有 ArrayList、LinkedList、HashSet、LinkedHashSet、HashMap、LinkedHashMap 等等。
-         *
-         *
          *
          * Java集合类库也将接口（interface）与实现（implementation）分离。
          *
@@ -47,8 +45,6 @@ public class CollectionStudy {
          *
          * 应该将Java迭代器认为是位于两个元素之间。当调用next时，迭代器就越过下一个元素，并返回刚刚越过的那个元素的引用。
          * （看ArrayList中Iterator的实现就明白了。）
-         *
-         *
          *
          */
         ArrayList<String> list =new ArrayList<>();
