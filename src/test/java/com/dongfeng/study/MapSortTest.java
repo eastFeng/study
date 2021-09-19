@@ -46,7 +46,7 @@ public class MapSortTest {
         areaMap.put("河北省", 10);
         areaMap.put("安徽省", 300);
 
-        //排序好之后放入LinkedHashMap
+        // 排序好之后放入LinkedHashMap
         HashMap<String, Integer> finalOut = new LinkedHashMap<>(10);
 
         areaMap.entrySet()
@@ -113,10 +113,10 @@ public class MapSortTest {
             provinceList.add(province);
         }
 
-        //根据数量倒序排序
+        // 根据数量倒序排序
         provinceList.sort(Comparator.comparing(NameNumber::getNumber).reversed());
 
-        //取前三个
+        // 取前三个
         if (provinceList.size()>3){
             provinceList = provinceList.subList(0, 3);
         }

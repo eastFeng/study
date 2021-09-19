@@ -2,12 +2,8 @@ package com.dongfeng.study;
 
 import com.rabbitmq.client.*;
 import org.junit.jupiter.api.Test;
-import sun.dc.DuctusRenderingEngine;
-
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,78 +13,216 @@ import java.util.Map;
  */
 public class RabbitMqTest {
     public static void main(String[] args) {
-        //RabbitMQ 是遵 AMQP 协议的， 换句话说 RabbitMQ 就是 AMQP协议的 Erlang 的实现
+        // RabbitMQ 是遵 AMQP 协议的， 换句话说 RabbitMQ 就是 AMQP协议的 Erlang 的实现
 
-        //交换器类型：
-        //1. fanout: 会把所有发送到该交换器的消息路由到所有与该交换器绑定的队列中。
-        //2. direct: 会把消息路由到那些BindingKey 和 RoutingKey完全匹配的队列中。
-        //3. topic: 是将消息路由到 BindingKey RoutingKey 相匹配的队列中。
-        //4. headers: 不依赖于路由键的匹配规则来路由消息，而是根据发送的消息内容中的 headers 属性进行匹配，这种类型的交换器性能很差，也不实用，基本不用。
-    }
+        /*
+         * Producer/Publisher（生产者）: 投递消息的一方。
+         * Consumer（消费者）: 消息的消费者，接收消息的一方。
+         * Message（消息）: 实际的数据，比如order订单消息载体。
+         * Exchange（交换机）: 在RabbitMQ中，生产者发送消息到交换机，由交换机将消息路由到一个或者多个队列中。
+         * Queue（消息队列）: 是RabbitMQ的内部对象，用于存储消息，最终将消息传输到消费者。一个消息可投入一个或多个队列。
+         * RoutingKey（路由键）: 生产者将消息发给交换机的时候，一般会指定一个RoutingKey，用来指定这个消息的路由规则。
+         * Binding（绑定）: RabbitMQ中通过绑定将交换机与队列关联起来，
+         * 在绑定的时候一般会指定一个绑定键（BindingKey），这样RabbitMQ就知道如何正确地将消息路由到队列。
+         */
 
-    @Test
-    public void publish(){
-        ConnectionFactory factory = getFactory();
+        /*
+         * Exchange(交换机)类型：
+         * 1. fanout: 会把所有发送到该交换机的消息路由到所有与该交换机绑定的队列中。
+         * 2. direct: 会把消息路由到那些BindingKey和RoutingKey完全匹配的队列中。
+         *            消息中的路由键（RoutingKey）如果和Binding中的BindingKey一致，交换机就将消息发到对应的队列中。
+         *            它是完全匹配、单播的模式。
+         * 3. topic: 是将消息路由到 BindingKey RoutingKey 相匹配的队列中。
+         * 4. headers: 不依赖于路由键的匹配规则来路由消息，而是根据发送的消息内容中的 headers 属性进行匹配，
+         *             这种类型的交换机性能很差，也不实用，基本不用。
+         */
+
         try {
-            //无论是生产者还是消费者，都需要和 RabbitMQ Broker 建立连接，这个连接就是一条TCP连接
-            //创建连接
-            Connection connection = factory.newConnection();
+            // 1. 获取连接工厂（ConnectionFactory）
+            ConnectionFactory connectionFactory = getFactory();
 
-            //Channel是建立在Connection之上的虚拟连接，RabbitMQ 处理的每条 AMQP 指令都是通过信道完成的。
-            //创建AMQP信道 (Channel) ,, Channel可以用来发送或者接受消息
+            // 2. 通过连接工厂（ConnectionFactory）创建连接（Connection）
+            // 无论是生产者还是消费者，都需要和RabbitMQ Broker建立连接，这个连接就是一条TCP连接
+            Connection connection = connectionFactory.newConnection();
+
+            // 3. 通过连接（Connection）创建信道（Channel）
+            // AMQP信道（Channel）是建立在Connection之上的虚拟连接，RabbitMQ处理的每条AMQP指令都是通过信道完成的
+            // 不管是发布消息、订阅队列还是接收消息，这些动作都是通过信道完成。
             Channel channel = connection.createChannel();
 
-            //Connection可以用来创建多个Channel实例，但是Channel实例不能在线程间共享，应用程序应该为每一个线程开辟一个Channel。
-            //多线程间共享Channel实例是非线程安全的。
-
-            //检测是否已处于开启状态, 不推荐在生产环境中使用isOpen方法
-            boolean connectionIsOpen = connection.isOpen();
-            boolean channelIsOpen = channel.isOpen();
-
-            String message = "Hello World!";
-            //将消息发送到Broker
-            channel.basicPublish("EXCHANGE_NAME", "ROUTING_KEY", true, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes());
-
-            //声明交换器 : 创建一个持久化的、非自动删除的、绑定类型为direct的交换器
-            channel.exchangeDeclare("exchangeName", BuiltinExchangeType.DIRECT, true);
-            //声明队列 : 创建一个非持久化的、排他的、自动删除的队列（此队列的名称由RabbitMQ自动生成）
-            //这个队列具备如下特性：只对当前应用中同一个Connection层面可用，同一个Connection的不同Channel可公用，并且也会在应用连接断开时自动删除。
-            String queueName = channel.queueDeclare().getQueue();
-            //用路由键（routingKey）将队列和交换器绑定起来
-            channel.queueBind(queueName, "exchangeName", "routingKey");
-
-            //创建一个应用中共享队列                 durable   exclusive  autoDelete  arguments
-            channel.queueDeclare("queueName", true, false, false, null);  //持久化的，非排他的，非自动删除的
-
-            //删除交换器
-            channel.exchangeDelete("exchangeName");
-            //删除队列
-            channel.queueDelete("queueName");
-            //清空队列中的内容
-            channel.queuePurge("queueName");
-
-            //将已经被绑定的队列和交换器进行解绑
-            channel.queueUnbind("queueName", "exchangeName", "routingKey");
-
-
-            channel.exchangeDeclare("source_exchange_name", BuiltinExchangeType.DIRECT, false, true, null);
-            channel.exchangeDeclare("destination_exchange_name", BuiltinExchangeType.FANOUT, false, true, null);
-            //将交换器与交换器进行绑定
-            //绑定之后，消息从source交换器转发到destination交换器，某种程度上来说destination交换器可以看作一个队列。
-            channel.exchangeBind("destination_exchange_name", "source_exchange_name", "exRoutingKey");
-            channel.queueDeclare("destination_queue", false, false, true, null);
-            //将destination_queue队列与destination_exchange_name交换器进行绑定
-            channel.queueBind("destination_queue", "destination_exchange_name", "");
-            //生产者发送消息值交换器source中，交换器source根据路由键找到匹配的另一个交换器destination，
-            //并把消息转发到destination中，进而存储在destination绑定的队列queue中。
-            channel.basicPublish("source_exchange_name", "exRoutingKey", null, "exToExDemo".getBytes());
-
-            //关闭资源
-            channel.close();
-            connection.close();
+            // 推送消息
+            sendMsg(channel, "testExchange001", "testQueue001",
+                    "testRoutingKey", "hhhh");
+            // 接收消息
+            String msg = receiveMsg(channel, "testQueue001");
+            System.out.println("receiveMsg : " + msg);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * 发送消息
+     *
+     * @param channel 信道
+     * @param exchangeName 交换机名称
+     * @param queueName 消息队列名称
+     * @param routingKey 路由键
+     * @param msg 消息
+     */
+    public static void sendMsg(Channel channel, String exchangeName,
+                               String queueName, String routingKey, String msg){
+        /*
+         * 生产者发送消息的流程:
+         * 1. 生产者连接RabbitMQ，建立TCP连接( Connection)，开启信道（Channel）
+         * 2. 生产者声明一个Exchange（交换器），并设置相关属性，比如交换器类型、是否持久化等
+         * 3. 生产者声明一个队列井设置相关属性，比如是否排他、是否持久化、是否自动删除等
+         * 4. 生产者通过 bindingKey（绑定键）将交换器和队列绑定（ binding ）起来
+         * 5. 生产者发送消息至RabbitMQ Broker，其中包含 routingKey （路由键）、交换器等信息
+         * 6. 相应的交换器根据接收到的 routingKey 查找相匹配的队列。
+         * 7. 如果找到，则将从生产者发送过来的消息存入相应的队列中。
+         * 8. 如果没有找到，则根据生产者配置的属性选择丢弃还是回退给生产者
+         * 9. 关闭信道。
+         * 10. 关闭连接。
+         */
+        try {
+            // 4. 声明一个交换机（Exchange）
+            AMQP.Exchange.DeclareOk exchange =
+                    channel.exchangeDeclare(exchangeName, BuiltinExchangeType.DIRECT, true);
+
+            // 5. 声明一个消息队列（Queue）
+            AMQP.Queue.DeclareOk queue =
+                    channel.queueDeclare(queueName, true, false, false, null);
+
+            // 6. 用路由键（routingKey）将队列（Queue）和交换器（Exchange）绑定起来
+            channel.queueBind(queueName, exchangeName, routingKey);
+
+            // 7. 推送消息
+            channel.basicPublish(exchangeName, routingKey, null, msg.getBytes(StandardCharsets.UTF_8));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 创建连接工厂（ConnectionFactory）
+     */
+    private static ConnectionFactory getFactory(){
+        // amqp://admin:admin@10.200.5.117:5672/
+        ConnectionFactory factory = new ConnectionFactory();
+        // 用户名
+        factory.setUsername("admin");
+        // 密码
+        factory.setPassword("admin");
+        //
+        factory.setVirtualHost("");
+        // IP
+        factory.setHost("10.200.5.117");
+        // 端口
+        factory.setPort(5672);
+        return factory;
+    }
+
+    /**
+     * 创建连接工厂（ConnectionFactory）
+     */
+    private ConnectionFactory getFactoryByUri() {
+        // URI格式 : amqp://userName:password@ipAddress:portNumber/virtualHost
+        // amqp://admin:admin@10.200.5.117:5672/
+        ConnectionFactory factory = new ConnectionFactory();
+        String uri = "amqp://admin:admin@10.200.5.117:5672/";
+        try {
+            factory.setUri(uri);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return factory;
+    }
+
+    /**
+     * 声明交换器 : exchangeDeclare 有多个重载方法
+     */
+    public void exchangeDeclare(){
+        // 声明创建交换器方法 :
+        // public DeclareOk exchangeDeclare(
+        // String exchange,   交换器的名称
+        // String type,       交换器的类型（fanout、direct、topic、headers）
+        // boolean durable,   设置是否持久化（持久化可以将交换器存盘，在服务器重启的时候不会丢失相关信息。）
+        // boolean autoDelete,设置是否自动删除 （自动删除的前提是至少有一个队列或者交换器与这个交换器绑定，之后所有与这个交换器绑
+        //                    定的队列或者交换器都与此解绑。注意不能错误地把这个参数理解为：当与此交换器连接的客户端都断开时，RabbitMQ会自动删除本交换器）
+        // boolean internal,  设置是否是内置的。（内置的交换器，客户端程序无法直接发送消息到这个交换器中，只能通过交换器路由到交换器这种方式。）
+        // Map<String, Object> arguments  其他一些结构化参数
+        // ) throws IOException
+
+        // 删除交换器方法
+        // public AMQP.Exchange.DeleteOk exchangeDelete(String exchange  交换器的名称
+        // ) throws IOException
+    }
+
+    /**
+     * <p> 声明队列  : queueDeclare有多个重载方法
+     *
+     * <p> 生产者和消费者都能够使用queueDeclare来声明一个队列，但是如果消费者在同一个信道（Channel）上订阅了另一个队列，就无法再声明队列了。
+     * 必须先取消订阅，然后将信道置为 “传输” 模式，之后才能声明队列。
+     */
+    public void queueDeclare(){
+        // 声明创建队列的方法
+        // public com.rabbitmq.client.AMQP.Queue.DeclareOk queueDeclare(
+        // String queue,                   队列的名称
+        // boolean durable,                设置是否持久化（持久化的队列会存盘，在服务器重启的时候可以保证不丢失相关信息）
+        // boolean exclusive,              设置是否排他（排他队列仅对首次声明它的连接可见，并在连接断开时自动删除。排他连接是基于连接(Connection)可见的，
+        //                                 同一个连接的不同信道(Channel)是可以同时访问同一连接创建的排他队列；“首次”是指如果一个连接已经声明了一个排他队列，
+        //                                 其他连接是不允许建立同名的排他队列的，这个与普通队列不同；即使该队列是持久化的，一旦连接关闭或者客户端退出，
+        //                                 该排他队列都会被自动删除，这种队列适用于一个客户端同时发送和读取消息的应用场景。）
+        // boolean autoDelete,             设置是否自动删除（自动删除的前提是：至少有一个消费者连接到这个队列，之后所有与这个队列连接的消费者都断开时，才会自动删除。
+        //                                 不能把这个参数错误地理解为：”当连接到次队列的所有客户端都断开时，这个队列自动删除“，因为生产者客户端创建这个队列，
+        //                                 或者没有消费者客户端与这个队列连接时，都不会自动删除这个队列。）
+        // Map<String, Object> arguments   设置队列的其他一些参数，如x-message-ttl,x-expires,x-max-length,x-max-length-bytes等等。
+        // ) throws IOException
+
+        // 删除队列
+        // public com.rabbitmq.client.AMQP.Queue.DeleteOk queueDelete(String queue  队列的名称
+        // ) throws IOException
+
+        // 清空队列中的内容
+        // public PurgeOk queuePurge(String queue 队列的名称
+        // ) throws IOException
+    }
+
+    /**
+     * 队列和交换器绑定 : queueBind
+     */
+    public void queueBind(){
+        // 将队列和交换器绑定
+        // public com.rabbitmq.client.AMQP.Queue.BindOk queueBind(
+        // String queue,                  队列名称
+        // String exchange,               交换器名称
+        // String routingKey,             用来绑定队列和交换器的路由键
+        // Map<String, Object> arguments  定义绑定的一些参数
+        // ) throws IOException
+
+        // 将已经被绑定的队列和交换器进行解绑
+        // public com.rabbitmq.client.AMQP.Queue.UnbindOk queueUnbind(
+        // String queue,                   队列名称
+        // String exchange,                交换器名称
+        // String routingKey,              路由键
+        // Map<String, Object> arguments   一些参数
+        // ) throws IOException
+    }
+
+    /**
+     * 交换器和交换器绑定 : exchangeBind
+     */
+    public void exchangeBind(){
+        // 将交换器与交换器绑定
+        // public BindOk exchangeBind(
+        // String destination,            destination交换器名称
+        // String source,                 source交换器名称
+        // String routingKey,             路由键
+        // Map<String, Object> arguments  绑定的一些参数
+        // ) throws IOException
     }
 
     /**
@@ -96,7 +230,7 @@ public class RabbitMqTest {
      */
     public void basicPush(Channel channel){
         try {
-            //发送消息到Broker  :  basicPublish
+            // 发送消息到Broker  :  basicPublish
             channel.basicPublish(
                     "exchangeName",
                     "rotingKey",
@@ -108,7 +242,7 @@ public class RabbitMqTest {
                             .build(),
                     "hello".getBytes());
 
-            //也可以发送一条带headers的消息
+            // 也可以发送一条带headers的消息
             Map<String, Object> headers = new HashMap<>();
             headers.put("location", "here");
             headers.put("time", "today");
@@ -119,7 +253,7 @@ public class RabbitMqTest {
                             .build(),
                     "hh".getBytes());
 
-            //也可以发送一条带有过期时间(expiration)的消息
+            // 也可以发送一条带有过期时间(expiration)的消息
             channel.basicPublish("exchangeName",
                     "routingKey",
                     new AMQP.BasicProperties().builder()
@@ -143,33 +277,112 @@ public class RabbitMqTest {
         }
     }
 
+    /**
+     * 监听器
+     */
     public void mandatory(Channel channel){
         try {
-
-            //mandatory, 生产者如何获取到没有被正确路由到合适队列的消息呢？
-            //生产者可以通过调用channel.addReturnListener来添加ReturnListener监听器实现
+            // mandatory, 生产者如何获取到没有被正确路由到合适队列的消息呢？
+            // 生产者可以通过调用channel.addReturnListener来添加ReturnListener监听器实现
             channel.basicPublish("Exchange_Name",
                     "",
                     true,
                     MessageProperties.PERSISTENT_TEXT_PLAIN,
                     "mandatory test".getBytes());
-            //添加ReturnListener监听器
-            channel.addReturnListener(new ReturnListener() {
-                @Override
-                public void handleReturn(int replyCode,
-                                         String replyText,
-                                         String exchange,
-                                         String routingKey,
-                                         AMQP.BasicProperties properties,
-                                         byte[] body) throws IOException {
-                    String message = new String(body);
-                    System.out.println("Basic.Return返回的结果是: "+message);
-                }
+            // 添加ReturnListener监听器
+            channel.addReturnListener((replyCode, replyText, exchange, routingKey, properties, body) -> {
+                String message = new String(body);
+                System.out.println("Basic.Return返回的结果是: "+message);
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 接收消息
+     * @param channel 信道
+     * @param queueName 消息队列名称
+     * @return 消息
+     */
+    public static String receiveMsg(Channel channel, String queueName){
+        try {
+            GetResponse response = channel.basicGet(queueName, false);
+
+            byte[] body = response.getBody();
+            return new String(body, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
+
+    /**
+     * RabbitMQ的消费模式分为两种：推(Push)模式和拉(Pull)模式。
+     * 推模式采用Basic.Consume进行消费，拉模式采用Basic.get进行消费
+     */
+    @Test
+    public void consume(){
+        ConnectionFactory factory = getFactory();
+        try {
+            // 无论是生产者还是消费者，都需要和 RabbitMQ Broker 建立连接，这个连接就是一条TCP连接
+            // 创建连接
+            Connection connection = factory.newConnection();
+            // Channel是建立在Connection之上的虚拟连接，RabbitMQ 处理的每条 AMQP 指令都是通过信道完成的。
+            // 创建AMQP信道 (Channel) ,, Channel可以用来发送或者接受消息
+            Channel channel = connection.createChannel();
+
+            //------------------------------------------推模式 basicConsumer-------------------------------------------//
+
+            // 与Broker建立连接
+            DefaultConsumer consumer = new DefaultConsumer(channel);
+            // 消费消息
+            channel.basicConsume("queue Name", consumer);
+
+            // autoAck设为false，接收消息之后进行显示ack操作，对于消费者来说这个设置是非常必要的，可以防止消息不必要的丢失。
+            boolean autoAck = false;
+            channel.basicQos(64);
+            channel.basicConsume("queueName",
+                    autoAck,
+                    "myConsumerTag",
+                    new DefaultConsumer(channel){
+                        public void handleDelivery(String consumerTag,
+                                                   Envelope envelope,
+                                                   AMQP.BasicProperties properties,
+                                                   byte[] body) throws IOException {
+                            String routingKey = envelope.getRoutingKey();
+                            String contentType = properties.getContentType();
+                            long deliveryTag = envelope.getDeliveryTag();
+                            //
+                            channel.basicAck(deliveryTag, false);
+                        }
+                    });
+
+            // public String basicConsume(
+            // String queue,                   队列的名称
+            // boolean autoAck,                设置是否自动确认。建议设为false，即不自动确认
+            // String consumerTag,             消费者标签，用来区分多个消费者
+            // boolean noLocal,                设置为true则表示不能将同一个Connection中生产者发送的消息传送给这个Connection中的消费者。
+            // boolean exclusive,              设置是否排他
+            // Map<String, Object> arguments,  设置消费者的其他参数
+            // Consumer callback               设置消费者的回调函数。用来处理RabbitMQ推送过来的消息。比如DefaultConsumer
+            // ) throws IOException
+            // 和生产者一样，消费者客户端同样需要考虑线程安全的问题。最常用的做法是一个Channel对应一个消费者。
+
+
+            //------------------------------------------拉模式 basicGet------------------------------------------------//
+            //basicGet没有其他重载方法
+            GetResponse response = channel.basicGet("queue_name", false);
+            System.out.println(new String(response.getBody()));
+            channel.basicAck(response.getEnvelope().getDeliveryTag(), false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     /**
      * 备份交换器
@@ -204,11 +417,11 @@ public class RabbitMqTest {
      */
     public void ttl(Channel channel){
         try {
-            //1. 设置消息的 TTL。
-            //方法一：通过队列属性设置，队列中所有消息都有相同的过期时间。
-            //方法二：对消息本身进行单独设置，每条消息的TTL可以不同。
-            //如果两种方法一起使用，则消息的 TTL 以两者之间较小的那个数值为准。
-            //消息在队列中的生存时间一旦超过设置的 TTL 值时，就会变成 “死信”（Dead Message）。
+            // 1. 设置消息的 TTL。
+            // 方法一：通过队列属性设置，队列中所有消息都有相同的过期时间。
+            // 方法二：对消息本身进行单独设置，每条消息的TTL可以不同。
+            // 如果两种方法一起使用，则消息的 TTL 以两者之间较小的那个数值为准。
+            // 消息在队列中的生存时间一旦超过设置的 TTL 值时，就会变成 “死信”（Dead Message）。
 
             // 方法一： 通过设置队列属性设置消息 TTL
             Map<String, Object> args = new HashMap<>();
@@ -225,17 +438,18 @@ public class RabbitMqTest {
                             .build(),
                     "ttlTestMessage".getBytes());
 
-            //对于第一种方法（设置队列TTL属性的方法），一旦消息过期，就会从队列中抹去，
-            //而第二种方法（对消息本身进行单独设置），即使消息过期，也不会马上从队列中抹去，因为每条消息是否过期是在即将投递到消费者之前判定的。
-            //为什么这种方法的处理方式不同呢？
-            //因为第一种方法中，队列中已过期的消息肯定在队列头部，RabbitMQ只要定期从队列头部开始扫描是否有过期的消息即可。
-            //而第二种方法中，每条消息的过期时间不同，如果要删除所有过期消息势必要扫描整个队列。所以不如等到此消息即将被消费时再判定是否过期，如果过期再进行删除即可。
+            // 对于第一种方法（设置队列TTL属性的方法），一旦消息过期，就会从队列中抹去，
+            // 而第二种方法（对消息本身进行单独设置），即使消息过期，也不会马上从队列中抹去，因为每条消息是否过期是在即将投递到消费者之前判定的。
+            // 为什么这种方法的处理方式不同呢？
+            // 因为第一种方法中，队列中已过期的消息肯定在队列头部，RabbitMQ只要定期从队列头部开始扫描是否有过期的消息即可。
+            // 而第二种方法中，每条消息的过期时间不同，如果要删除所有过期消息势必要扫描整个队列。
+            // 所以不如等到此消息即将被消费时再判定是否过期，如果过期再进行删除即可。
 
 
-            //2. 设置队列的 TTL
+            // 2. 设置队列的 TTL
             // RabbitMQ会确保在过期时间到达后将队列删除，但是不保障删除的动作有多及时。在RabbitMQ重启后，持久化的队列的过期时间会被重新计算。
             Map<String, Object> queueArgs = new HashMap<>();
-            //设置 TTL = 30分钟
+            // 设置 TTL = 30分钟
             queueArgs.put("x-expires", 1800000);
             channel.queueDeclare("myQueue", false, false, false, queueArgs);
         } catch (Exception e) {
@@ -266,7 +480,7 @@ public class RabbitMqTest {
 
             Map<String, Object> args = new HashMap<>();
             args.put("x-dead-letter-exchange", "dlx_exchange");
-            //为队列 myQueue 添加 DLX
+            // 为队列 myQueue 添加 DLX
             channel.queueDeclare("myQueue", false, false, false, args);
         } catch (Exception e) {
             e.printStackTrace();
@@ -276,10 +490,10 @@ public class RabbitMqTest {
     /**
      * 优先级队列 : 具有高优先级的队列具有高的优先权，优先级高的消息具备优先被消费的特权。
      */
-    public void queuePriority(Channel channel){
+    public void queuePriority(Channel channel) {
         try {
             Map<String, Object> args = new HashMap<>();
-            //配置队列的最大优先级为 10
+            // 配置队列的最大优先级为 10
             args.put("x-max-priority", 10);
             channel.queueDeclare("queue.priority", true, false, false, args);
 
@@ -320,157 +534,7 @@ public class RabbitMqTest {
     public void durable(){}
 
 
-    /**
-     * 声明交换器  exchangeDeclare 有多个重载方法
-     */
-    public void exchangeDeclare(){
-
-        // 声明创建交换器方法
-        // public DeclareOk exchangeDeclare(
-        // String exchange,   交换器的名称
-        // String type,       交换器的类型（fanout、direct、topic、headers）
-        // boolean durable,   设置是否持久化（持久化可以将交换器存盘，在服务器重启的时候不会丢失相关信息。）
-        // boolean autoDelete,设置是否自动删除 （自动删除的前提是至少有一个队列或者交换器与这个交换器绑定，之后所有与这个交换器绑
-        //                    定的队列或者交换器都与此解绑。注意不能错误地把这个参数理解为：当与此交换器连接的客户端都断开时，RabbitMQ会自动删除本交换器）
-        // boolean internal,  设置是否是内置的。（内置的交换器，客户端程序无法直接发送消息到这个交换器中，只能通过交换器路由到交换器这种方式。）
-        // Map<String, Object> arguments  其他一些结构化参数
-        // ) throws IOException
-
-        // 删除交换器方法
-        // public AMQP.Exchange.DeleteOk exchangeDelete(String exchange  交换器的名称
-        // ) throws IOException
-    }
-
-    /**
-     * 声明队列  queueDeclare有多个重载方法
-     *
-     * 生产者和消费者都能够使用queueDeclare来声明一个队列，但是如果消费者在同一个信道（Channel）上订阅了另一个队列，就无法再声明队列了。
-     * 必须先取消订阅，然后将信道置为 “传输” 模式，之后才能声明队列。
-     */
-    public void queueDeclare(){
-        // 声明创建队列的方法
-        // public com.rabbitmq.client.AMQP.Queue.DeclareOk queueDeclare(
-        // String queue,                   队列的名称
-        // boolean durable,                设置是否持久化（持久化的队列会存盘，在服务器重启的时候可以保证不丢失相关信息）
-        // boolean exclusive,              设置是否排他（排他队列仅对首次声明它的连接可见，并在连接断开时自动删除。排他连接是基于连接(Connection)可见的，
-        //                                 同一个连接的不同信道(Channel)是可以同时访问同一连接创建的排他队列；“首次”是指如果一个连接已经声明了一个排他队列，
-        //                                 其他连接是不允许建立同名的排他队列的，这个与普通队列不同；即使该队列是持久化的，一旦连接关闭或者客户端退出，
-        //                                 该排他队列都会被自动删除，这种队列适用于一个客户端同时发送和读取消息的应用场景。）
-        // boolean autoDelete,             设置是否自动删除（自动删除的前提是：至少有一个消费者连接到这个队列，之后所有与这个队列连接的消费者都断开时，才会自动删除。
-        //                                 不能把这个参数错误地理解为：”当连接到次队列的所有客户端都断开时，这个队列自动删除“，因为生产者客户端创建这个队列，
-        //                                 或者没有消费者客户端与这个队列连接时，都不会自动删除这个队列。）
-        // Map<String, Object> arguments   设置队列的其他一些参数，如x-message-ttl,x-expires,x-max-length,x-max-length-bytes等等。
-        // ) throws IOException
-
-        // 删除队列
-        // public com.rabbitmq.client.AMQP.Queue.DeleteOk queueDelete(String queue  队列的名称
-        // ) throws IOException
-
-        // 清空队列中的内容
-        // public PurgeOk queuePurge(String queue 队列的名称
-        // ) throws IOException
-    }
-
-    /**
-     * 队列和交换器绑定 queueBind
-     */
-    public void queueBind(){
-        // 将队列和交换器绑定
-        // public com.rabbitmq.client.AMQP.Queue.BindOk queueBind(
-        // String queue,                  队列名称
-        // String exchange,               交换器名称
-        // String routingKey,             用来绑定队列和交换器的路由键
-        // Map<String, Object> arguments  定义绑定的一些参数
-        // ) throws IOException
-
-        // 将已经被绑定的队列和交换器进行解绑
-        // public com.rabbitmq.client.AMQP.Queue.UnbindOk queueUnbind(
-        // String queue,                   队列名称
-        // String exchange,                交换器名称
-        // String routingKey,              路由键
-        // Map<String, Object> arguments   一些参数
-        // ) throws IOException
-    }
-
-    /**
-     * 交换器和交换器绑定 exchangeBind
-     */
-    public void exchangeBind(){
-        // 将交换器与交换器绑定
-        // public BindOk exchangeBind(
-        // String destination,            destination交换器名称
-        // String source,                 source交换器名称
-        // String routingKey,             路由键
-        // Map<String, Object> arguments  绑定的一些参数
-        // ) throws IOException
-    }
-
-
-    /**
-     * RabbitMQ的消费模式分为两种：推(Push)模式和拉(Pull)模式。
-     * 推模式采用Basic.Consume进行消费，拉模式采用Basic.get进行消费
-     */
-    @Test
-    public void consume(){
-        ConnectionFactory factory = getFactory();
-        try {
-            //无论是生产者还是消费者，都需要和 RabbitMQ Broker 建立连接，这个连接就是一条TCP连接
-            //创建连接
-            Connection connection = factory.newConnection();
-            //Channel是建立在Connection之上的虚拟连接，RabbitMQ 处理的每条 AMQP 指令都是通过信道完成的。
-            //创建AMQP信道 (Channel) ,, Channel可以用来发送或者接受消息
-            Channel channel = connection.createChannel();
-
-            //------------------------------------------推模式 basicConsumer-------------------------------------------//
-
-            //与Broker建立连接
-            DefaultConsumer consumer = new DefaultConsumer(channel);
-            //消费消息
-            channel.basicConsume("queue Name", consumer);
-
-            //autoAck设为false，接收消息之后进行显示ack操作，对于消费者来说这个设置是非常必要的，可以防止消息不必要的丢失。
-            boolean autoAck = false;
-            channel.basicQos(64);
-            channel.basicConsume("queueName",
-                    autoAck,
-                    "myConsumerTag",
-                    new DefaultConsumer(channel){
-                        public void handleDelivery(String consumerTag,
-                                                   Envelope envelope,
-                                                   AMQP.BasicProperties properties,
-                                                   byte[] body) throws IOException {
-                            String routingKey = envelope.getRoutingKey();
-                            String contentType = properties.getContentType();
-                            long deliveryTag = envelope.getDeliveryTag();
-                            //
-                            channel.basicAck(deliveryTag, false);
-                        }
-                    });
-
-            //public String basicConsume(
-            // String queue,                   队列的名称
-            // boolean autoAck,                设置是否自动确认。建议设为false，即不自动确认
-            // String consumerTag,             消费者标签，用来区分多个消费者
-            // boolean noLocal,                设置为true则表示不能将同一个Connection中生产者发送的消息传送给这个Connection中的消费者。
-            // boolean exclusive,              设置是否排他
-            // Map<String, Object> arguments,  设置消费者的其他参数
-            // Consumer callback               设置消费者的回调函数。用来处理RabbitMQ推送过来的消息。比如DefaultConsumer
-            // ) throws IOException
-            // 和生产者一样，消费者客户端同样需要考虑线程安全的问题。最常用的做法是一个Channel对应一个消费者。
-
-
-            //------------------------------------------拉模式 basicGet------------------------------------------------//
-            //basicGet没有其他重载方法
-            GetResponse response = channel.basicGet("queue_name", false);
-            System.out.println(new String(response.getBody()));
-            channel.basicAck(response.getEnvelope().getDeliveryTag(), false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    /**
+    /*
      * ACK
      * <p>消息确认机制(message acknowledgement) : 保证消息从队列可靠地到达消费者
      *
@@ -484,30 +548,4 @@ public class RabbitMqTest {
      *
      */
 
-
-
-    private ConnectionFactory getFactory(){
-        // amqp://admin:admin@10.200.5.117:5672/
-        ConnectionFactory factory = new ConnectionFactory();
-        //用户名
-        factory.setUsername("admin");
-        //密码
-        factory.setPassword("admin");
-        //
-        factory.setVirtualHost("");
-        //IP
-        factory.setHost("10.200.5.117");
-        //端口
-        factory.setPort(5672);
-        return factory;
-    }
-
-    private ConnectionFactory getFactoryByUri() throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
-        // URI格式 : amqp://userName:password@ipAddress:portNumber/virtualHost
-        // amqp://admin:admin@10.200.5.117:5672/
-        ConnectionFactory factory = new ConnectionFactory();
-        String uri = "amqp://admin:admin@10.200.5.117:5672/";
-        factory.setUri(uri);
-        return factory;
-    }
 }

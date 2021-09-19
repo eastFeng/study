@@ -44,8 +44,11 @@ public class RedisUtil {
         long start = System.currentTimeMillis();
 
         try {
+            // setIfAbsent : 将key的值设为value，当且仅当key不存在。设置成功返回true，否则返回false。
             // 自旋的方式加锁
-            while (!stringRedisTemplate.opsForValue().setIfAbsent(key, value, lockTime, TimeUnit.SECONDS)) {
+            while (Boolean.FALSE.equals(stringRedisTemplate.opsForValue().setIfAbsent(key, value, lockTime, TimeUnit.SECONDS))) {
+                // 进入while循环，说明setIfAbsent方法返回false，没有获取到锁
+
                 // 睡眠2毫秒, 然后重新尝试获取锁
                 Thread.sleep(2);
                 long time = System.currentTimeMillis() - start;
@@ -404,7 +407,7 @@ public class RedisUtil {
             return null;
         }
 
-        return stringRedisTemplate.opsForHash().delete(key, field);
+        return stringRedisTemplate.opsForHash().delete(key, (Object) field);
     }
 
     /**

@@ -42,21 +42,21 @@ public class CountDownLatchDemo {
      * 这里我们使用CountDownLatch 来完成此功能。
      */
     public static void statistics(){
-        //记录开始时间
+        // 记录开始时间
         long startTime = System.currentTimeMillis();
 
         Thread countUserThread = new Thread(() -> {
             try {
                 System.out.println("正在统计新增用户数量");
-                //该任务执行需要三秒
+                // 该任务执行需要三秒
                 TimeUnit.SECONDS.sleep(3);
-                //保存统计结果值
+                // 保存统计结果值
                 STATISTICS_MAP.put("userNumber", "1000");
                 System.out.println("统计新增用户数量完毕");
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                //已经完成一个任务，调用一次countDown方法
+                // 已经完成一个任务，调用一次countDown方法
                 COUNT_DOWN_LATCH.countDown();
             }
         });
@@ -64,15 +64,15 @@ public class CountDownLatchDemo {
         Thread countOrderThread = new Thread(() -> {
             try {
                 System.out.println("正在统计订单数量");
-                //该任务执行需要三秒
+                // 该任务执行需要三秒
                 TimeUnit.SECONDS.sleep(3);
-                //保存统计结果值
+                // 保存统计结果值
                 STATISTICS_MAP.put("countOrders", "3000");
                 System.out.println("统计订单数量完毕");
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                //已经完成一个任务，调用一次countDown方法
+                // 已经完成一个任务，调用一次countDown方法
                 COUNT_DOWN_LATCH.countDown();
             }
         });
@@ -80,15 +80,15 @@ public class CountDownLatchDemo {
         Thread countGoodsThread = new Thread(() -> {
             try {
                 System.out.println("正在统计商品销量");
-                //该任务执行需要三秒
+                // 该任务执行需要三秒
                 TimeUnit.SECONDS.sleep(3);
-                //保存统计结果值
+                // 保存统计结果值
                 STATISTICS_MAP.put("countGoods", "5600");
                 System.out.println("统计商品销量完毕");
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                //已经完成一个任务，调用一次countDown方法
+                // 已经完成一个任务，调用一次countDown方法
                 COUNT_DOWN_LATCH.countDown();
             }
         });
@@ -96,15 +96,15 @@ public class CountDownLatchDemo {
         Thread countMoneyThread = new Thread(() -> {
             try {
                 System.out.println("正在统计总销售额");
-                //该任务执行需要三秒
+                // 该任务执行需要三秒
                 TimeUnit.SECONDS.sleep(3);
-                //保存统计结果值
+                // 保存统计结果值
                 STATISTICS_MAP.put("countMoney", "123456789");
                 System.out.println("统计总销售额完毕");
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                //已经完成一个任务，调用一次countDown方法
+                // 已经完成一个任务，调用一次countDown方法
                 COUNT_DOWN_LATCH.countDown();
             }
         });
@@ -115,7 +115,7 @@ public class CountDownLatchDemo {
         countMoneyThread.start();
 
         try {
-            //阻塞当前线程, 直到计数器的值为0, 等待所有任务完成
+            // 阻塞当前线程, 直到计数器的值为0, 等待所有任务完成
             COUNT_DOWN_LATCH.await();
             long endTime = System.currentTimeMillis();
             System.out.println("------------统计指标全部完成--------------");
@@ -137,7 +137,7 @@ public class CountDownLatchDemo {
         }
 
         try {
-            //阻塞当前线程, 直到计数器的值为0 , 等待所有任务完成
+            // 阻塞当前线程, 直到计数器的值为0 , 等待所有任务完成
             latch.await();
             long endTime = System.currentTimeMillis();
             System.out.println("time : "+ (endTime-startTime)/1000 + "秒");
@@ -150,15 +150,15 @@ public class CountDownLatchDemo {
     /**
      * 用两个CountDownLatch
      *
-     * startC: new CountDownLatch(1);
-     * 多个个新开启的线程都调用了startC.await() 进行阻塞等待，它们阻塞在栅栏上，
+     * <p> startC: new CountDownLatch(1);
+     * <p> 多个个新开启的线程都调用了startC.await() 进行阻塞等待，它们阻塞在栅栏上，
      * 只有当条件满足的时候（startC.countDown()），它们才能同时通过这个栅栏，目的是让所有的线程站在一个起跑线上。
      */
     public static void twoCountDownLatch(){
         long startTime = System.currentTimeMillis();
-        //用来控制各个任务同时开始的计数器
+        // 用来控制各个任务同时开始的计数器
         CountDownLatch startC = new CountDownLatch(1);
-        //做任务的计数器
+        // 做任务的计数器
         CountDownLatch doneC = new CountDownLatch(6);
 
         for (int i=0; i<6; i++){
@@ -166,14 +166,14 @@ public class CountDownLatchDemo {
         }
 
         try {
-            //睡眠一秒，确保上面每个线程都启动起来
+            // 睡眠一秒，确保上面每个线程都启动起来
             TimeUnit.SECONDS.sleep(1);
-            //因为startC的计数器的值设置的是1:  所以调用一次 countDown方法 ,所有的await方法都可以通过了
+            // 因为startC的计数器的值设置的是1:  所以调用一次 countDown方法 ,所有的await方法都可以通过了
             startC.countDown();
-            //阻塞当前线程, 直到计数器的值为0 , 等待所有任务完成
+            // 阻塞当前线程, 直到计数器的值为0 , 等待所有任务完成
             doneC.await();
             long endTime = System.currentTimeMillis();
-            //花费的时间应该要减去上面主线程休眠的一秒的
+            // 花费的时间应该要减去上面主线程休眠的一秒的
             System.out.println("time : "+ (endTime-startTime)/1000 + "秒");
             System.out.println("await finish=============================================");
         } catch (InterruptedException e) {
@@ -195,19 +195,19 @@ public class CountDownLatchDemo {
         @Override
         public void run() {
             try {
-                //做任务
+                // 做任务
                 doWork(i);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                //这个线程的任务完成了，调用countDown方法
+                // 这个线程的任务完成了，调用countDown方法
                 doneSignal.countDown();
             }
         }
 
         void doWork(int i) throws InterruptedException {
             System.out.println("第-- "+i+" --个任务 start");
-            //做任务需要的时间
+            // 做任务需要的时间
             int i1 = RandomUtil.randomInt(1, 5);
             TimeUnit.SECONDS.sleep(i1);
             System.out.println("第-- "+i+" --个任务 end 执行时间"+i1+"秒");
@@ -233,7 +233,7 @@ public class CountDownLatchDemo {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                //这个线程的任务完成了，调用countDown方法
+                // 这个线程的任务完成了，调用countDown方法
                 doneC.countDown();
             }
         }

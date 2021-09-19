@@ -177,7 +177,7 @@
         <dependency>
             <groupId>me.zhyd.oauth</groupId>
             <artifactId>JustAuth</artifactId>
-            <version>1.15.7</version>
+            <version>1.16.3</version>
         </dependency>
 
         <!--sentinel提供的一个微服务开发的起步依赖-->
@@ -220,10 +220,17 @@
         </dependency>
 
         <!--druid数据库连接池: https://mvnrepository.com/artifact/com.alibaba/druid -->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba</groupId>-->
+<!--            <artifactId>druid</artifactId>-->
+<!--            <version>1.2.6</version>-->
+<!--        </dependency>-->
+        <!--Druid是Java语言中最好的数据库连接池。Druid能够提供强大的监控和扩展功能。-->
+        <!-- https://mvnrepository.com/artifact/com.alibaba/druid-spring-boot-starter -->
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.1.22</version>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.2.6</version>
         </dependency>
         <!--c3p0数据库连接池: https://mvnrepository.com/artifact/com.mchange/c3p0 -->
         <dependency>

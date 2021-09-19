@@ -1,15 +1,12 @@
 package com.dongfeng.study.service;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.dongfeng.study.bean.base.Constants;
 import com.dongfeng.study.bean.base.Response;
 import com.dongfeng.study.bean.entity.UserInfo;
 import com.dongfeng.study.bean.enums.ResponseCodeEnum;
 import com.dongfeng.study.bean.mapper.UserInfoMapper;
 import com.dongfeng.study.bean.mapper.UserInfoMapper2;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.MDC;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -74,7 +71,7 @@ public class UserInfoService {
     }
 
     public Response<List<UserInfo>> getByIds(List<Integer> ids){
-        log.info("getByIds traceId:{},ids:{}", MDC.get(Constants.TRACE_ID), ids);
+        log.info("getByIds ids:{}", ids);
         if (CollectionUtil.isEmpty(ids)){
             return Response.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
         }

@@ -61,7 +61,7 @@ public class StudyApplication {
      */
     public static void main(String[] args) {
         try {
-            //启动Tomcat  生命周期
+            // 启动Tomcat  生命周期
             SpringApplication.run(StudyApplication.class, args);
         } catch (Exception e) {
             // 查看项目启动报错信息
