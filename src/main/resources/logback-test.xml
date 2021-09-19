@@ -32,7 +32,7 @@
     <!-- 日志输出级别 -->
     <!--<logger name="com.hl.magic" level="INFO"/>-->
     <root level="INFO">
-        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
     </root>
 </configuration>

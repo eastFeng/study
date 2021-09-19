@@ -417,12 +417,12 @@ public class AQS extends AbstractOwnableSynchronizer implements Serializable {
                 }
             }
 
-            //如果到了这里的时候，前面唤醒的线程已经占领了head，那么继续循环
-            //否则，就是head没有变，那么退出循环
-            //退出循环是不是意味着阻塞队列中的其他节点就不唤醒了？
+            // 如果到了这里的时候，前面唤醒的线程已经占领了head，那么继续循环
+            // 否则，就是head没有变，那么退出循环
+            // 退出循环是不是意味着阻塞队列中的其他节点就不唤醒了？
             // 当然不是，唤醒的线程之后还是会调用这个方法，继续唤醒其他节点，以此类推，直到阻塞队列的所有节点都被唤醒
             if (h == head){
-                //head节点没有被其他线程更改
+                // head节点没有被其他线程更改
                 break;
             }
         }
@@ -432,12 +432,12 @@ public class AQS extends AbstractOwnableSynchronizer implements Serializable {
      * 设置队列头节点，并检查后续节点是否在共享模式下等待，如果是这样，如果propagate > 0或者 PROPAGATE status已经设置。
      */
     private void setHeadAndPropagate(Node node, int propagate){
-        //记录设置之前的头节点为了下面检查
+        // 记录设置之前的头节点为了下面检查
         Node h = head;
-        //设置头节点
+        // 设置头节点
         setHead(node);
 
-        /**
+        /*
          * 如果1. 传播由调用者指示或者由之前的操作记录(这里对waitStatus做了检查，因为PROPAGATE可能转化为SIGNAL)
          * 并且2. 下一个节点在共享模式下等待，或者我们不知道，因为它是null
          * 则尝试通知下一个排队节点
@@ -449,8 +449,8 @@ public class AQS extends AbstractOwnableSynchronizer implements Serializable {
                 || h.waitStatus<0){
             Node next = node.next;  //此时node节点已经是head节点
             if (next==null || next.isShared()){
-                //下一个节点为null或者在共享模式下等待
-                //唤醒（释放）head（也是就node节点）的后继节点
+                // 下一个节点为null或者在共享模式下等待
+                // 唤醒（释放）head（也是就node节点）的后继节点
                 doReleaseShared();
             }
         }
@@ -567,7 +567,7 @@ public class AQS extends AbstractOwnableSynchronizer implements Serializable {
         boolean failed = true;
 
         try {
-            //线程中断标志，记录是否发生了中断
+            // 线程中断标志，记录是否发生了中断
             boolean interrupted = false;
             for (;;){
                 final Node p = node.predecessor();
@@ -598,7 +598,7 @@ public class AQS extends AbstractOwnableSynchronizer implements Serializable {
                 }
             }
         } finally {
-            //只有tryAcquire方法抛异常的时候，failed才会为true
+            // 只有tryAcquire方法抛异常的时候，failed才会为true
             if (failed){
                 cancelAcquire(node);
             }
@@ -657,7 +657,7 @@ public class AQS extends AbstractOwnableSynchronizer implements Serializable {
                     int r = tryAcquireShared(arg);
                     if (r >= 0){
                         setHeadAndPropagate(node, r);
-                        //帮助GC
+                        // 帮助GC
                         p.next = null;
                         if (interrupted){
                             selfInterrupt();
@@ -739,7 +739,7 @@ public class AQS extends AbstractOwnableSynchronizer implements Serializable {
                     int r = tryAcquireShared(arg);
                     if (r >= 0){
                         setHeadAndPropagate(node, r);
-                        //帮助GC
+                        // 帮助GC
                         p.next = null;
                         failed = false;
                         return true;
@@ -747,7 +747,7 @@ public class AQS extends AbstractOwnableSynchronizer implements Serializable {
                 }
                 nanosTimeout = deadline - System.nanoTime();
                 if (nanosTimeout <= 0){
-                    //已超时
+                    // 已超时
                     return false;
                 }
                 if (shouldParkAfterFailedAcquire(p, node) && nanosTimeout>spinForTimeoutThreshold){
@@ -911,7 +911,7 @@ public class AQS extends AbstractOwnableSynchronizer implements Serializable {
         if (tryRelease(arg)){
             Node h = head;
             if (h!=null && h.waitStatus!=0){
-                //唤醒head节点之后的一个阻塞节点
+                // 唤醒head节点之后的一个阻塞节点
                 unparkSuccessor(h);
             }
             return true;
@@ -929,7 +929,7 @@ public class AQS extends AbstractOwnableSynchronizer implements Serializable {
      */
     public final void acquireShared(int arg){
         if (tryAcquireShared(arg)<0){
-            //小于0，获取失败，则需要重复调用tryAcquireShared直至成功
+            // 小于0，获取失败，则需要重复调用tryAcquireShared直至成功
             doAcquireShared(arg);
         }
     }
@@ -1029,7 +1029,7 @@ public class AQS extends AbstractOwnableSynchronizer implements Serializable {
      * 离头节点head最近的一个节点的thread
      */
     private Thread fullGetFirstQueuedThread(){
-        /**
+        /*
          * 【第一个节点通常是head.next（而不是头节点head）】。
          * 尝试获取它的thread字段，确保读取的一致性：
          * 如果thread字段为null或者s.prev不再是head，那么其他线程在一些读取之间并发执行了setHead。
@@ -1045,22 +1045,22 @@ public class AQS extends AbstractOwnableSynchronizer implements Serializable {
             return st;
         }
 
-        /**
+        /*
          * head.next节点可能尚未设置，或者可能在setHead之后未设置。
          * 所以我们必须检查tail是否是第一个节点。如果不是，我们继续，安全地从尾部到头部找到第一个，保证终止
          */
         Node t = tail;
         Thread firstThread = null;
-        //第一次循环，tail是否是head
+        // 第一次循环，tail是否是head
         while (t!=null && t!=head){
             Thread tt = t.thread;
             if (tt != null){
                 firstThread = tt;
             }
-            //从尾节点往前遍历
+            // 从尾节点往前遍历
             t = t.prev;
         }
-        //离头节点head最近的一个节点的thread
+        // 离头节点head最近的一个节点的thread
         return firstThread;
     }
 
@@ -1077,7 +1077,7 @@ public class AQS extends AbstractOwnableSynchronizer implements Serializable {
             throw new NullPointerException();
         }
 
-        //从尾节点开始遍历队列
+        // 从尾节点开始遍历队列
         for (Node p=tail; p!=null; p=p.prev){
             if (p.thread == thread){
                 return true;
@@ -1093,13 +1093,13 @@ public class AQS extends AbstractOwnableSynchronizer implements Serializable {
     final boolean apparentlyFirstQueuedIsExclusive(){
         Node h,s;
 
-        //head节点不为null
+        // head节点不为null
         return (h=head)!=null
-                //head节点的下一个节点也不为null
+                // head节点的下一个节点也不为null
                 && (s=h.next)!=null
-                //下一个节点是独占模式
+                // 下一个节点是独占模式
                 && !s.isShared()
-                //下一个节点的线程不为null
+                // 下一个节点的线程不为null
                 && s.thread!=null;
     }
 

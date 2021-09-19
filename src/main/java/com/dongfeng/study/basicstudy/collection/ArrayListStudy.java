@@ -204,6 +204,50 @@ public class ArrayListStudy<E> {
     }
 
 
+    // 一些常量
+    private static final int DEFAULT_CAPACITY = 10;
+    private static final Object[] EMPTY_ELEMENTDATA = {};
+    private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
+    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+
+    // 保存元素的数组
+    transient Object[] elementData;
+    // 元素实际个数
+    private int size;
+    // 内部的修改次数，方便在迭代中检测结构性修改变化
+    protected transient int modCount = 0;
+
+    public ArrayListStudy(){
+        this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
+    }
+
+    public ArrayListStudy(int initialCapacity) {
+        if (initialCapacity > 0) {
+            this.elementData = new Object[initialCapacity];
+        } else if (initialCapacity == 0) {
+            this.elementData = EMPTY_ELEMENTDATA;
+        } else {
+            throw new IllegalArgumentException("Illegal Capacity: "+
+                    initialCapacity);
+        }
+    }
+
+    public ArrayListStudy(Collection<? extends E> c) {
+        if (c == null){
+            throw new NullPointerException();
+        }
+        elementData = c.toArray();
+        if ((size = elementData.length) != 0) {
+            // c.toArray might (incorrectly) not return Object[] (see 6260652)
+            if (elementData.getClass() != Object[].class) {
+                elementData = Arrays.copyOf(elementData, size, Object[].class);
+            }
+        } else {
+            // replace with empty array.
+            this.elementData = EMPTY_ELEMENTDATA;
+        }
+    }
+
     /**
      * ArrayList迭代器实现原理：Iterator迭代器的实现原理。
      *
@@ -295,51 +339,6 @@ public class ArrayListStudy<E> {
             if (modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
-        }
-    }
-
-
-    // 一些常量
-    private static final int DEFAULT_CAPACITY = 10;
-    private static final Object[] EMPTY_ELEMENTDATA = {};
-    private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
-    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
-
-    // 保存元素的数组
-    transient Object[] elementData;
-    // 元素实际个数
-    private int size;
-    // 内部的修改次数，方便在迭代中检测结构性修改变化
-    protected transient int modCount = 0;
-
-    public ArrayListStudy(){
-        this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
-    }
-
-    public ArrayListStudy(int initialCapacity) {
-        if (initialCapacity > 0) {
-            this.elementData = new Object[initialCapacity];
-        } else if (initialCapacity == 0) {
-            this.elementData = EMPTY_ELEMENTDATA;
-        } else {
-            throw new IllegalArgumentException("Illegal Capacity: "+
-                    initialCapacity);
-        }
-    }
-
-    public ArrayListStudy(Collection<? extends E> c) {
-        if (c == null){
-            throw new NullPointerException();
-        }
-        elementData = c.toArray();
-        if ((size = elementData.length) != 0) {
-            // c.toArray might (incorrectly) not return Object[] (see 6260652)
-            if (elementData.getClass() != Object[].class) {
-                elementData = Arrays.copyOf(elementData, size, Object[].class);
-            }
-        } else {
-            // replace with empty array.
-            this.elementData = EMPTY_ELEMENTDATA;
         }
     }
 

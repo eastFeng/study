@@ -110,7 +110,7 @@ public class FrameworkStudy {
          * boolean contains(Object o); boolean containsAll(Collection<?> c); // 查
          * Iterator<E> iterator(); // 遍历
          *
-         *
+         * 【List】
          * List是Collection的子接口，表示一个有序集合，允许元素重复，增加了根据元素索引进行操作的方法。
          * 它有两个主要的实现类：ArrayList和LinkedList。
          * ArrayList基于数组实现， LinkedList基于链表实现；
@@ -119,25 +119,27 @@ public class FrameworkStudy {
          * List可以采用两种方式访问元素：使用迭代器访问，或者使用一个整数索引来访问。
          * 后一种方法称为随机访问（random access），因为这样可以按任意顺序访问元素。与之不同，使用迭代器访问时，必须顺序地访问元素。
          *
-         * Set也是Collection的子接口，它没有增加新的方法，但保证不含重复元素。
+         * 【Set】
+         * Set也是Collection的子接口，表示一个无序集合，不允许重复元素（保证不含重复元素），它没有增加新的方法。
          * 它有两个主要的实现类：HashSet和TreeSet。
          * HashSet基于哈希表实现，要求键重写hashCode方法，效率更高，但元素间没有顺序；
          * TreeSet基于排序二叉树实现，元素按比较有序，元素需要实现Comparable接口，或者创建TreeSet时提供一个Comparator对象。
          * HashSet还有一个子类LinkedHashSet可以按插入有序。
          * Set还有一个针对枚举类型的实现类EnumSet，它基于位向量实现，效率很高。
          *
+         * 【Queue】
          * Queue是Collection的子接口，表示先进先出的队列，在尾部添加，从头部查看或删除。
          * Deque是Queue的子接口，表示更为通用的双端队列，有明确的在头或尾进行查看、添加和删除的方法。
          * （注：双端列表Deque也只能在队列两端进行操作，不能像List一样根据索引在列表任意位置操作）
          * 普通队列有两个主要的实现类：LinkedList和ArrayDeque。
          * LinkedList基于链表实现，ArrayDeque基于循环数组实现。
          * 一般而言，如果只需要Deque接口，ArrayDeque的效率更高一些。
-         *
          * Queue还有一个特殊的实现类PriorityQueue，表示优先级队列，内部是用堆实现的。
          * 堆除了用于实现优先级队列，还可以高效方便地解决很多其他问题，比如求前K个最大的元素、求中值等。
          *
          * 【Map】
-         * Map接口表示键值对集合，经常根据键进行操作，它有两个主要的实现类：HashMap和TreeMap。
+         * Map接口表示键值对集合，经常根据键进行操作。
+         * 它有两个主要的实现类：HashMap和TreeMap。
          * HashMap基于哈希表实现，要求键重写hashCode方法，操作效率很高，但元素没有顺序。
          * TreeMap基于排序二叉树实现，要求键实现Comparable接口，或提供一个Comparator对象，操作效率稍低，但可以按键有序。
          *

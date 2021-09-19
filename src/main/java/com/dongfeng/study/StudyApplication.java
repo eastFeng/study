@@ -1,5 +1,6 @@
 package com.dongfeng.study;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -41,7 +42,9 @@ import org.springframework.core.type.AnnotationMetadata;
  * @author eastFeng
  * @date 2020/8/15 - 12:49
  */
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+//@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication
+@MapperScan(basePackages = "com.dongfeng.study.bean.mapper") // 添加扫描mapper接口的注解
 public class StudyApplication {
 
     /**
@@ -57,8 +60,13 @@ public class StudyApplication {
      * @param args 启动参数
      */
     public static void main(String[] args) {
-        //启动Tomcat  生命周期
-        SpringApplication.run(StudyApplication.class, args);
+        try {
+            //启动Tomcat  生命周期
+            SpringApplication.run(StudyApplication.class, args);
+        } catch (Exception e) {
+            // 查看项目启动报错信息
+            e.printStackTrace();
+        }
     }
 
 }
