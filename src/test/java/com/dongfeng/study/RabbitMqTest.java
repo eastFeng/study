@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author eastFeng
@@ -23,39 +24,41 @@ public class RabbitMqTest {
          * Queue（消息队列）: 是RabbitMQ的内部对象，用于存储消息，最终将消息传输到消费者。一个消息可投入一个或多个队列。
          * RoutingKey（路由键）: 生产者将消息发给交换机的时候，一般会指定一个RoutingKey，用来指定这个消息的路由规则。
          * Binding（绑定）: RabbitMQ中通过绑定将交换机与队列关联起来，
-         * 在绑定的时候一般会指定一个绑定键（BindingKey），这样RabbitMQ就知道如何正确地将消息路由到队列。
+         * 在绑定的时候一般会指定一个RoutingKey（路由键），这样RabbitMQ就知道如何正确地将消息路由到队列。
          */
 
         /*
-         * Exchange(交换机)类型：
+         * Exchange（交换机）类型：
          * 1. fanout: 会把所有发送到该交换机的消息路由到所有与该交换机绑定的队列中。
-         * 2. direct: 会把消息路由到那些BindingKey和RoutingKey完全匹配的队列中。
-         *            消息中的路由键（RoutingKey）如果和Binding中的BindingKey一致，交换机就将消息发到对应的队列中。
+         *            很像广播，每台子网内的机器都会获得一份消息，Fanout交换机转发消息是最快的。
+         * 2. direct: 会把消息路由到那些消息带的路由键和绑定的路由键完全匹配的队列中，这是一个完整的匹配。
+         *            消息中的路由键（RoutingKey）如果和Exchange中的路由键（RoutingKey）一致，交换机就将消息发到对应的队列中。
          *            它是完全匹配、单播的模式。
-         * 3. topic: 是将消息路由到 BindingKey RoutingKey 相匹配的队列中。
+         *            Direct Exchange和Queue通过绑定键绑定；此后 Direct Exchange接受到的消息，
+         *            都会根据消息中的路由键和Exchange中路由键进行匹配，从而确定将消息转发到对应的队列Queue中。
+         *            特点：设置路由键，Point to point 模式发送消息，发送速度较快
+         *
+         * 3. topic: 是将消息路由到 消息中的路由键（RoutingKey）与绑定的路由键（RoutingKey） 相匹配的队列中。
+         *           与Direct Exchange基本相同，唯一区别在于路由键。Topic exchange 的路由键可以去进行模糊匹配。
+         *           匹配规则：
+         *           （1） * 表示单个模糊匹配。
+         *                例如，路由键是*.apple.big 则表示第一个单词可以是任意的，只需后边单词完全匹配即可。
+         *           （2） # 表示单个或多个模糊匹配。
+         *                例如，路由键是 #.little ，那么发送消息的路由键可以是 green.apple.little,也就是说前面的单词是任意的。
+         *           特点：路由键匹配，发送消息速度较快。
+         *
          * 4. headers: 不依赖于路由键的匹配规则来路由消息，而是根据发送的消息内容中的 headers 属性进行匹配，
          *             这种类型的交换机性能很差，也不实用，基本不用。
          */
 
         try {
-            // 1. 获取连接工厂（ConnectionFactory）
-            ConnectionFactory connectionFactory = getFactory();
-
-            // 2. 通过连接工厂（ConnectionFactory）创建连接（Connection）
-            // 无论是生产者还是消费者，都需要和RabbitMQ Broker建立连接，这个连接就是一条TCP连接
-            Connection connection = connectionFactory.newConnection();
-
-            // 3. 通过连接（Connection）创建信道（Channel）
-            // AMQP信道（Channel）是建立在Connection之上的虚拟连接，RabbitMQ处理的每条AMQP指令都是通过信道完成的
-            // 不管是发布消息、订阅队列还是接收消息，这些动作都是通过信道完成。
-            Channel channel = connection.createChannel();
-
             // 推送消息
-            sendMsg(channel, "testExchange001", "testQueue001",
+            sendMsg("testExchange001", "testQueue001",
                     "testRoutingKey", "hhhh");
-            // 接收消息
-            String msg = receiveMsg(channel, "testQueue001");
-            System.out.println("receiveMsg : " + msg);
+
+//            // 接收消息
+//            String msg = receiveMsg("testQueue001");
+//            System.out.println("receiveMsg : " + msg);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,14 +68,13 @@ public class RabbitMqTest {
     /**
      * 发送消息
      *
-     * @param channel 信道
      * @param exchangeName 交换机名称
      * @param queueName 消息队列名称
      * @param routingKey 路由键
      * @param msg 消息
      */
-    public static void sendMsg(Channel channel, String exchangeName,
-                               String queueName, String routingKey, String msg){
+    public static void sendMsg(String exchangeName, String queueName,
+                               String routingKey, String msg) {
         /*
          * 生产者发送消息的流程:
          * 1. 生产者连接RabbitMQ，建立TCP连接( Connection)，开启信道（Channel）
@@ -86,43 +88,78 @@ public class RabbitMqTest {
          * 9. 关闭信道。
          * 10. 关闭连接。
          */
+
+        Connection connection = null;
+        Channel channel = null;
         try {
-            // 4. 声明一个交换机（Exchange）
+            // 1. 获取连接
+            connection = getConnection();
+
+            // 2. 通过连接（Connection）创建信道（Channel）
+            // AMQP信道（Channel）是建立在Connection之上的虚拟连接，RabbitMQ处理的每条AMQP指令都是通过信道完成的
+            // 不管是发布消息、订阅队列还是接收消息，这些动作都是通过信道完成。
+            // Connection可以用来创建多个 Channel 实例，但是 Channel 实例不能在线程问共享，应用程序应该为每一个线程开辟一个 Channel 。
+            channel = connection.createChannel();
+
+            // 3. 声明一个交换机（Exchange）
             AMQP.Exchange.DeclareOk exchange =
                     channel.exchangeDeclare(exchangeName, BuiltinExchangeType.DIRECT, true);
 
-            // 5. 声明一个消息队列（Queue）
+            // 4. 声明一个消息队列（Queue）
             AMQP.Queue.DeclareOk queue =
                     channel.queueDeclare(queueName, true, false, false, null);
 
-            // 6. 用路由键（routingKey）将队列（Queue）和交换器（Exchange）绑定起来
+            // 5. 用路由键（routingKey）将队列（Queue）和交换器（Exchange）绑定起来
             channel.queueBind(queueName, exchangeName, routingKey);
 
-            // 7. 推送消息
+            // 6. 推送消息，指定路由键
             channel.basicPublish(exchangeName, routingKey, null, msg.getBytes(StandardCharsets.UTF_8));
+            System.out.println("推送消息成功");
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            close(channel, connection);
         }
     }
 
 
     /**
-     * 创建连接工厂（ConnectionFactory）
+     * 创建连接（Connection）
      */
-    private static ConnectionFactory getFactory(){
-        // amqp://admin:admin@10.200.5.117:5672/
+    private static Connection getConnection() throws IOException, TimeoutException {
+        // 1. 创建连接工厂（ConnectionFactory）
         ConnectionFactory factory = new ConnectionFactory();
         // 用户名
         factory.setUsername("admin");
         // 密码
         factory.setPassword("admin");
         //
-        factory.setVirtualHost("");
+        factory.setVirtualHost("test");
         // IP
-        factory.setHost("10.200.5.117");
+        factory.setHost("localhost");
         // 端口
         factory.setPort(5672);
-        return factory;
+
+        // 2. 通过连接工厂（ConnectionFactory）创建连接（Connection）
+        // 无论是生产者还是消费者，都需要和RabbitMQ Broker建立连接，这个连接就是一条TCP连接
+        return factory.newConnection();
+    }
+
+    private static void close(Channel channel, Connection connection){
+        if (channel != null){
+            try {
+                channel.close();
+            } catch (IOException | TimeoutException e) {
+                e.printStackTrace();
+            }
+        }
+        if (connection != null){
+            try {
+                connection.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -172,10 +209,13 @@ public class RabbitMqTest {
         // public com.rabbitmq.client.AMQP.Queue.DeclareOk queueDeclare(
         // String queue,                   队列的名称
         // boolean durable,                设置是否持久化（持久化的队列会存盘，在服务器重启的时候可以保证不丢失相关信息）
-        // boolean exclusive,              设置是否排他（排他队列仅对首次声明它的连接可见，并在连接断开时自动删除。排他连接是基于连接(Connection)可见的，
-        //                                 同一个连接的不同信道(Channel)是可以同时访问同一连接创建的排他队列；“首次”是指如果一个连接已经声明了一个排他队列，
-        //                                 其他连接是不允许建立同名的排他队列的，这个与普通队列不同；即使该队列是持久化的，一旦连接关闭或者客户端退出，
-        //                                 该排他队列都会被自动删除，这种队列适用于一个客户端同时发送和读取消息的应用场景。）
+
+        // boolean exclusive,              设置是否排他（排他连接是基于连接(Connection)可见的，
+        //                                 同一个连接的不同信道(Channel)是可以同时访问同一连接创建的排他队列；
+        //                                 “首次”：是指如果一个连接已经声明了一个排他队列，其他连接是不允许建立同名的排他队列的。
+        //                                 即使该队列是持久化的，一旦连接关闭或者客户端退出，该排他队列都会被自动删除，
+        //                                 这种队列适用于一个客户端同时发送和读取消息的应用场景。）
+
         // boolean autoDelete,             设置是否自动删除（自动删除的前提是：至少有一个消费者连接到这个队列，之后所有与这个队列连接的消费者都断开时，才会自动删除。
         //                                 不能把这个参数错误地理解为：”当连接到次队列的所有客户端都断开时，这个队列自动删除“，因为生产者客户端创建这个队列，
         //                                 或者没有消费者客户端与这个队列连接时，都不会自动删除这个队列。）
@@ -301,18 +341,32 @@ public class RabbitMqTest {
 
     /**
      * 接收消息
-     * @param channel 信道
+     *
      * @param queueName 消息队列名称
      * @return 消息
      */
-    public static String receiveMsg(Channel channel, String queueName){
+    public static String receiveMsg(String queueName){
+        Connection connection = null;
+        Channel channel = null;
         try {
-            GetResponse response = channel.basicGet(queueName, false);
+            // 1. 获取连接
+            connection = getConnection();
 
+            // 2. 通过连接（Connection）创建信道（Channel）
+            // AMQP信道（Channel）是建立在Connection之上的虚拟连接，RabbitMQ处理的每条AMQP指令都是通过信道完成的
+            // 不管是发布消息、订阅队列还是接收消息，这些动作都是通过信道完成。
+            // Connection可以用来创建多个 Channel 实例，但是 Channel 实例不能在线程问共享，应用程序应该为每一个线程开辟一个 Channel 。
+            channel = connection.createChannel();
+
+            // 3. 拉模式进行消费消息 basicGet
+            GetResponse response = channel.basicGet(queueName, false);
             byte[] body = response.getBody();
+
             return new String(body, StandardCharsets.UTF_8);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            close(channel, connection);
         }
 
         return "";
@@ -325,11 +379,9 @@ public class RabbitMqTest {
      */
     @Test
     public void consume(){
-        ConnectionFactory factory = getFactory();
+
         try {
-            // 无论是生产者还是消费者，都需要和 RabbitMQ Broker 建立连接，这个连接就是一条TCP连接
-            // 创建连接
-            Connection connection = factory.newConnection();
+            Connection connection = getConnection();
             // Channel是建立在Connection之上的虚拟连接，RabbitMQ 处理的每条 AMQP 指令都是通过信道完成的。
             // 创建AMQP信道 (Channel) ,, Channel可以用来发送或者接受消息
             Channel channel = connection.createChannel();
@@ -341,11 +393,15 @@ public class RabbitMqTest {
             // 消费消息
             channel.basicConsume("queue Name", consumer);
 
+
+            DeliverCallback callback = (consumerTag, delivery) -> {
+                String msg = new String(delivery.getBody(), StandardCharsets.UTF_8);
+                System.out.println("Receive msg : "+ msg);
+            };
             // autoAck设为false，接收消息之后进行显示ack操作，对于消费者来说这个设置是非常必要的，可以防止消息不必要的丢失。
-            boolean autoAck = false;
             channel.basicQos(64);
             channel.basicConsume("queueName",
-                    autoAck,
+                    false,
                     "myConsumerTag",
                     new DefaultConsumer(channel){
                         public void handleDelivery(String consumerTag,
@@ -373,7 +429,7 @@ public class RabbitMqTest {
 
 
             //------------------------------------------拉模式 basicGet------------------------------------------------//
-            //basicGet没有其他重载方法
+            // basicGet没有其他重载方法
             GetResponse response = channel.basicGet("queue_name", false);
             System.out.println(new String(response.getBody()));
             channel.basicAck(response.getEnvelope().getDeliveryTag(), false);
