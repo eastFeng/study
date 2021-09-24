@@ -1,4 +1,4 @@
-package com.dongfeng.study.config.config;
+package com.dongfeng.study.config.configuration;
 
 import com.dongfeng.study.bean.vo.TestVo;
 import com.dongfeng.study.bean.vo.UserPunch;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2020-11-20 16:53
  */
 @Configuration
-public class DemoConfig {
+public class DemoConfiguration {
 
     /**
      * <p> {@link Bean}是方法级别的注解

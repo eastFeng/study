@@ -1,9 +1,8 @@
-package com.dongfeng.study.config.config;
+package com.dongfeng.study.config.configuration;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
@@ -11,7 +10,7 @@ import javax.sql.DataSource;
  * @author eastFeng
  * @date 2021-09-19 17:19
  */
-@Configuration
+//@Configuration
 public class DataSourceConfig {
 
     // 多数据源

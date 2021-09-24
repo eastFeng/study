@@ -1,12 +1,14 @@
 package com.dongfeng.study.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.dongfeng.study.bean.base.Constants;
 import com.dongfeng.study.bean.base.Response;
 import com.dongfeng.study.bean.enums.ResponseCodeEnum;
 import com.dongfeng.study.bean.req.DeclareQueueReq;
 import com.dongfeng.study.bean.req.MqSendReq;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,29 @@ public class RabbitMqController {
 
     @Resource
     private AmqpAdmin amqpAdmin;
+
+
+     /**
+     * 发送消息
+     */
+    @PostMapping("/send")
+    public Response<String> send2(@RequestBody MqSendReq req){
+        log.info("send2 req:{}", req);
+        if (StringUtils.isBlank(req.getMsg())){
+            return Response.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
+        }
+
+        try {
+            rabbitTemplate.convertAndSend(Constants.RABBIT_TOPIC_EXCHANGE_NAME,
+                                          Constants.RABBIT_ROUTING_KEY,
+                                          req.getMsg());
+            return Response.successInstance("success");
+        } catch (Exception e) {
+            log.error("send2 error:{}", e.getMessage(), e);
+        }
+
+        return Response.errorInstance(ResponseCodeEnum.UNKNOWN);
+    }
 
     /**
      * 声明队列

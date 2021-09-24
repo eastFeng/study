@@ -21,7 +21,7 @@ public class LockAndCondition {
     int value;
 
     public void addOne(){
-        //获取锁
+        // 获取锁
         lock.lock();
         try {
             value += 1;

@@ -30,31 +30,32 @@ public class CreateAndRun {
      * 方式一：创建Thread类的匿名内部类
      */
     public static void way1(){
-        //通过匿名内部类方法创建线程对象
+        // 通过匿名内部类方法创建线程对象
         Thread t1 = new Thread(){
           @Override
           public void run(){
-              //要执行的任务
+              // 要执行的任务
               log.info("【t1 running】");
           }
         };
 
-        //设置线程名字
+        // 设置线程名字
         t1.setName("t1");
-        //调用start方法启动线程
+        // 调用start方法启动线程
         t1.start();
         log.info("【{}】", t1.getName());
     }
 
     /**
      * 方法二：使用Runnable配合Thread
-     * 把【线程】和【任务(要执行的代码)】分开
-     * Thread代表线程
-     * Runnable代表可运行的任务(线程要执行的代码)
-     *
+     * <p> 把【线程】和【任务(要执行的代码)】分开
+     * <p> Thread代表线程
+     * <p> Runnable代表可运行的任务(线程要执行的代码)
      * 优点：
-     *     1. 用Runnable更容易与线程池等高级API结合
-     *     2. 用Runnable让任务类脱离了Thread继承体系，更灵活
+     * <ol>
+     * <li> 用Runnable更容易与线程池等高级API结合
+     * <li> 用Runnable让任务类脱离了Thread继承体系，更灵活
+     * </ol>
      */
     public static void way2(){
         // 通过匿名内部类方式创建Runnable接口对象
@@ -90,7 +91,7 @@ public class CreateAndRun {
         t4.start();
         log.info("【{}】", t4.getName());
 
-        //或者
+        // 或者
         new Thread(()->log.info("【running】"), "t5").start();
     }
 
@@ -111,7 +112,7 @@ public class CreateAndRun {
         Thread t5 = new Thread(futureTask, "t5");
         t5.start();
 
-        //获取返回值
+        // 获取返回值
         Integer integer = futureTask.get();
         log.info("【futureTask返回值: {}】", integer);
     }
@@ -140,7 +141,7 @@ public class CreateAndRun {
     }
 
     //-------------------------------------------------------------------------------------------
-    /**
+    /*
      * windows下查看进程和线程
      * 1. 任务管理器可以用来查看进程和线程，也可以用来杀死进程；
      *

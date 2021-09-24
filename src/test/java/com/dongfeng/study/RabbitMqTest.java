@@ -133,7 +133,7 @@ public class RabbitMqTest {
         factory.setUsername("admin");
         // 密码
         factory.setPassword("admin");
-        //
+        // 虚拟主机
         factory.setVirtualHost("test");
         // IP
         factory.setHost("localhost");

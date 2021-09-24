@@ -1,7 +1,5 @@
 package com.dongfeng.study.sourcecode.java8.util;
 
-import com.amazonaws.transform.MapEntry;
-
 import java.util.*;
 import java.util.SortedMap;
 

@@ -4,7 +4,7 @@ import com.dongfeng.study.bean.base.Constants;
 import com.dongfeng.study.bean.base.Response;
 import com.dongfeng.study.bean.enums.ResponseCodeEnum;
 import com.dongfeng.study.bean.vo.TestVo;
-import com.dongfeng.study.config.config.ConfigurationPropertiesDemo;
+import com.dongfeng.study.config.properties.ConfigurationPropertiesDemo;
 import com.dongfeng.study.service.RequestContextHolderService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
