@@ -34,12 +34,21 @@ public class RabbitMQConfig {
         return new Queue(Constants.RABBIT_QUEUE_NAME);
     }
 
+    // 声明消息队列2
+//    @Bean
+//    public Queue queue2(){
+//        return new Queue(Constants.RABBIT_QUEUE2_NAME);
+//    }
+
     /**
      * Binding（绑定）：通过路由键将消息队列（Queue）和交换机（Exchange）绑定起来
      * @return Binding
      */
     @Bean
     public Binding binding(){
-        return BindingBuilder.bind(queue()).to(topicExchange()).with(Constants.RABBIT_ROUTING_KEY);
+        return BindingBuilder.
+                bind(queue())
+                .to(topicExchange())
+                .with(Constants.RABBIT_ROUTING_KEY);
     }
 }

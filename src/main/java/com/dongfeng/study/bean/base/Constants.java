@@ -30,6 +30,8 @@ public interface Constants {
     String RABBIT_TOPIC_EXCHANGE_NAME = "topic_exchange_test";
     // 消息队列（Queue）的名称
     String RABBIT_QUEUE_NAME = "queue_test";
+    // 消息队列（Queue）2的名称
+    String RABBIT_QUEUE2_NAME = "queue_test_2";
     // 路由键（RoutingKey）
     String RABBIT_ROUTING_KEY = "*.myTest.#";
     /* -------------  RabbitMQ相关, Start ----------------- */

@@ -1,5 +1,6 @@
 package com.dongfeng.study.controller;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson.JSON;
 import com.dongfeng.study.bean.base.Constants;
 import com.dongfeng.study.bean.base.Response;
@@ -14,6 +15,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 /**
  *
@@ -34,23 +37,48 @@ public class RabbitMqController {
     private AmqpAdmin amqpAdmin;
 
 
+    @PostMapping("/sendList")
+    public Response<String> sendList(@RequestBody MqSendReq req){
+        log.info("sendList req:{}", req);
+        if (CollectionUtil.isEmpty(req.getListMsg())){
+            return Response.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
+        }
+
+        try {
+//            Message message = MessageBuilder.
+//                    withBody(req.getMsg().getBytes(StandardCharsets.UTF_8)) // 真正要发送的消息内容
+//                    .setMessageId(UUID.randomUUID().toString()) // 设置消息ID
+//                    .build();
+
+            rabbitTemplate.convertAndSend(Constants.RABBIT_TOPIC_EXCHANGE_NAME, // 指定交换机
+                    Constants.RABBIT_ROUTING_KEY, // 指定路由键
+                    req.getListMsg()); // 消息
+            return Response.successInstance("success");
+        } catch (Exception e) {
+            log.error("sendList error:{}", e.getMessage(), e);
+        }
+
+        return Response.errorInstance(ResponseCodeEnum.UNKNOWN);
+    }
+
+
      /**
      * 发送消息
      */
-    @PostMapping("/send")
-    public Response<String> send2(@RequestBody MqSendReq req){
-        log.info("send2 req:{}", req);
+    @PostMapping("/sendString")
+    public Response<String> sendString(@RequestBody MqSendReq req){
+        log.info("sendString req:{}", req);
         if (StringUtils.isBlank(req.getMsg())){
             return Response.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
         }
 
         try {
-            rabbitTemplate.convertAndSend(Constants.RABBIT_TOPIC_EXCHANGE_NAME,
-                                          Constants.RABBIT_ROUTING_KEY,
-                                          req.getMsg());
+            rabbitTemplate.convertAndSend(Constants.RABBIT_TOPIC_EXCHANGE_NAME, // 指定交换机
+                                          Constants.RABBIT_ROUTING_KEY, // 指定路由键
+                                          req.getMsg()); // 消息
             return Response.successInstance("success");
         } catch (Exception e) {
-            log.error("send2 error:{}", e.getMessage(), e);
+            log.error("sendString error:{}", e.getMessage(), e);
         }
 
         return Response.errorInstance(ResponseCodeEnum.UNKNOWN);
