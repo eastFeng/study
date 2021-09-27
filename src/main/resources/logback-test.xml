@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Logback配置文件 -->
+<!-- SpringBoot 默认使用Logback组件作为日志管理。Logback是由log4j创始人设计的一个开源日志组件。
+     在SpringBoot项目中不需要额外添加Logback依赖，因为在spring-boot-starter或者spring-boot-starter-web中已经包含了Logback。
+
+     Logback读取配置文件的步骤：
+     1. 在classpath下查找文件logback-test.xml
+     2. 如果文件不存在，则查找logback.xml
+     3. 如果两个文件都不存在，Logback用BasicConfiguration自动对自己进行最小化配置，这样就实现了不需要添加任何配置就可以输出到控制台日志信息。
+
+ -->
 <configuration debug="false">
-    <!--定义日志文件的存储地址 勿在LogBack的配置中使用相对路径-->
+    <!-- 定义日志文件的存储地址 勿在LogBack的配置中使用相对路径 -->
     <property name="LOG_HOME" value="D:/Wstudy/logs/springboot-study"/>
     <!-- 定义日志格式  -->
     <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] [%-30.30logger{30}] %msg%n"/>
@@ -15,9 +25,9 @@
     <!-- 按照每天生成日志文件 -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!--日志文件输出的文件名-->
+            <!-- 日志文件输出的文件名 -->
             <FileNamePattern>${LOG_HOME}/Springboot-study-Slf4j_%d{yyyy-MM-dd}.log</FileNamePattern>
-            <!--日志文件保留天数-->
+            <!-- 日志文件保留天数 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -25,7 +35,7 @@
             <!--%X{traceId} : traceId, [%X{***}]是一个模板，中间属性名是我们使用MDC put进去的-->
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - [%X{traceId}] - %msg%n</pattern>
         </encoder>
-        <!--日志文件最大的大小-->
+        <!-- 日志文件最大的大小 -->
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
             <MaxFileSize>10MB</MaxFileSize>
         </triggeringPolicy>

@@ -3,8 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!--对应于数据处理层的mapper映射文件-->
-<!--UserInfoMapper.xml文件名称必须与数据处理层的接口名称一致-->
+<!-- 对应于数据处理层的mapper映射文件 -->
+<!-- UserInfoMapper.xml文件名称必须与数据处理层的接口名称一致 -->
 
 <!-- namespace:改mapper.xml映射文件的唯一标识并且必须和数据处理层的接口的路径相同, 此处与接口类地址对应 -->
 <mapper namespace="com.dongfeng.study.bean.mapper.UserInfoMapper">

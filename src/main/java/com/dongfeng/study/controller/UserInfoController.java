@@ -3,6 +3,8 @@ package com.dongfeng.study.controller;
 import com.dongfeng.study.bean.base.Response;
 import com.dongfeng.study.bean.entity.UserInfo;
 import com.dongfeng.study.service.UserInfoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -16,11 +18,15 @@ import java.util.List;
 @RequestMapping("/userInfo")
 public class UserInfoController {
 
+    // 不在类上面用@Slf4j注解也可以日志
+    private final static Logger LOGGER = LoggerFactory.getLogger(UserInfoController.class);
+
     @Resource
     private UserInfoService userInfoService;
 
     @GetMapping("/getAllUsers")
     public Response<List<UserInfo>> getAllUsers(){
+        LOGGER.info("getAllUsers start--------------");
         return userInfoService.getAllUsers();
     }
 
