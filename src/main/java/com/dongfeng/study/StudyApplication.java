@@ -1,26 +1,40 @@
 package com.dongfeng.study;
 
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
 
 /**
- *
- * <b> {@link SpringBootApplication}： 自动配置的实现
+ * <b> Spring Boot 的启动类
+ * <p> <b> {@link SpringBootApplication} 注解： 自动配置的实现，表示当前类是SpringBoot的启动类。
+ * 此注解等同于：@Configuration + @EnableAutoConfiguration + @ComponentScan的组合。
  * <p> 配置：指的是javaConfig配置 而不是xml配置
  * <p> 自动配置：Spring Boot帮我们把那些配置类提前写好了
  *
- * <p> {@link org.springframework.boot.SpringBootConfiguration}：声明(标注)当前类是根配置类
+ * <p> {@link org.springframework.boot.SpringBootConfiguration}注解：声明(标注)当前类是根配置类
+ * 此注解是@Configuration注解的派生注解，跟@Configuration注解的功能一致，标注这个类是一个配置类。
+ * 只不过@SpringBootConfiguration是SpringBoot的注解，@Configuration是Spring的注解。
  *
- * <p> {@link org.springframework.boot.autoconfigure.EnableAutoConfiguration}：开启自动配置的核心
+ * <p> {@link org.springframework.context.annotation.Configuration}注解：通过对bean对象的操作替代Spring中的xml文件。
  *
- * <p> {@link org.springframework.boot.autoconfigure.AutoConfigurationPackage}：
- * 添加该注解的类所在的package作为自动配置package进行管理
+ * <p> {@link org.springframework.boot.autoconfigure.EnableAutoConfiguration}注解：开启自动配置的核心。
+ * Springboot自动配置：尝试根据添加的jar依赖自动配置Spring应用。是@AutoConfigurationPackage注解和@Import(AutoConfigurationImportSelector.class)
+ * 注解的组合。
  *
- * <p> {@link org.springframework.boot.autoconfigure.AutoConfigurationImportSelector}：是自动配置的核心类
+ * <p> {@link org.springframework.boot.autoconfigure.AutoConfigurationPackage}注解：
+ * 添加该注解的类所在的package作为自动配置package进行管理。自动注入主类所有包下所有的加了注解（@Controller，@Services等）的类，以及配置类（@Configuration）。
+ *
+ * <p> {@link org.springframework.context.annotation.Import}注解：导入类。
+ * 1. 直接导入普通的类。 2. 导入实现了{@link org.springframework.context.annotation.ImportSelector}接口的类
+ * 3. 导入实现了{@link org.springframework.context.annotation.ImportBeanDefinitionRegistrar}接口的类
+ *
+ * <p> @Import(AutoConfigurationImportSelector.class)
+ * <p> {@link org.springframework.boot.autoconfigure.AutoConfigurationImportSelector}类：是自动配置的核心类
  *
  * <p> {@link org.springframework.boot.autoconfigure.AutoConfigurationImportSelector#selectImports(AnnotationMetadata)}：
  * 是自动配置的核心方法。
@@ -35,16 +49,18 @@ import org.springframework.core.type.AnnotationMetadata;
  *
  * <p>loadSpringFactories {@link }: 加载整个配置文件并缓存
  *
- * <p>selectImports会过滤自动配置类:
+ * <p> selectImports会过滤自动配置类:
  *    1.会移除exclude里面的配置类
  *    2.filter：根据自动配置类的条件---自动配置类上标注的一系列@ConditionalOnXXX注解
- *
+ * <p> {@link org.springframework.context.annotation.ComponentScan}注解：组件扫描，可自动发现和装配一些Bean。
  * @author eastFeng
  * @date 2020/8/15 - 12:49
  */
+@Slf4j
 //@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@ServletComponentScan // 在SpringBoot启动时会扫描有@WebServlet、@WebFilter注解的类，并将该类实例化
+@MapperScan(basePackages = "com.dongfeng.study.bean.mapper") // Mybatis:扫描mapper接口
 @SpringBootApplication
-@MapperScan(basePackages = "com.dongfeng.study.bean.mapper") // 添加扫描mapper接口的注解
 public class StudyApplication {
 
     /**
@@ -60,12 +76,19 @@ public class StudyApplication {
      * @param args 启动参数
      */
     public static void main(String[] args) {
+
+        /*
+         * Springboot的启动类的作用是启动Springboot项目，是基于main方法来运行的。
+         * 注意：启动类在启动时会做注解扫描（@Controller、@Service、@Repository...），
+         * 扫描位置为同包或者子包下的注解，所以启动类的位置应该放在包的根下。
+         */
         try {
             // 启动Tomcat  生命周期
             SpringApplication.run(StudyApplication.class, args);
         } catch (Exception e) {
             // 查看项目启动报错信息
-            e.printStackTrace();
+//            e.printStackTrace();
+            log.error("SpringBoot启动报错 error:{}", e.getMessage(), e);
         }
     }
 

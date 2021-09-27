@@ -17,33 +17,37 @@
 
     <!--父项目的坐标。如果项目中没有规定某个元素的值，那么父项目中的对应值即为项目的默认值。
      坐标包括groupID，artifactId和version  -->
+    <!-- Springboot的父级依赖，只有继承它项目才是Springboot项目 -->
     <parent>
-        <!--父项目的groupId-->
+        <!-- 父项目的groupId -->
         <groupId>org.springframework.boot</groupId>
-        <!--父项目的artifactId-->
+        <!-- 父项目的artifactId -->
+        <!-- spring-boot-starter-parent：是一个特殊的starter依赖，它用来提供相关的Maven默认依赖。
+             使用它之后，常用的依赖可以省去version标签 -->
         <artifactId>spring-boot-starter-parent</artifactId>
-        <!--父项目的version-->
+        <!-- 父项目的version -->
         <version>2.3.3.RELEASE</version>
-        <!--父项目的pom.xml文件的相对路径。相对路径允许你选择一个不同的路径。默认值是../pom.xml。
+        <!-- 父项目的pom.xml文件的相对路径。相对路径允许你选择一个不同的路径。默认值是../pom.xml。
         Maven首先在构建当前项目的地方寻找父项目的pom，其次在文件系统的这个位置（relativePath位置），
-        然后在本地仓库，最后在远程仓库寻找父项目的pom。-->
+        然后在本地仓库，最后在远程仓库寻找父项目的pom。 -->
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <!--公司或者组织的唯一标志，并且配置时生成的路径也由此生成。
+
+    <!-- 公司或者组织的唯一标志，并且配置时生成的路径也由此生成。
     maven会将该项目打成的jar包放在本地路径：/com/dongfeng-->
     <groupId>com.dongfeng</groupId>
-    <!--项目的唯一ID，一个groupId下面可能有多个项目，就是靠artifactId区分的-->
+    <!-- 项目的唯一ID，一个groupId下面可能有多个项目，就是靠artifactId区分的-->
     <artifactId>study</artifactId>
-    <!--工程的版本号-->
+    <!-- 工程的版本号 -->
     <version>0.0.1-SNAPSHOT</version>
-    <!--项目的名称，Maven产生的文档用-->
+    <!-- 项目的名称，Maven产生的文档用 -->
     <name>study</name>
-    <!--项目的详细描述, Maven 产生的文档用-->
+    <!-- 项目的详细描述, Maven 产生的文档用 -->
     <description>Demo project for Spring Boot</description>
 
-    <!--项目开发者列表-->
+    <!-- 项目开发者列表 -->
     <developers>
-        <!--某一个项目开发者的信息-->
+        <!-- 某一个项目开发者的信息 -->
         <developer>
             <id>DongFeng</id>
             <name>eastFeng</name>
@@ -51,7 +55,7 @@
         </developer>
     </developers>
 
-    <!--该元素描述了项目相关的所有依赖-->
+    <!-- 该元素描述了项目相关的所有依赖 -->
     <dependencies>
         <!-- Alipay Easy SDK -->
         <dependency>
@@ -219,12 +223,6 @@
             <version>0.4.11</version>
         </dependency>
 
-        <!--druid数据库连接池: https://mvnrepository.com/artifact/com.alibaba/druid -->
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba</groupId>-->
-<!--            <artifactId>druid</artifactId>-->
-<!--            <version>1.2.6</version>-->
-<!--        </dependency>-->
         <!--Druid是Java语言中最好的数据库连接池。Druid能够提供强大的监控和扩展功能。-->
         <!-- https://mvnrepository.com/artifact/com.alibaba/druid-spring-boot-starter -->
         <dependency>
@@ -244,7 +242,12 @@
             <artifactId>commons-dbutils</artifactId>
             <version>1.7</version>
         </dependency>
-
+        <!-- Springboot的特性之一：提供starter依赖（starter dependence）来简化项目构建配置
+             starter依赖基于坐标（比如Maven的坐标）。
+        -->
+        <!-- SpringBoot将所有的功能场景都抽取出来，做成一个个的starter（启动器），
+        只需要在项目中引入这些starter相关场景的所有依赖都会导入进来，要用什么功能就导入什么场景，
+        在jar包管理上非常方便，最终实现一站式开发。-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
@@ -290,6 +293,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <!--web启动类 ： 支持全栈式的web开发，包括Tomcat和SpringWebMVC-->
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
@@ -328,15 +332,19 @@
         </dependency>
     </dependencies>
 
-    <!--构建项目需要的信息-->
+    <!-- 构建项目需要的信息 -->
     <build>
         <!--使用的插件列表-->
         <plugins>
             <!--plugin元素描述插件所需要的信息-->
+            <!-- 下面这个插件非常重要，是Springboot的打包插件-->
             <plugin>
                 <!--插件在仓库的group ID-->
                 <groupId>org.springframework.boot</groupId>
                 <!--插件在仓库的artifact ID-->
+                <!-- spring-boot-maven-plugin：是将Springboot的应用程序打包诚jar包的插件。
+                     将所有应用启动运行所需要的jar包都包含进来，从逻辑上将具备独立运行的条件。
+                     当运行"mvn package"进行打包后，使用"java -jar"命令就可以直接运行。-->
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <!--作为DOM对象的配置-->
                 <configuration>

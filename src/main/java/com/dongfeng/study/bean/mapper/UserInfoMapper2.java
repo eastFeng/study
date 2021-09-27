@@ -15,7 +15,7 @@ import java.util.List;
  * <p> UserInfoMapper2创建好之后，还要配置mapper扫描，有两种方式:
  * <lo>
  * <li> 一种是直接在UserMapper2上面添加@Mapper注解，这种方式有一个弊端就是所有的Mapper都要手动添加，要是落下一个就会报错，
- * <li> 还有一个一劳永逸的办法就是直接在启动类上添加Mapper扫描: @MapperScan(basePackages = "com.dongfeng.study.bean.mapper")
+ * <li> 还有一个一劳永逸的办法就是直接在启动类上添加Mapper扫描注解: @MapperScan(basePackages = "com.dongfeng.study.bean.mapper")
  * </lo>
  * @author eastFeng
  * @date 2021-09-19 11:33
