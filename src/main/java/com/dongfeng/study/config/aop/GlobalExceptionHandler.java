@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * <b> 全局异常处理 </b>
+ * <b> 全局异常处理 : {@link ControllerAdvice} + {@link ExceptionHandler}</b>
  *
  * @author eastFeng
  * @date 2021-04-22 17:15
@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 public class GlobalExceptionHandler {
 
     /*
+     * @ControllerAdvice : 异常集中处理，更好的使业务逻辑与异常处理剥离开；其是对Controller层进行拦截。
      * @ControllerAdvice，是Spring3.2提供的新注解,它是一个Controller增强器,
      * 可对controller中被 @RequestMapping注解的方法加一些逻辑处理。最常用的就是异常处理。
      *
@@ -36,7 +37,7 @@ public class GlobalExceptionHandler {
      * 3. 结合方法型注解@ModelAttribute，表示其标注的方法将会在目标Controller方法执行之前执行。
      *
      *
-     *
+     * @ExceptionHandler : 统一处理某一类异常，从而能够减少代码重复率和复杂度。
      */
 
     @ResponseBody
