@@ -15,8 +15,8 @@ public class JDBCUtil {
      * @return Connection
      */
     public static Connection getConnection()throws Exception{
-        //1. 加载驱动
-        Class.forName("com.mysql.jdbc.Driver");
+        // 1. 加载驱动
+        Class.forName("com.mysql.cj.jdbc.Driver");
 
         /*
          * 获取连接所需要的url,用户名和密码
@@ -27,9 +27,12 @@ public class JDBCUtil {
          * 3306        端口号(3306是数据库默认的端口号)
          * test        数据库
          */
-        String url = "jdbc:mysql://localhost:3306/test?characterEncoding=utf8&useSSL=false";
+        String url = "jdbc:mysql://localhost:3306/dongfeng_test?" +
+                "characterEncoding=utf8" +
+                "&useSSL=false" +
+                "&serverTimezone=UTC";
         String user = "root";
-        String password = "root";
+        String password = "zdf123";
         //2. 获取连接
         return DriverManager.getConnection(url, user, password);
     }

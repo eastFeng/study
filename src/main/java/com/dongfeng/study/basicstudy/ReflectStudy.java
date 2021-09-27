@@ -109,7 +109,7 @@ public class ReflectStudy {
      * <p> 一个类在内存中至多存在一个 Class对象
      */
     public static void getClassObj() throws ClassNotFoundException {
-        //1. 类名.class : 这种获取方式只有在编译前已经声明了该类的类型才能获取到 Class对象
+        // 1. 类名.class : 这种获取方式只有在编译前已经声明了该类的类型才能获取到 Class对象
         Class<Goods> aClass1 = Goods.class;
         // 接口也有Class对象，且这种方式对于接口也是适用的
         Class<IPrinter> iPrinterClass = IPrinter.class;
@@ -136,7 +136,7 @@ public class ReflectStudy {
         Class<? extends int[]> aClass = oneDimArr.getClass();
 
 
-        //3. Class.forName(className) : 通过类的全限定名获取该类的 Class对象
+        // 3. Class.forName(className) : 通过类的全限定名获取该类的 Class对象
         // Class有一个静态方法forName，可以根据类名直接加载Class，获取Class对象
         Class<?> aClass3 = Class.forName("com.javabasics.Goods");
 

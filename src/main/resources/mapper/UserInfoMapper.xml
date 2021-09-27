@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 对应于数据处理层的mapper映射文件 -->
+<!-- UserInfoMapper.xml文件名称必须与数据处理层的接口名称一致 -->
+
+<!-- namespace:改mapper.xml映射文件的唯一标识并且必须和数据处理层的接口的路径相同, 此处与接口类地址对应 -->
+<mapper namespace="com.dongfeng.study.bean.mapper.UserInfoMapper">
+
+    <!--自定义映射（的结果集） : 解决实体类属性名和数据表列名不一致问题-->
+    <resultMap id="userInfoResultMap" type="com.dongfeng.study.bean.entity.UserInfo">
+
+        <!--column : 数据库表中的列名
+            property : 表对应的实体类的属性（字段）名
+            javaType : java数据类型-->
+
+        <result column="id" property="id" javaType="java.lang.Integer"></result>
+        <result column="user_login_id" property="userLoginId" javaType="java.lang.Integer"></result>
+        <result column="name" property="name" javaType="java.lang.String"></result>
+        <result column="sex" property="sex" javaType="java.lang.Integer"></result>
+        <result column="phone_number" property="phoneNumber" javaType="java.lang.Long"></result>
+        <result column="id_card_type" property="idCardType" javaType="java.lang.Integer"></result>
+        <result column="id_card_no" property="idCardNo" javaType="java.lang.String"></result>
+        <result column="email" property="email" javaType="java.lang.String"></result>
+        <result column="birthday" property="birthday" javaType="java.util.Date"></result>
+        <result column="country" property="country" javaType="java.lang.String"></result>
+        <result column="nation" property="nation" javaType="java.lang.String"></result>
+        <result column="member_level" property="memberLevel" javaType="java.lang.Integer"></result>
+        <result column="create_time" property="createTime" javaType="java.util.Date"></result>
+        <result column="update_time" property="updateTime" javaType="java.util.Date"></result>
+        <result column="is_delete" property="isDelete" javaType="java.lang.Integer"></result>
+    </resultMap>
+
+    <!--id的值必须和数据处理层的接口中的方法名一致，且参数、返回值类型一致-->
+    <select id="getAllUsers" resultMap="userInfoResultMap">
+        SELECT * FROM user_info;
+    </select>
+
+    <!--parameterType : 输入的参数类型-->
+    <select id="getUserById" parameterType="java.lang.Integer" resultMap="userInfoResultMap">
+        SELECT * FROM user_info
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="getUserByMemberLevel" parameterType="java.lang.Integer" resultMap="userInfoResultMap">
+        SELECT * FROM user_info
+        /*where标签用来处理查询参数，where会自动处理and关键字*/
+        <where>
+            1=1
+            /*if是一个判断节点，如果满足某个条件，节点中的SQL就会生效
+              test用于判断条件*/
+            <if test="memberLevel != null">
+                AND member_level = #{memberLevel}
+            </if>
+            <if test="isDelete != null">
+                AND is_delete = #{isDelete}
+            </if>
+        </where>
+    </select>
+
+    <select id="geUserByName" parameterType="java.lang.String" resultMap="userInfoResultMap">
+        SELECT * FROM user_info WHERE name LIKE
+    </select>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM user_info WHERE id = #{id}
+    </delete>
+
+    <insert id="addUserInfo" parameterType="com.dongfeng.study.bean.entity.UserInfo">
+        INSERT INTO user_info
+        (user_login_id, `name`, sex, phone_number, id_card_type, id_card_no,
+         email, birthday, country, nation, member_level, create_time, update_time)
+         VALUES
+        (#{userInfo.userLoginId}, #{userInfo.name}, #{userInfo.sex}, #{userInfo.phoneNumber},
+         #{userInfo.idCardType}, #{userInfo.idCardNo}, #{userInfo.email}, #{userInfo.birthday},
+         #{userInfo.country}, #{userInfo.nation}, #{userInfo.memberLevel}, #{userInfo.createTime},
+         #{userInfo.updateTime})
+    </insert>
+
+
+    <!--#和$相同点: 都是用来引用变量的，如果只有一个参数，可以不用取别名-->
+    <!-- 在JDBC调用中，SQL的执行，可以通过字符串拼接的方式(Statement)来解决参数的传递问题，
+         也可以通过占位符的方式(PreparedStatement)来解决参数的传递问题。
+         同样的，这中方式也传递到了Mybatis中，在Mybatis中，$相当于参数拼接的方式，儿#则相当于占位符的方式。
+         由于参数拼接的方式存在SQL注入的风险，因此我们使用较少，但是一些特殊的情况下，又不得不使用。
+         比如下面：查询所有数据，排序查询，但是排序的字段不确定，需要通过参数传入，这种场景只能使用$
+         -->
+    <select id="orderBy" parameterType="java.lang.String" resultMap="userInfoResultMap">
+        SELECT * FROM user_info
+        <if test="columnName !=null and columnName!=''">
+            ORDER BY ${columnName}
+        </if>
+    </select>
+
+    <select id="getByIds" resultMap="userInfoResultMap">
+        SELECT * FROM user_info
+        <where>
+            id IN
+            /*foreach节点来遍历数组，collection表示变量，open表示循环结束后左边的符号，
+              close表示循环结束后，右边的符号，item表示循环时候的单个变量，
+              separator表示循环的元素之间的分隔符*/
+            <foreach collection="ids" open="(" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+</mapper>

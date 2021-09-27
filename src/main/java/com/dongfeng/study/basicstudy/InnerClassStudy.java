@@ -151,7 +151,7 @@ public class InnerClassStudy {
 
         // 静态变量
         public static int anInt;
-        // 常量
+        // 静态常量
         public static final String COUNTRY = "China";
         // 成员变量（实例变量）
         private String province;

@@ -43,8 +43,8 @@ public class UUIDTest {
         double aDouble = RandomUtil.randomDouble(0.01, 0.1);
         System.out.println(aDouble);
 
-        //min 最小数（包含）
-        //max 最大数（不包含）
+        // min 最小数（包含）
+        // max 最大数（不包含）
         int anInt = RandomUtil.randomInt(1, 10);
         System.out.println(anInt);
 
@@ -52,7 +52,7 @@ public class UUIDTest {
         System.out.println(randomString);
     }
 
-    //ObjectId是MongoDB数据库的一种唯一ID生成策略，是UUID version1的变种
+    // ObjectId是MongoDB数据库的一种唯一ID生成策略，是UUID version1的变种
     @Test
     public void objectID(){
         String s = IdUtil.objectId();

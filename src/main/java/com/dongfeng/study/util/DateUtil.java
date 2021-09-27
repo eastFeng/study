@@ -2,6 +2,7 @@ package com.dongfeng.study.util;
 
 import cn.hutool.core.date.DateTime;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.DateFormat;
@@ -11,7 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * 建议使用hutool工具类 : cn.hutool.core.date.DateUtil
+ * 建议使用hutool中的日期工具类 : {@link cn.hutool.core.date.DateUtil}
  *
  * @author eastFeng
  * @date 2020/8/15 - 14:42
@@ -19,7 +20,8 @@ import java.util.Date;
 @Slf4j
 public class DateUtil {
     public static void main(String[] args) {
-        test_format();
+        test();
+//        test_format();
     }
 
     public static void test_format(){
@@ -67,11 +69,11 @@ public class DateUtil {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
 
-        //hutool的日期工具类很好用
+        // hutool的日期工具类很好用
         DateTime beginOfDay = cn.hutool.core.date.DateUtil.beginOfDay(date);
         DateTime endOfDay = cn.hutool.core.date.DateUtil.endOfDay(date);
 
-        //apache lang3包下的日期工具类也好用
+        // apache lang3包下的日期工具类也好用
         Date truncate = DateUtils.truncate(date, Calendar.DATE);
 
         System.out.println("现在时间  "+dateFormat.format(date));
@@ -109,6 +111,11 @@ public class DateUtil {
      * 字符串转Date对象
      */
     public static Date parseDate(String dateStr, String format){
+        // 参数非空校验
+        if (StringUtils.isAnyBlank(dateStr, format)){
+            return null;
+        }
+
         Date date = null;
         try {
             DateFormat dateFormat = new SimpleDateFormat(format);
@@ -120,6 +127,9 @@ public class DateUtil {
     }
 
     /**
+     * 不建议使用这个方法，建议使用hutool工具类里的方法：
+     * {@link cn.hutool.core.date.DateUtil#beginOfDay(Date)}
+     *
      * @return 获取该Date的开始处 00:00:00
      */
     public static Date getDateStart(Date date){
@@ -140,6 +150,9 @@ public class DateUtil {
     }
 
     /**
+     * 不建议使用这个方法，建议使用hutool工具类里的方法：
+     * {@link cn.hutool.core.date.DateUtil#endOfDay(Date)}
+     *
      * @return 获取该Date的结束处 23:59:59
      */
     public static Date getDateEnd(Date date){

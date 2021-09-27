@@ -1,15 +1,19 @@
 package com.dongfeng.study.bean.base;
 
 import com.dongfeng.study.bean.enums.ResponseCodeEnum;
-import me.zhyd.oauth.log.Log;
 import org.slf4j.MDC;
+
+import java.io.Serializable;
 
 /**
  * 方法返回基类
  * @author eastFeng
  * @date 2020/8/15 - 12:49
  */
-public class Response<T> {
+public class Response<T> implements Serializable {
+
+    private static final long serialVersionUID = -1075989307245937233L;
+
     /**
      * 响应码
      */

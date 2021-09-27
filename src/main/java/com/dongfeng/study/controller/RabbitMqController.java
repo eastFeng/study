@@ -1,17 +1,22 @@
 package com.dongfeng.study.controller;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson.JSON;
+import com.dongfeng.study.bean.base.Constants;
 import com.dongfeng.study.bean.base.Response;
 import com.dongfeng.study.bean.enums.ResponseCodeEnum;
 import com.dongfeng.study.bean.req.DeclareQueueReq;
 import com.dongfeng.study.bean.req.MqSendReq;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 /**
  *
@@ -30,6 +35,54 @@ public class RabbitMqController {
 
     @Resource
     private AmqpAdmin amqpAdmin;
+
+
+    @PostMapping("/sendList")
+    public Response<String> sendList(@RequestBody MqSendReq req){
+        log.info("sendList req:{}", req);
+        if (CollectionUtil.isEmpty(req.getListMsg())){
+            return Response.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
+        }
+
+        try {
+//            Message message = MessageBuilder.
+//                    withBody(req.getMsg().getBytes(StandardCharsets.UTF_8)) // 真正要发送的消息内容
+//                    .setMessageId(UUID.randomUUID().toString()) // 设置消息ID
+//                    .build();
+
+            rabbitTemplate.convertAndSend(Constants.RABBIT_TOPIC_EXCHANGE_NAME, // 指定交换机
+                    Constants.RABBIT_ROUTING_KEY, // 指定路由键
+                    req.getListMsg()); // 消息
+            return Response.successInstance("success");
+        } catch (Exception e) {
+            log.error("sendList error:{}", e.getMessage(), e);
+        }
+
+        return Response.errorInstance(ResponseCodeEnum.UNKNOWN);
+    }
+
+
+     /**
+     * 发送消息
+     */
+    @PostMapping("/sendString")
+    public Response<String> sendString(@RequestBody MqSendReq req){
+        log.info("sendString req:{}", req);
+        if (StringUtils.isBlank(req.getMsg())){
+            return Response.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
+        }
+
+        try {
+            rabbitTemplate.convertAndSend(Constants.RABBIT_TOPIC_EXCHANGE_NAME, // 指定交换机
+                                          Constants.RABBIT_ROUTING_KEY, // 指定路由键
+                                          req.getMsg()); // 消息
+            return Response.successInstance("success");
+        } catch (Exception e) {
+            log.error("sendString error:{}", e.getMessage(), e);
+        }
+
+        return Response.errorInstance(ResponseCodeEnum.UNKNOWN);
+    }
 
     /**
      * 声明队列

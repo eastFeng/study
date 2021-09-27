@@ -1,6 +1,7 @@
 package com.dongfeng.study.basicstudy.io;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * <b> 文件概述 </b>
@@ -55,13 +56,13 @@ public class FileOverview {
          * 虽然所有数据都是以二进制形式保存的，但为了方便处理数据，高级语言引入了数据类型的概念。
          * 文件处理也类似，所有文件都是以二进制形式保存的，但为了便于理解和处理文件，文件也有文件类型的概念。
          *
-         * 文件类型通常以扩展名的形式体现，比如，PDF文件类型的扩展名是．pdf，图片文件的一种常见扩展名是．jpg，压缩文件的一种常见扩展名是．zip。
+         * 文件类型通常以扩展名的形式体现，比如，PDF文件类型的扩展名是.pdf，图片文件的一种常见扩展名是.jpg，压缩文件的一种常见扩展名是.zip。
          * 每种文件类型都有一定的格式，代表着文件含义和二进制之间的映射关系。
          * 比如一个Word文件，其中有文本、图片、表格，文本可能有颜色、字体、字号等，doc文件类型就定义了这些内容和二进制表示之间的映射关系。
          * 有的文件类型的格式是公开的，有的可能是私有的，我们也可以定义自己私有的文件格式。
          *
          * 对于一种文件类型，往往有一种或多种应用程序可以解读它，进行查看和编辑，一个应用程序往往可以解读一种或多种文件类型。
-         * 在操作系统中，一种扩展名往往关联一个应用程序，比如．doc后缀关联Word应用。
+         * 在操作系统中，一种扩展名往往关联一个应用程序，比如.doc后缀关联Word应用。
          * 用户通过双击试图打开某扩展名的文件时，操作系统查找关联的应用程序，启动该程序，传递该文件路径给它，程序再打开该文件。
          *
          * 需要说明的是，给文件加正确的扩展名是一种惯例，但并不是强制的，
@@ -73,10 +74,9 @@ public class FileOverview {
          * 二进制文件的例子有压缩文件（.zip）、PDF文件（.pdf）、MP3文件（.mp3）、Excel文件（.xlsx）等。
          *
          * 基本上，文本文件里的每个二进制字节都是某个可打印字符的一部分，都可以用最基本的文本编辑器进行查看和编辑，
-         * 如Windows上的notepad、Linux上的vi。
+         * 如Windows上的notepad、Linux上的vim。
          * 二进制文件中，每个字节就不一定表示字符，可能表示颜色、字体、声音大小等，
          * 如果用基本的文本编辑器打开，一般都是满屏的乱码，需要专门的应用程序进行查看和编辑。
-         *
          */
     }
 
@@ -146,13 +146,22 @@ public class FileOverview {
          *
          *
          */
+        final String separator = File.separator;
+        System.out.println(separator);
+
+        try {
+            final File hhhh = File.createTempFile("hhhh", ".txt");
+            System.out.println(hhhh.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * 文件读写
      */
     public static void fileReadingAndWriting(){
-        /**
+        /*
          * 文件是放在硬盘上的，程序处理文件需要将文件读入内存，修改后，需要写回硬盘。
          * 操作系统提供了对文件读写的基本API，不同操作系统的接口和实现是不一样的，不过，有一些共同的概念。
          * Java封装了操作系统的功能，提供了统一的API。

@@ -8,13 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * PreparedStatement: 表示预编译的SQL语句的对象。
- * SQL语句已预编译并存储在PreparedStatement对象中。 然后可以使用该对象多次有效地执行此语句。
+ * <p> PreparedStatement: 表示预编译的SQL语句的对象。
+ * <p> SQL语句已预编译并存储在PreparedStatement对象中。 然后可以使用该对象多次有效地执行此语句。
  *
  * PreparedStatement优点:
- * 1. 防止SQL注入;
- * 2. PreparedStatement可以操作Blob数据, 而Statement做不到;
- * 3. PreparedStatement可以实现更高效的批量操作;
+ * <lo>
+ * <li> 1. 防止SQL注入;
+ * <li> 2. PreparedStatement可以操作Blob数据, 而Statement做不到;
+ * <li> 3. PreparedStatement可以实现更高效的批量操作;
+ * </lo>
  * @author eastFeng
  * @date 2020/4/20 - 17:00
  */
@@ -22,7 +24,7 @@ import java.util.List;
 public class PreparedStatementDemo {
 
     public static void main(String[] args) {
-        test_commonSelect();
+        test_select();
     }
 
     private static void test_insert(){
@@ -114,34 +116,34 @@ public class PreparedStatementDemo {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
-            //1. 获取数据库连接
+            // 1. 获取数据库连接
             connection = JDBCUtil.getConnection();
 
-            //2. 预编译SQL语句, 获取PreparedStatement对象
-            String sql = "SELECT * FROM customers";
+            // 2. 预编译SQL语句, 获取PreparedStatement对象
+            String sql = "SELECT * FROM user_info";
             preparedStatement = connection.prepareStatement(sql);
 
-            //3. 执行并返回结果集
+            // 3. 执行并返回结果集
             resultSet = preparedStatement.executeQuery();
 
-            ArrayList<Customers> customersArrayList = new ArrayList<>(10);
-            //4. 处理结果集
+            // ArrayList<Customers> customersArrayList = new ArrayList<>(10);
+            // 4. 处理结果集
             while (resultSet.next()){
                 // 获取当前这条数据的各个字段值
                 int id = resultSet.getInt(1);
-                String name = resultSet.getString(2);
-                String email = resultSet.getString(3);
-                Date birth = resultSet.getDate(4);
+                int userLoginId = resultSet.getInt(2);
+                String name = resultSet.getString(3);
+                System.out.println("id="+id+" userLoginId="+userLoginId+" name="+name);
 
-                Customers customers = new Customers(id, name, email, birth);
+                // Customers customers = new Customers(id, name, email, birth);
 
-                customersArrayList.add(customers);
+                // customersArrayList.add(customers);
             }
-            System.out.println(customersArrayList);
+            // System.out.println(customersArrayList);
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            //5. 关闭资源
+            // 5. 关闭资源
             JDBCUtil.closeConnection(connection, preparedStatement, resultSet);
         }
     }

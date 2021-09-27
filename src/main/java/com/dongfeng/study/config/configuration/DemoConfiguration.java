@@ -1,4 +1,4 @@
-package com.dongfeng.study.config.config;
+package com.dongfeng.study.config.configuration;
 
 import com.dongfeng.study.bean.vo.TestVo;
 import com.dongfeng.study.bean.vo.UserPunch;
@@ -14,13 +14,14 @@ import org.springframework.context.annotation.Configuration;
  * @date 2020-11-20 16:53
  */
 @Configuration
-public class DemoConfig {
+public class DemoConfiguration {
 
     /**
      * <p> {@link Bean}是方法级别的注解
      * <p> {@link Bean}注解指示方法生成一个由Spring容器管理的bean
-     * <p> 方法的结果bean会由Spring容器管理
-     * <p> 通常{@link Bean}注解的方法在@Configuration类中声明
+     * <p> 方法返回的结果bean会由Spring容器管理
+     * <p> 通常{@link Bean}注解的方法在@Configuration注解的类中声明
+     * <p> 方法名可以任意的
      *
      * @return {@link TestVo}实例
      */

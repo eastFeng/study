@@ -14,9 +14,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "OtaResponseBody")
 @XmlSeeAlso({
-        //子类
+        // 子类
         GetOrderByOTAResponseBody.class
 })
 public class OtaResponseBody {
-    //父类，为了后面请求ota其他接口，扩展，XmlSeeAlso注解里面可以定义多个子类
+    // 父类，为了后面请求ota其他接口，扩展，XmlSeeAlso注解里面可以定义多个子类
 }

@@ -23,7 +23,7 @@ public class ReentrantLock implements Lock, Serializable {
 
     private final Sync sync;
 
-    //AbstractOwnableSynchronizer.getExclusiveOwnerThread方法返回的就是独占模式下持有锁的线程
+    // AbstractOwnableSynchronizer.getExclusiveOwnerThread方法返回的就是独占模式下持有锁的线程
 
     abstract static class Sync extends AQS {
 
@@ -44,23 +44,24 @@ public class ReentrantLock implements Lock, Serializable {
             final Thread current = Thread.currentThread();
             int state = getState();
             if (state==0){
-                //1. 锁是空闲的
+                // 1. 锁是空闲的
                 if (compareAndSetState(0, acquires)){
-                    //CAS更新state的值成功
-                    //有可能有其他线程同时也尝试获取锁调用tryAcquire方法，所以要以CAS方式更新state值
+                    // CAS更新state的值成功
+                    // 有可能有其他线程同时也尝试获取锁调用tryAcquire方法，所以要以CAS方式更新state值
                     setExclusiveOwnerThread(current);
                     return true;
                 }
             }else if (current == getExclusiveOwnerThread()){
-                //2. 锁不是空闲的，但是持有锁的线程就是当前线程 ----> 更新state的值
+                // 2. 锁不是空闲的，但是持有锁的线程就是当前线程 ----> 更新state的值
                 int nextState = state + acquires;
                 if (nextState < 0){
                     throw new Error("超过最大锁计数");
                 }
-                //更新state值，不需要CAS方式更新，因为不存在其他线程竞争，只有当前线程能到这里
+                // 更新state值，不需要CAS方式更新，因为不存在其他线程竞争，只有当前线程能到这里
                 setState(nextState);
                 return true;
             }
+            // 3. 锁不是空闲的，但是持有锁的线程不是当前线程
             return false;
         }
 
@@ -73,18 +74,18 @@ public class ReentrantLock implements Lock, Serializable {
         protected final boolean tryRelease(int releases){
             int c = getState() - releases;
             if (Thread.currentThread() != getExclusiveOwnerThread()){
-                //如果当前要释放锁线程不是持有锁的线程
+                // 如果当前要释放锁线程不是持有锁的线程
                 throw new IllegalMonitorStateException();
             }
-            //是否完全释放锁
+            // 是否完全释放锁
             boolean free = false;
             if (c == 0){
-                //releases == state，c==0,说明没有嵌套锁了，可以释放了，否则还不能释放掉
+                // releases == state，c==0,说明没有嵌套锁了，可以释放了，否则还不能释放掉
                 free = true;
-                //将占有锁的线程设为null，释放锁
+                // 将占有锁的线程设为null，释放锁
                 setExclusiveOwnerThread(null);
             }
-            //更新state的值 ----> 只有持有锁的线程才会走到这里，所以不用CAS方式
+            // 更新state的值 ----> 只有持有锁的线程才会走到这里，所以不用CAS方式
             setState(c);
             return free;
         }
@@ -98,7 +99,7 @@ public class ReentrantLock implements Lock, Serializable {
         }
 
         final ConditionObject newCondition(){
-            //实例化一个ConditionObject
+            // 实例化一个ConditionObject
             return new ConditionObject();
         }
 
@@ -123,10 +124,10 @@ public class ReentrantLock implements Lock, Serializable {
             return getState() != 0;
         }
 
-        //反序列化
+        // 反序列化
         private void readObject(java.io.ObjectInputStream s) throws IOException, ClassNotFoundException {
             s.defaultReadObject();
-            //重置为解锁状态
+            // 重置为解锁状态
             setState(0);
         }
     }
@@ -140,7 +141,7 @@ public class ReentrantLock implements Lock, Serializable {
 
         @Override
         void lock() {
-            //与公平锁相比，直接先进行一次CAS，成功就返回了
+            // 与公平锁相比，直接先进行一次CAS，成功就返回了
             if (compareAndSetState(0, 1)){
                 setExclusiveOwnerThread(Thread.currentThread());
             }else {
@@ -162,7 +163,7 @@ public class ReentrantLock implements Lock, Serializable {
     static final class FairSync extends Sync{
         private static final long serialVersionUID = 5835038930227853222L;
 
-        //争锁
+        // 争锁
         @Override
         void lock() {
             acquire(1);
@@ -180,26 +181,27 @@ public class ReentrantLock implements Lock, Serializable {
             int state = getState();
 
             if (state == 0){
-                //1. 锁是空闲的
-                //虽然此时此刻锁是空闲的，但是这是公平锁，要讲究先来后到，看看有没有别的线程在队列中等了半天
+                // 1. 锁是空闲的
+                // 虽然此时此刻锁是空闲的，但是这是公平锁，要讲究先来后到，看看有没有别的线程在队列中等了半天
                 if (!hasQueuedPredecessors() && compareAndSetState(0, acquires)){
-                    //没有线程比当前线程等待时间更长（因为是公平锁），并且CAS更新state字段成功
-                    //有可能有其他线程同时也尝试获取锁调用tryAcquire方法，所以要以CAS方式更新state值
+                    // 没有线程比当前线程等待时间更长（因为是公平锁），并且CAS更新state字段成功
+                    // 有可能有其他线程同时也尝试获取锁调用tryAcquire方法，所以要以CAS方式更新state值
 
-                    //获取到锁，标记一下
+                    // 获取到锁，标记一下
                     setExclusiveOwnerThread(current);
                     return true;
                 }
             }else if(current==getExclusiveOwnerThread()){
-                //2. 锁不是空闲的，并且持有锁的线程就是当前线程 ----> 更新state的值
+                // 2. 锁不是空闲的，并且持有锁的线程就是当前线程 ----> 更新state的值
                 int nextState = state + acquires;
                 if (nextState < 0){
                     throw new Error("超过最大锁计数");
                 }
-                //更新state值，不需要CAS方式更新，因为不存在其他线程竞争，只有当前线程能到这里
+                // 更新state值，不需要CAS方式更新，因为不存在其他线程竞争，只有当前线程能到这里
                 setState(nextState);
                 return true;
             }
+            // 3. 锁不是空闲的，但是持有锁的线程不是当前线程
             return false;
         }
     }

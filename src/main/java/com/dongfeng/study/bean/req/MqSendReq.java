@@ -1,8 +1,10 @@
 package com.dongfeng.study.bean.req;
 
+import com.dongfeng.study.sourcecode.java8.util.Map;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author eastFeng
@@ -22,7 +24,50 @@ public class MqSendReq implements Serializable {
      */
     private String routingKey;
     /**
-     * 要往RabbitMq队列发送的信息
+     * 要往RabbitMq队列发送的String类型的信息
      */
     private String msg;
+
+    /**
+     * 要往RabbitMq队列发送的List类型的信息
+     */
+    private List<Object> listMsg;
+
+    /**
+     * 要往RabbitMq队列发送的List类型的信息
+     */
+    private Map<String, Object> mapMsg;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

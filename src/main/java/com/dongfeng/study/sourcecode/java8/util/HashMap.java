@@ -529,6 +529,7 @@ public class HashMap<K, V> extends AbstractMap<K,V>
      */
     final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict){
         Node<K,V>[] tab;
+        // 索引处的第一个节点
         Node<K,V> p;
         int n, i; // n:数组长度  i:数组索引
         if ((tab=table)==null || (n=tab.length)==0){
@@ -586,7 +587,7 @@ public class HashMap<K, V> extends AbstractMap<K,V>
 
                     if (e.hash==hash
                             &&((k=e.key)==key || (key!=null&&key.equals(k)))){
-                        //节点e=p.next 命中key，e!=null
+                        // 节点e=p.next 命中key，e!=null
                         break;
                     }
 
@@ -764,7 +765,7 @@ public class HashMap<K, V> extends AbstractMap<K,V>
      * @param hash 键的哈希值
      */
     final void treeifyBin(Node<K,V>[] tab, int hash){
-        //n: 数组大小, index: 数组索引
+        // n: 数组大小, index: 数组索引
         int n, index;
         // 索引处链表的表头(索引处节点)
         Node<K,V> e;
@@ -828,23 +829,26 @@ public class HashMap<K, V> extends AbstractMap<K,V>
      */
     final Node<K,V> removeNode(int hash, Object key, Object value, boolean matchValue, boolean movable){
         Node<K,V>[] tab;
+        // hash计算的索引处第一个节点
         Node<K,V> p;
         int n, index;
 
         if ((tab=table) != null
                 && (n=tab.length)>0
                 && (p=tab[index=(n-1)&hash])!=null){
+            // node：要删除的节点
             Node<K,V> node = null, e;
             K k;
             V v;
+            // 先看第一个节点是不是要删除的节点
             if (p.hash==hash && Objects.equals(key, p.key)){
                 node = p;
-            }else if ((e=p.next)!=null){
+            }else if ((e=p.next)!=null){  // 第二个节点不为null
                 if (p instanceof TreeNode){
-                    //红黑树
+                    // 红黑树
                     node = ((TreeNode<K,V>)p).getTreeNode(hash, key);
                 }else {
-                    //链表
+                    // 链表
                     do {
                         if (e.hash==hash && Objects.equals(e.key, key)){
                             //找到
@@ -862,14 +866,17 @@ public class HashMap<K, V> extends AbstractMap<K,V>
 //            }
             if (node!=null
                     && (!matchValue || Objects.equals(value, node.value))){
-                //node就是要移除的节点
+                // node就是要移除的节点
                 if (node instanceof TreeNode){
+                    // 红黑树
                     ((TreeNode<K,V>)node).removeTreeNode(this, tab, movable);
                 }else if (node == p){
-                    //链表删除: 指向后续一个节点
+                    // 链表，并且要删除的是第一个节点 : 第一个节点变为第一个节点的后续节点
+                    // 链表删除: 指向后续一个节点
                     tab[index] = node.next;
                 }else {
-                    //链表删除: 指向后续一个节点
+                    // 链表，并且要删除的不是第一个节点
+                    // 链表删除: 指向后续一个节点
                     p.next = node.next;
                 }
                 ++modCount;
@@ -890,6 +897,7 @@ public class HashMap<K, V> extends AbstractMap<K,V>
         modCount++;
         if ((tab=table)!=null && size>0){
             size = 0;
+            // 清空数组中的每个元素：每个元素设为null
             for (int i=0; i<tab.length; ++i){
                 tab[i] = null;
             }
@@ -973,7 +981,7 @@ public class HashMap<K, V> extends AbstractMap<K,V>
                     }
                 }
                 if (modCount != mc){
-                    //遍历过程中不允许修改
+                    // 遍历过程中不允许修改
                     throw new ConcurrentModificationException();
                 }
             }

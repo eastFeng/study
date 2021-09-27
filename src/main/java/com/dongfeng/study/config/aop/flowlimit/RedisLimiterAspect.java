@@ -30,7 +30,7 @@ import java.util.List;
  */
 @Slf4j
 @Aspect
-@Component
+//@Component
 public class RedisLimiterAspect{
     @Autowired
     private StringRedisTemplate stringRedisTemplate;

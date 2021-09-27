@@ -6,8 +6,9 @@ import com.dongfeng.study.bean.enums.ResponseCodeEnum;
  * <b> 业务异常 </b>
  *
  * <p> 除了Java API中定义的异常类，也可以自己定义异常类，一般是继承Exception或者它的某个子类。
- * 如果父类是RuntimeException或它的某个子类，则自定义异常也是未受检异常；
- * 如果是Exception或Exception的其他子类，则自定义异常是受检异常。
+ * <p> 如果父类是RuntimeException或它的某个子类，则自定义异常也是未受检异常；
+ * <p> 如果是Exception或Exception的其他子类，则自定义异常是受检异常。
+ *
  * @author eastFeng
  * @date 2021-04-22 16:45
  */

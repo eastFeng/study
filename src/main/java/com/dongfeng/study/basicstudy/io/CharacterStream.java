@@ -229,7 +229,8 @@ public class CharacterStream {
      */
     public static void stringReaderAndWriter(){
         /*
-         * StringReader/StringWriter与CharArrayReader/CharArrayWriter类似，只是输入数据源为String，输出目标为StringBuffer，
+         * StringReader/StringWriter与CharArrayReader/CharArrayWriter类似，
+         * 只是输入数据源为String，输出目标为StringBuffer，
          * 而且，String/StringBuffer内部是由char数组组成的，所以它们本质上是一样的。
          * 之所以要将char数组和String与Reader/Writer进行转换，也是为了能够方便地参与Reader/Writer构成的协作体系，复用代码。
          *
@@ -281,7 +282,6 @@ public class CharacterStream {
      * {@link PrintWriter}
      */
     public static void printWriterStudy(){
-
     }
 }
 

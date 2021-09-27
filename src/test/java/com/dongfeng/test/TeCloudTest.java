@@ -31,8 +31,8 @@ public class TeCloudTest {
     private static final String ENDPOINT = "oos-cn.ctyunapi.cn";
 
     public static void main(String[] args) {
-        //byte数据类型是8位,有符号的。 最大值是127  最小值是-128
-        //byte类型在大型数据中节约空间, 主要代替整数, 因为byte类型变量占用的空间只有int类型的四分之一
+        // byte数据类型是8位,有符号的。 最大值是127  最小值是-128
+        // byte类型在大型数据中节约空间, 主要代替整数, 因为byte类型变量占用的空间只有int类型的四分之一
         byte i = 126;
 
         File file = new File("D:\\MyFiles\\Pictures\\微信图片_20200723002024.jpg");
@@ -43,7 +43,7 @@ public class TeCloudTest {
         }
     }
 
-    ///获取文件名称前缀和后缀
+    // 获取文件名称前缀和后缀
     @Test
     public void fileName(){
 
@@ -62,10 +62,10 @@ public class TeCloudTest {
 
     /**
      * Bucket是存储Object的容器。中国电信天翼对象存储系统的每个Object都必须包含在一个Bucket中。
-     * 用户存储在OOS上的每个文件都是一个Object。文件可以是文本、图片、音频、视频或者网页。OOS支持的单个文件的大小从1字节到5T字节。
+     * <p> 用户存储在OOS上的每个文件都是一个Object。文件可以是文本、图片、音频、视频或者网页。OOS支持的单个文件的大小从1字节到5T字节。
      */
     private static void putAndGetUrl(File file) throws FileNotFoundException {
-        //1. client
+        // 1. 创建client
         AmazonS3Client client = createClient();
 
         String fileName = file.getName();
@@ -100,23 +100,23 @@ public class TeCloudTest {
      */
     private static AmazonS3Client createClient(){
         ClientConfiguration clientConfig = new ClientConfiguration();
-        //连接超时时间(毫秒)
+        // 连接超时时间(毫秒)
         clientConfig.setConnectionTimeout(30*1000);
-        //socket超时时间(毫秒)
+        // socket超时时间(毫秒)
         clientConfig.setSocketTimeout(30*1000);
-        //设置http
+        // 设置http
         clientConfig.setProtocol(Protocol.HTTPS);
 
-        //负载是否参与签名 : 设置参与
+        // 负载是否参与签名 : 设置参与
         S3ClientOptions options = new S3ClientOptions();
         options.setPayloadSigningEnabled(true);
 
-        //创建client
+        // 创建client
         AmazonS3Client client =
                 new AmazonS3Client(new PropertiesCredentials(ACCESS_KEY_ID, SECRET_ACCESS_KEY), clientConfig);
-        //设置endpoint
+        // 设置endpoint
         client.setEndpoint(ENDPOINT);
-//        //设置选项
+//        // 设置选项
 //        client.setS3ClientOptions(options);
         return client;
     }

@@ -59,12 +59,10 @@ public class IoUtil {
         try {
             output = new FileOutputStream(destination, append);
             // 拷贝输入流的内容到输出流
-            copy(source, output);
+            copy(source, output, isCloseIn, false);
         } finally {
+            // 在这里关闭文件输出流就行
             close(output);
-            if (isCloseIn){
-                close(source);
-            }
         }
     }
 
@@ -210,7 +208,7 @@ public class IoUtil {
      */
     public static String readFile(File file) throws IOException {
         if (file == null){
-            return null;
+            return StringUtils.EMPTY;
         }
 
         // 输入流：输入流和数据源相关，从数据源中读取数据
@@ -220,9 +218,10 @@ public class IoUtil {
         try {
             in = new FileInputStream(file);
             out = new ByteArrayOutputStream();
-            copy(in, out);
+            copy(in, out, false, false);
             return out.toString();
         } finally {
+            // 在这里关闭就行
             close(in);
             close(out);
         }
@@ -261,14 +260,29 @@ public class IoUtil {
     /* ---------------- copy -------------- */
 
     /**
-     * 拷贝输入流的内容到输出流，拷贝后不关闭流，
+     * 拷贝输入流的内容到输出流，拷贝后关闭流，
      *
      * @param input 输入流
      * @param output 输出流
      * @return 传输的byte数
      */
     public static long copy(InputStream input, OutputStream output) throws IOException{
-        return copy(input, output, COPY_DEFAULT_BUF_SIZE);
+        return copy(input, output, COPY_DEFAULT_BUF_SIZE, true, true);
+    }
+
+    /**
+     * 拷贝输入流的内容到输出流
+     *
+     * @param input 输入流
+     * @param output 输出流
+     * @param isCloseIn 是否关闭输入流
+     * @param isCloseOut 是否关闭输出流
+     * @return 传输的字节数
+     * @throws IOException
+     */
+    public static long copy(InputStream input, OutputStream output,
+                            boolean isCloseIn, boolean isCloseOut) throws IOException{
+        return copy(input, output, COPY_DEFAULT_BUF_SIZE, isCloseIn, isCloseOut);
     }
 
     /**
@@ -277,9 +291,12 @@ public class IoUtil {
      * @param input 输入流
      * @param output 输出流
      * @param bufferSize 数组大小（缓存大小）
+     * @param isCloseIn 是否关闭输入流
+     * @param isCloseOut 是否关闭输出流
      * @return 传输的byte数
      */
-    public static long copy(InputStream input, OutputStream output, int bufferSize) throws IOException {
+    public static long copy(InputStream input, OutputStream output, int bufferSize,
+                            boolean isCloseIn, boolean isCloseOut) throws IOException {
         Objects.requireNonNull(input, "InputStream is null!");
         Objects.requireNonNull(output, "OutputStream is null");
         if (bufferSize <= 0){
@@ -293,11 +310,20 @@ public class IoUtil {
         byte[] buf = new byte[bufferSize];
         // 每次从输入流中读取的字节数量
         int readBytes;
-        while ((readBytes=input.read(buf)) != EOF){
-            // 将充输入流中读取到的数据（字节）写入到输出流中
-            output.write(buf, 0, readBytes);
-            transferred += readBytes;
-            output.flush();
+        try {
+            while ((readBytes=input.read(buf)) != EOF){
+                // 将充输入流中读取到的数据（字节）写入到输出流中
+                output.write(buf, 0, readBytes);
+                transferred += readBytes;
+                output.flush();
+            }
+        } finally {
+            if (isCloseIn){
+                close(input);
+            }
+            if (isCloseOut){
+                close(output);
+            }
         }
 
         return transferred;

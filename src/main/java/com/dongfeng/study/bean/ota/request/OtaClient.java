@@ -40,7 +40,7 @@ public class OtaClient {
             System.out.println(JSON.toJSONString(body));
 
             OrderInfo orderInfo = body.getOrderInfo();
-            //入园二维码
+            // 入园二维码
             String qrCode = orderInfo.getOtherQRCode();
         }
     }
@@ -63,45 +63,45 @@ public class OtaClient {
      */
     public static OtaResponse execute(String method, OtaRequestBody requestBody){
         JSON.toJSONString(requestBody);
-        //requestParam的request报文
+        // requestParam的request报文
         OtaRequest request = getRequest(requestBody);
         try {
-            //转为xml
+            // 转为xml
             String requestString = marshall(request);
             System.out.println(requestString);
-            //data : base64编码之后的字符串
+            // data : base64编码之后的字符串
             String data = Base64.encode(requestString);
 
             String signkey = "ec30824b5dg6tyR2v";
-            //signed : MD5(singkey+data)
+            // signed : MD5(singkey+data)
             String signed = SecureUtil.md5(signkey+data);
             System.out.println("signed.length : "+signed.length());
 
-            //组装requestParam
+            // 组装requestParam
             RequestParam requestParam = new RequestParam();
             requestParam.setData(data);
             requestParam.setSigned(signed);
-            //securityType固定不变
+            // securityType固定不变
             requestParam.setSecurityType("MD5");
 
             String url = "http://js.yylxjt.com/service_/distributor_.do";
             Map<String, Object> param = new HashMap<>(2);
             param.put("method", method);
             param.put("requestParam", JSON.toJSONString(requestParam));
-            //post 表单请求
+            // post 表单请求
             String result = HttpRequest.post(url).form(param).execute().body();
             System.out.println(result);
             if (StringUtils.isBlank(result)){
                 return null;
             }
             RequestParam responseObj = JSON.parseObject(result, RequestParam.class);
-            //返回的data是xml形式的数据(字符串)base64编码之后的字符串
+            // 返回的data是xml形式的数据(字符串)base64编码之后的字符串
             String dataBase64 = responseObj.getData();
-            //base64解码--->解码后为xml形式
+            // base64解码--->解码后为xml形式
             String resData = Base64.decodeStr(dataBase64);
             System.out.println();
             System.out.println(resData);
-            //xml转java对象并返回
+            // xml转java对象并返回
             return (OtaResponse) unmarshal(resData);
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,25 +117,25 @@ public class OtaClient {
     private static OtaRequest getRequest(OtaRequestBody body){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         OtaRequest request = new OtaRequest();
-        //设置body : Request Body
+        // 设置body : Request Body
         request.setBody(body);
 
-        //设置header : Request Header
+        // 设置header : Request Header
         OtaRequestHeader header = new OtaRequestHeader();
-        //系统版本，固定
+        // 系统版本，固定
         header.setApplication("tour.ectrip.com");
-        //处理程序，固定
+        // 处理程序，固定
         header.setProcessor("DataExchangeProcessor");
-        //版本，固定
+        // 版本，固定
         header.setVersion("v1.0.0");
-        //创建时间
+        // 创建时间
         String createTime = dateFormat.format(new Date());
         header.setCreateTime(createTime);
-        //消息体类型
+        // 消息体类型
         header.setBodyType(body.getClass().getSimpleName());
-        //创建用户
+        // 创建用户
         header.setCreateUser("wllvmama");
-        //供应商用户名
+        // 供应商用户名
         header.setSupplierIdentity("wlyylx");
 
         request.setHeader(header);

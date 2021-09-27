@@ -1,4 +1,4 @@
-package com.dongfeng.study.config.config;
+package com.dongfeng.study.config.configuration;
 
 import com.dongfeng.study.config.interceptor.LoginInterceptor;
 import com.dongfeng.study.config.interceptor.TraceIdInterceptor;

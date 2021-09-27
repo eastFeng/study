@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
         "orderId"
 })
 public class GetOrderByOTARequestBody extends OtaRequestBody{
-    //partnerOrderId和orderId这俩参数传一个就可以请求到订单信息，订单信息里面包含入园二维码链接
+    // partnerOrderId和orderId这俩参数传一个就可以请求到订单信息，订单信息里面包含入园二维码链接
     /**
      * 畅游通生成的订单ID
      */
