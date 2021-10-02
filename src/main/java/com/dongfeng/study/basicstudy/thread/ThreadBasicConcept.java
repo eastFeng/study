@@ -110,7 +110,7 @@ public class ThreadBasicConcept {
             System.out.println("lambda thread");
         });
 
-        // 线程有一些基本属性和方法，包括id、name、优先级、状态、是否daemo线程、sleep方法、yield方法、join方法、过时方法等
+        // 线程有一些基本属性和方法，包括id、name、优先级、状态、是否daemon线程、sleep方法、yield方法、join方法、过时方法等
 
 
         // 1. 每个线程都有一个id和name。
@@ -133,7 +133,10 @@ public class ThreadBasicConcept {
          * TERMINATED：线程运行结束后状态为TERMINATED。
          * RUNNABLE：调用start后线程在执行run方法且没有阻塞时状态为RUNNABLE，
          *          不过，RUNNABLE不代表CPU一定在执行该线程的代码，可能正在执行也可能在等待操作系统分配时间片，只是它没有在等待其他条件。
-         * BLOCKED：没有获取锁。当前线程不能获得锁的时候，它会加入等待队列等待，线程的状态会变为BLOCKED。
+         *          线程在运行或具备运行条件只是在等待操作系统调度。
+         * BLOCKED：没有获取锁。
+         *         当前线程不能获得锁的时候，它会加入等待队列等待，线程的状态会变为BLOCKED。
+         *         线程在等待锁，试图进入同步块。
          * WAITING、TIMED_WAITING：线程进入了条件等待队列等待。当调用了sleep方法，wait方法
          */
 
@@ -162,7 +165,7 @@ public class ThreadBasicConcept {
 
         // 7. join方法：线程等待，Thread有一个join方法，可以让调用join的线程等待该线程结束
         try {
-            // 那个线程调用了线程t1的join方法，哪个线程就要等待线程t1结束
+            // 哪个线程调用了线程t1的join方法，哪个线程就要等待线程t1结束
             // 在等待线程结束的过程中，这个等待可能被中断，如果被中断，会抛出Interrupted-Exception。
             t1.join();
         } catch (InterruptedException e) {
@@ -233,10 +236,11 @@ public class ThreadBasicConcept {
             e.printStackTrace();
         }
         flag = false;
-        System.out.println("exit main, flag="+flag);
+        System.out.println("exit main, flag=" + flag);
     }
 
 
+    // 内存可见性
     private static boolean flag = true;
     private static class VisibilityDemo extends Thread{
         @Override
@@ -249,6 +253,7 @@ public class ThreadBasicConcept {
         }
     }
 
+    // 竞态条件
     private static int count = 0;
     private static class RaceConditionDemo extends Thread{
         @Override

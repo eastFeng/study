@@ -40,7 +40,7 @@ public class SynchronizedStudy {
          *
          * synchronized可以用于修饰类的实例方法、静态方法和代码块。
          * 对实例方法，synchronized锁住(保护)的是当前实例对象(this)
-         * 对静态方法，synchronized锁住(保护)的是类对象(Class)，实际上，每个对象都有一个锁和一个等待队列，类对象也不例外。
+         * 对静态方法，synchronized锁住(保护)的是类对象(Class对象)，实际上，每个对象都有一个锁和一个等待队列，类对象也不例外。
          * 对代码块，synchronized同步的对象可以是任意对象，任意对象都有一个锁和等待队列，或者说，任何对象都可以作为锁对象。
          *
          *
@@ -190,7 +190,7 @@ public class SynchronizedStudy {
     public static void thread_localVariable(){
         for (int i=0; i<3; ++i){
             new Thread(()->{
-                //list是局部变量  线程安全
+                // list是局部变量  线程安全
                 List<String> list = new ArrayList<>(1);
                 for (int j=0; j<200; ++j){
                     list.add("1");

@@ -1,6 +1,6 @@
 /**
  * <b> HandlerInterceptor拦截器 </b>
- *
+ * <p> 拦截器是Spring MVC中的技术
  * <p> 原理：拦截器是基于java反射机制(动态代理)实现
  * <p> 使用方法：实现{@link org.springframework.web.servlet.HandlerInterceptor}接口。
  * 也可以继承{@link org.springframework.web.servlet.handler.HandlerInterceptorAdapter}类。

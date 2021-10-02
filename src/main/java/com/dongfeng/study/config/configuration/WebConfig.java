@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 
 /**
  * <b>MVC配置</b>
+ * <p> 相当于 SpringMVC.xml
  *
  * @author eastFeng
  * @date 2020-11-18 16:22
