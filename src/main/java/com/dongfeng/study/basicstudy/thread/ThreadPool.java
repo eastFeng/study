@@ -1,10 +1,6 @@
 package com.dongfeng.study.basicstudy.thread;
 
 import cn.hutool.core.util.RandomUtil;
-import org.apache.poi.ss.formula.functions.T;
-
-import java.util.List;
-import java.util.Random;
 import java.util.concurrent.*;
 
 /**
