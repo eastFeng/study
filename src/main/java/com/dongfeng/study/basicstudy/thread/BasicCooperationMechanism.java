@@ -17,6 +17,10 @@ public class BasicCooperationMechanism {
          * 多线程之间除了竞争访问同一个资源外，也经常需要相互协作的。
          * 怎么协作呢？ Java中多线程协作的基本机制是 wait/notify。
          *
+         * 并发编程领域两大核心问题:
+         * 【互斥】即同一时刻只允许一个线程访问共享资源。
+         * 【同步】即线程之间如果通信、协作。
+         *
          * 协作关键要想清楚协作的共享变量和条件是什么。
          */
 
@@ -27,10 +31,10 @@ public class BasicCooperationMechanism {
         waitAndNotify();
 
         // 生产者消费者模式
-//        producerAndConsumer();
+        producerAndConsumer();
 
         // 同时开始
-        sameTimeStart();
+//        sameTimeStart();
     }
 
     /**
@@ -144,7 +148,6 @@ public class BasicCooperationMechanism {
          * 生产者往队列上放数据，如果满了就wait，而消费者从队列上取数据，如果队列为空也wait。
          */
 
-
         MyBlockQueue<Integer> myBlockQueue = new MyBlockQueue<>(10);
 
         Thread producerThread = new Thread() {
@@ -154,7 +157,6 @@ public class BasicCooperationMechanism {
                 for (int i=0; i<1000; i++) {
                     try {
                         myBlockQueue.put(num);
-                        System.out.println("producer put "+ num);
                         num++;
                         TimeUnit.MILLISECONDS.sleep(100);
                     } catch (InterruptedException e) {
@@ -170,7 +172,6 @@ public class BasicCooperationMechanism {
                 for (int i=0; i<1000; i++) {
                     try {
                         Integer take = myBlockQueue.take();
-                        System.out.println("consumer take "+ take);
                         TimeUnit.MILLISECONDS.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -188,7 +189,7 @@ public class BasicCooperationMechanism {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        // 运行该程序，会看到生产者和消费者线程的输出交替出现。
+        // 运行该程序，会看到生产者和消费者线程的输出交替出现。并且是先生产再消费。
         /*
          * 我们实现的MyBlockingQueue主要用于演示，Java提供了专门的阻塞队列实现，包括：
          * 1. 接口BlockingQueue和BlockingDeque。
@@ -221,31 +222,44 @@ public class BasicCooperationMechanism {
         }
 
         /**
-         * 往队列中添加元素
+         * <b> 往队列中添加元素 </b>
+         * <p> 对实例方法，synchronized锁住(保护)的是当前实例对象(this)
          */
         public synchronized void put(E e) throws InterruptedException {
             // 当队列已满，添加元素的条件不成立，调用wait方法等待
+            // 线程从wait调用中返回后，不代表其等待的条件就一定成立了，它需要重新检查其等待的条件(放在while循环中)
             while (queue.size() == limit){
+                // wait方法：当前线程放入条件队列中，并且释放对象锁，线程状态变为WAITING
                 wait();
             }
 
-            // 走到这里，说明队列已经不满了添加元素的条件成立，可以往里面添加元素了
+            // 走到这里，说明队列已经是不满的，添加元素的条件成立，可以往里面添加元素了
             queue.add(e);
+
+//            System.out.println("producer put "+ e);
+            System.out.println("生产者 生产 ---- "+ e);
+
             // 唤醒所有线程（主要是为了唤醒消费者线程从队列中取元素）
             notifyAll();
         }
 
         /**
          * 从队列中取元素
+         * <p> 对实例方法，synchronized锁住(保护)的是当前实例对象(this)
          */
         public synchronized E take() throws InterruptedException {
             // 当队列为空，从队列中取元素的条件不成立，调用wait方法等待
             while (queue.isEmpty()){
+                // wait方法：当前线程放入条件队列中，并且释放对象锁，线程状态变为WAITING
                 wait();
             }
 
-            // 到这里说明，队列已经不为空取元素的条件成立
+            // 到这里说明，队列已经不为空，取元素的条件成立
             E poll = queue.poll();
+
+//            System.out.println("consumer take "+ poll);
+            System.out.println("消费者 消费 "+ poll);
+
             // 唤醒所有线程（主要是为了唤醒生产者线程往队列中添加元素）
             notifyAll();
             return poll;
