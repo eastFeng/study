@@ -45,6 +45,7 @@ public class ArrayListStudy<E> {
         /*
          * List元素：有序，可重复，可通过下标随机访问元素。
          *
+         * ArrayList基于动态数组。
          * ArrayList内部有一个Object数组elementData，一般会有一些预留的空间，有一个整数size记录实际的元素个数。
          * 如下所示：
          * transient Object[] elementData;

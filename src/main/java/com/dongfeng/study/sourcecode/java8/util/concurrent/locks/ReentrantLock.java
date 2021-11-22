@@ -43,7 +43,7 @@ public class ReentrantLock implements Lock, Serializable {
         final boolean nonfairTryAcquire(int acquires){
             final Thread current = Thread.currentThread();
             int state = getState();
-            if (state==0){
+            if (state == 0){
                 // 1. 锁是空闲的
                 if (compareAndSetState(0, acquires)){
                     // CAS更新state的值成功

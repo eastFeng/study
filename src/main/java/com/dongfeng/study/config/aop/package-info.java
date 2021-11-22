@@ -575,7 +575,6 @@ package com.dongfeng.study.config.aop;
  *
  * <p> @AspectJ annotation style
  *
- *
  * <p> AOP 在Spring框架中用于:
  * <pre>
  * 1. 提供声明式企业服务。最重要的此类服务是声明式事务管理（declarative transaction management）。

@@ -7,6 +7,9 @@ package com.dongfeng.study.basicstudy.java.otherbasic;
  * @date 2021-04-21 19:17
  */
 public abstract class AbstractStudy {
+
+
+
     /*
      * 抽象类（abstract class）就是抽象的类。抽象是相对于具体而言的，一般而言，具体类有直接对应的对象，而抽象类没有，它表达的是抽象概念。
      * 一般是具体类的比较上层的父类。比如，狗是具体对象，而动物则是抽象概念；樱桃是具体对象，而水果则是抽象概念；正方形是具体对象，而图形则是抽象概念。

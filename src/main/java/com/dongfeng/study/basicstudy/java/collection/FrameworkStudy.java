@@ -100,7 +100,7 @@ public class FrameworkStudy {
      */
     public static void usageAndCharacter(){
         /*
-         * 容器类（集合框架）有两个根接口，分别是Collection和Map, Collection表示单个元素的集合，Map表示键值对的集合。
+         * 容器类（集合框架）有两个根接口，分别是Collection和Map, 【Collection表示单个元素的集合，Map表示键值对的集合】。
          *
          * 【Collection】
          * Collection表示的数据集合有基本的增、删、查、遍历等方法，但没有定义元素间的顺序或位置，也没有规定是否有重复元素。
@@ -111,7 +111,7 @@ public class FrameworkStudy {
          * Iterator<E> iterator(); // 遍历
          *
          * 【List】
-         * List是Collection的子接口，表示一个有序集合，允许元素重复，增加了根据元素索引进行操作的方法。
+         * List是Collection的子接口，表示一个有序（元素的进入顺序）集合，允许元素重复，增加了根据元素索引进行操作的方法。
          * 它有两个主要的实现类：ArrayList和LinkedList。
          * ArrayList基于数组实现， LinkedList基于链表实现；
          * ArrayList的随机访问效率很高，但从中间插入和删除元素需要移动元素，效率比较低，
@@ -121,6 +121,7 @@ public class FrameworkStudy {
          *
          * 【Set】
          * Set也是Collection的子接口，表示一个无序集合，不允许重复元素（保证不含重复元素），它没有增加新的方法。
+         * 取元素时只能用Iterator接口取得所有元素，再逐一遍历所有元素。
          * 它有两个主要的实现类：HashSet和TreeSet。
          * HashSet基于哈希表实现，要求键重写hashCode方法，效率更高，但元素间没有顺序；
          * TreeSet基于排序二叉树实现，元素按比较有序，元素需要实现Comparable接口，或者创建TreeSet时提供一个Comparator对象。
