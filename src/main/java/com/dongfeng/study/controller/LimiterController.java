@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequestMapping("/limiterTest")
 @RestController
-public class LimiterTestController {
+public class LimiterController {
 
     /**
      * 3秒内允许请求10次

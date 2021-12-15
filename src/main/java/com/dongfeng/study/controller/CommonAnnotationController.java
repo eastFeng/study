@@ -11,17 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
+ * <b> 常见注解学习 </b>
+ *
  * @author eastFeng
  * @date 2020-12-30 17:31
  */
 @Slf4j
-@RequestMapping("/rs")
+@RequestMapping("/common/annotation")
 @Controller
-public class RsController {
+public class CommonAnnotationController {
 
     /**
-     * @ResponseBody  : Java对象序列化为Json
-     * @RequestBody  : Json反序列化为Java对象
+     * {@link ResponseBody} : Java对象序列化为Json
+     * <p> {@link RequestBody} : Json反序列化为Java对象
      */
     @GetMapping("/noRsTest")
     @ResponseBody
