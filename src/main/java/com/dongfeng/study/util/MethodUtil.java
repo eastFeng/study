@@ -25,7 +25,7 @@ public class MethodUtil {
      */
     public static String resolveMethodName(Method method) {
         if (method == null) {
-            throw new IllegalArgumentException("Null method");
+            return "Null_Method";
         }
         // 首先从map中获取
         String methodName = METHOD_NAME_MAP.get(method);

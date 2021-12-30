@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public <T> Response<T> business(HttpServletRequest request, Exception e){
         String uri = request.getRequestURI();
-        log.error(uri + "controller exception error:{}", e.getMessage(), e);
+        log.error(uri + "ControllerException error:{}", e.getMessage(), e);
 
         if (e instanceof BizException){
             BizException biz = (BizException) e;

@@ -14,7 +14,7 @@ import java.lang.annotation.*;
 public @interface RedisLimiter {
 
     /**
-     * @return 资源的名称 (限流key)
+     * @return 资源的名称 (限流key)。建议必须自定义一个。
      */
     String value() default "";
 

@@ -86,13 +86,13 @@ public class RSAUtil {
      * @return 公钥对象
      */
     public static PublicKey getPublicKey(String pubKeyBase64){
-        //把公钥的Base64文本 转换为 已编码的公钥bytes
+        // 把公钥的Base64文本 转换为 已编码的公钥bytes
         byte[] keyBytes = Base64.decodeBase64(pubKeyBase64);
 
-        //创建 已编码的公钥规格
+        // 创建 已编码的公钥规格
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
 
-        //获取指定算法的密钥工厂, 根据 已编码的公钥规格 生成公钥对象
+        // 获取指定算法的密钥工厂, 根据 已编码的公钥规格 生成公钥对象
         PublicKey publicKey = null;
         try {
             publicKey = KeyFactory.getInstance(RSA_ALGORITHM).generatePublic(keySpec);
@@ -109,13 +109,13 @@ public class RSAUtil {
      * @return 私钥对象
      */
     public static PrivateKey getPrivateKey(String priKeyBase64){
-        //把私钥的Base64文本 转换为 已编码的私钥bytes
+        // 把私钥的Base64文本 转换为 已编码的私钥bytes
         byte[] keyBytes = Base64.decodeBase64(priKeyBase64);
 
-        //创建 已编码的私钥规格
+        // 创建 已编码的私钥规格
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
 
-        //获取指定算法的密钥工厂, 根据 已编码的私钥规格 生成私钥对象
+        // 获取指定算法的密钥工厂, 根据 已编码的私钥规格 生成私钥对象
         PrivateKey privateKey = null;
         try {
             privateKey = KeyFactory.getInstance(RSA_ALGORITHM).generatePrivate(keySpec);

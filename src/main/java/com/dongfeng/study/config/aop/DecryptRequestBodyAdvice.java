@@ -1,6 +1,7 @@
 package com.dongfeng.study.config.aop;
 
 import cn.hutool.core.codec.Base64;
+import com.dongfeng.study.bean.base.Constants;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpInputMessage;
@@ -29,7 +30,7 @@ import java.lang.reflect.Type;
  * @author eastFeng
  * @date 2020-11-27 15:04
  */
-@ControllerAdvice(basePackages = "com.dongfeng.study.controller") //basePackages: 设置需要当前Advice执行的域 , 省略默认全局生效
+@ControllerAdvice(basePackages = "com.dongfeng.study.controller") // basePackages: 设置需要当前Advice执行的域,省略默认全局生效
 public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
 
     /**
@@ -43,7 +44,7 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
     public boolean supports(MethodParameter methodParameter,
                             Type targetType,
                             Class<? extends HttpMessageConverter<?>> converterType) {
-        //如果返回false，就不会调用此拦截器的业务了
+        // 如果返回false，就不会调用此拦截器的业务了
         return true;
     }
 
@@ -63,19 +64,19 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
                                            MethodParameter parameter,
                                            Type targetType,
                                            Class<? extends HttpMessageConverter<?>> converterType) throws IOException {
-        //1. 请求是否是加密的，如果不是，不用处理请求体
-        String ccEnable = inputMessage.getHeaders().getFirst("ccEnable");
+        // 1. 请求是否是加密的，如果不是，不用处理请求体
+        String ccEnable = inputMessage.getHeaders().getFirst(Constants.REQUEST_ENCRYPTION);
         if (!"true".equals(ccEnable)){
-            //请求没有加密
+            // 请求没有加密
             return inputMessage;
         }
 
-        //2. 转换入参
+        // 2. 转换入参
         StringBuilder stringBuilder = new StringBuilder();
-        //BufferedReader：字符流读取的效率，引入了缓冲机制，进行字符批量的读取。拥有8192个字符的缓冲区
+        // BufferedReader：字符流读取的效率，引入了缓冲机制，进行字符批量的读取。拥有8192个字符的缓冲区
         BufferedReader bufferedReader = null;
         try {
-            //获取请求体数据流
+            // 获取请求体数据流
             InputStream bodyInputStream = inputMessage.getBody();
             bufferedReader = new BufferedReader(new InputStreamReader(bodyInputStream));
             char[] charBuffer = new char[128];
@@ -86,7 +87,7 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
         } catch (IOException e) {
             throw e;
         } finally {
-            //关闭流
+            // 关闭流
             if (bufferedReader != null){
                 try {
                     bufferedReader.close();
@@ -96,18 +97,30 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
             }
         }
 
-        //获取前端传入的ccCode（前端进行过Base64编码）
-        String ccCode = inputMessage.getHeaders().getFirst("ccCode");
-        //Base64编码：基于64个可打印字符来表示二进制数据，Base64编码是从二进制到字符的过程，采用Base64编码具有不可读性，需要解码后才能阅读。
-        //Base64编码是用64（2的6次方）个ASCII字符来表示256（2的8次方）个ASCII字符，也就是三位二进制数组经过编码后变为四位的ASCII字符显示，长度比原来增加1/3。
-        //编码规则：1.把3个字节变成4个字节  2.每76个字符加一个换行符  3.最后的结束符也要处理
+        // 获取前端传入的ccCode（前端进行过Base64编码）
+        String ccCode = inputMessage.getHeaders().getFirst(Constants.REQUEST_ENCRYPTION_CODE);
+        /*
+         * Base64是网络上最常见的用于传输8Bit字节码的编码方式之一，Base64就是一种基于64个可打印字符来表示二进制数据的方法。
+         * Base64编码是从二进制到字符的过程，可用于在HTTP环境下传递较长的标识信息。采用Base64编码具有不可读性，需要解码后才能阅读。
+         * Base64编码规则：1.把3个字节变成4个字节  2.每76个字符加一个换行符  3.最后的结束符也要处理
+         *
+         * Base64编码是用64（2的6次方）个ASCII字符来表示256（2的8次方）个ASCII字符，
+         * 也就是三位二进制数组经过编码后变为四位的ASCII字符显示，长度比原来增加1/3。
+         * 例如：
+         * 转换前 10101101,10111010,01110110
+         * 转换后 00101011, 00011011 ,00101001 ,00110110
+         * 十进制 43 27 41 54
+         * （转换后，我们用一个码表来得到我们想要的字符串（也就是最终的Base64编码））
+         * 对应码表中的值 r b p 2
+         * 所以上面的24位编码，编码后的Base64值为rbp2
+         */
         String nk = Base64.decodeStr(ccCode);
         int length = nk.length();
-        //substring: 开始下标包括，结束下标不包括
-        //后面3个放在前面
+        // substring: 开始下标包括，结束下标不包括
+        // 后面3个放在前面
         String password = nk.substring(length - 3, length) + nk.substring(0, length - 3);
 
-        //请求体数据
+        // 请求体数据
         String body = stringBuilder.toString();
 
 

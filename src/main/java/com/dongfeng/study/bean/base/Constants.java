@@ -24,6 +24,15 @@ public interface Constants {
      * 日志的traceId
      */
     String TRACE_ID = "traceId";
+    /**
+     * 请求是否加密
+     * <p> 请求头中的requestEncryption参数值如果为true，则请求是加密的，否则没有加密。
+     */
+    String REQUEST_ENCRYPTION = "requestEncryption";
+    /**
+     * 请求如果是加密的，这个就是密码Base64编码后的的
+     */
+    String REQUEST_ENCRYPTION_CODE = "reCode";
 
     /* -------------  RabbitMQ相关, Start ----------------- */
     // Topic类型的Exchange的名字
