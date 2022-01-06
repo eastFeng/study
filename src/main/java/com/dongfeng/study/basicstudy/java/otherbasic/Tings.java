@@ -9,8 +9,9 @@ import java.util.UUID;
 public class Tings {
     public static String s;
     static {
-        System.out.println("父类静态代码块，s="+s);
+        System.out.println("父类Tings静态代码块，变量在赋值前输出 s="+s);
         s = "staticS";
+        System.out.println("父类Tings静态代码块，变量在赋值后输出 s="+s);
     }
 
 

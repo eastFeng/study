@@ -180,7 +180,8 @@ public class LambdaStudy {
      */
     public static void lambdaSyntax(){
         /*
-         * Lambda表达式核心原则：可推到可省略。
+         * Lambda表达式核心原则：可推导可省略。
+         * Lambda表达式关注的是数据处理，而不是对象。
          *
          * lambda表达式是一个可传递的代码块，可以在以后执行一次或多次。
          * 它是一种紧凑的传递代码的方式，利用它，可以实现简洁灵活的函数式编程。
@@ -252,9 +253,9 @@ public class LambdaStudy {
 
         ExecutorService executor = Executors.newFixedThreadPool(10);
         String msg = "hello world";
-        //可以访问局部变量msg，但msg不能被重新赋值，Java编译器会提示错误：
-//        msg = "good morning";
-          // Java编译器会提示错误：Variable used in lambda expression should be final or effectively final
+        // 可以访问局部变量msg，但msg不能被重新赋值，Java编译器会提示错误：
+        // msg = "good morning";
+        // Java编译器会提示错误：Variable used in lambda expression should be final or effectively final
         executor.submit(() -> System.out.println(msg));
         /*
          * 这个原因与匿名内部类是一样的，Java会将msg的值作为参数传递给Lambda表达式，
@@ -284,7 +285,7 @@ public class LambdaStudy {
          * 方法可以是实例方法，也可以是静态方法，但含义不同。
          *
          * 要用::操作符分隔方法名与对象或类名。主要有3种情况：
-         * object::instanceMethod      // 变量::实例方法
+         * object::instanceMethod      // 变量::实例方法   [变量（类或者接口的实例）只能引用实例方法]
          * Class::staticMethod         // 类名::实例方法
          * Class::instanceMethod       // 类名（接口名）::静态方法
          * 在前2种情况中，方法引用等价于提供方法参数的lambda表达式。比如：
@@ -292,6 +293,7 @@ public class LambdaStudy {
          * 对于第3种情况，第1个参数会成为方法的目标。
          * 例如，String::compareToIgnoreCase等同于(x, y) -> x.compareToIgnoreCase(y)。
          */
+
         // 对于静态方法，如下两条语句是等价的：
         Supplier<String> supplier1 = () -> InterfaceStudy.getStr();
         Supplier<String> supplier2 = InterfaceStudy::getStr;
