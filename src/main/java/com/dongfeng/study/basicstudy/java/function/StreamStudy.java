@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * @author eastFeng
  * @date 2020/4/16 - 15:48
  */
-public class StreamDemo {
+public class StreamStudy {
     public static void main(String[] args) {
 
         // Stream 介绍
