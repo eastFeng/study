@@ -118,6 +118,26 @@ public class LambdaStudy {
          * lambda 表达式可以转换为接口，这一点让 lambda 表达式很有吸引力，实际上，在 Java 中，对 lambda 所做的也只能是转换为函数式接口。
          * 甚至不能把lambda表达式赋给类型为Object的变量，Object不是一个函数式接口。
          */
+
+        /**
+         * java.util.function包中有很多函数式接口，用来支持 Java的 函数式编程
+         * 有以下分类：
+         * 1. 【消费型】
+         *           比如：Consumer<T> {@link Consumer} 接受一个输入参数并且无返回。
+         *           也有其他Consumer函数式接口的变形，比如BiConsumer<T,U>
+         *
+         * 2. 【提供型】
+         *           比如：Supplier<T> 无参数，返回一个结果。
+         *
+         * 3. 【判断型】
+         *           比如：Predicate<T> {@link java.util.function.Predicate} 接受一个输入参数，返回一个布尔值结果。
+         *           也有其他Predicate函数式接口的变形，比如BiPredicate<T,U>
+         *
+         * 4. 【计算型】
+         *          比如：Function<T,R> {@link Function} 接受一个T类型输入参数，返回一个R类型结果。
+         *
+         *
+         */
     }
 
     /**

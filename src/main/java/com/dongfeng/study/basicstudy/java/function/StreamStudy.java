@@ -29,7 +29,7 @@ public class StreamStudy {
          * Stream流的特点：
          * 1. 不是数据结构，不会保存数据。 Java中的Stream并不会存储元素，而是按需计算。
          * 2. 数据源 : 流的来源。可以是集合，数组，I/O channel， 产生器generator等。
-         * 3. 不会修改原来的数据源，它会将操作后的数据保存到另外一个对象中。
+         * 3. 不会修改原来的数据源，它会将操作后的数据保存到另外一个对象中。【非常重要，和直接使用Collection集合中的方法不一样】
          * 4. 惰性求值，流在中间处理过程中，只是对操作进行了记录，并不会立即执行，需要等到执行终止操作的时候才会进行实际的计算。
          * 5. 聚合操作 : 类似SQL语句一样的操作， 比如filter, map, reduce, find, match, sorted等。
          *
@@ -247,7 +247,7 @@ public class StreamStudy {
     }
 
     /**
-     * stream filter 根据条件过滤
+     * stream filter 根据条件过滤流中元素
      * <p> Stream接口的filter方法:
      * <p> Stream<T> filter(Predicate<? super T> predicate);
      * <p> filter方法需传入一个Predicate类型的参数, 返回值是T类型的流Stream<T>,所以这是个中间操作。
@@ -257,17 +257,20 @@ public class StreamStudy {
      * <p> 注: 因为可以根据T的所有属性进行过滤,所以是输入是: ? super T
      */
     private static void streamFilter(List<Goods> goodsList){
-        // 过滤出所有满足条件的数据
+        // 过滤出流中所有满足条件的数据
         List<Goods> goods = goodsList.stream().filter(T -> T.getPrice() <= 10).collect(Collectors.toList());
         System.out.println(goods);
 
-        // 根据条件返回一个数据
+        // 根据条件获取流中第一个数据
         Goods goods1 = goodsList.stream().filter(T -> T.getType().equals("电脑")).findFirst().orElse(null);
         if (goods1 == null){
             System.out.println("no goods type is 电脑");
         }else {
             System.out.println(goods1);
         }
+
+        // 获取流中任意一个元素
+        Goods goods3 = goodsList.stream().findAny().orElse(null);
 
         List<String> stringList = new ArrayList<>(10);
         // 根据条件返回一个数据
@@ -281,7 +284,32 @@ public class StreamStudy {
     }
 
     /**
-     * stream sorted 根据条件排序
+     * stream anyMatch 流中是否有符合条件的元素
+     */
+    public static void streamAnyMatch(List<Goods> goodsList){
+        final boolean anyMatch = goodsList.stream().anyMatch(g -> g.getNumber() > 10);
+        System.out.println("anyMatch = "+anyMatch);
+    }
+
+    /**
+     * stream allMatch 流中是否所有元素都符合条件
+     */
+    public static void streamAllMatch(List<Goods> goodsList){
+        final boolean allMatch = goodsList.stream().allMatch(g -> g.getNumber() > 10);
+        System.out.println("anyMatch = "+allMatch);
+    }
+
+    /**
+     * stream noneMatch 流中是否所有元素都不符合条件
+     */
+    public static void streamNoneMatch(List<Goods> goodsList){
+        final boolean noneMatch = goodsList.stream().noneMatch(g -> g.getNumber() > 10);
+        System.out.println("noneMatch = "+noneMatch);
+    }
+
+
+    /**
+     * stream sorted 根据条件排序对流中元素进行排序
      * <p> 1. Stream接口中的sorted方法:
      * <p> Stream<T> sorted(Comparator<? super T> comparator)
      * 该方法需要传入一个Comparator类型的参数
@@ -309,7 +337,7 @@ public class StreamStudy {
     }
 
     /**
-     * stream map 映射(转换)元素到对应的结果
+     * stream map 映射(转换)流中元素到对应的结果
      *
      * <p> Stream接口的map方法:
      * <p> <R> Stream<R> map(Function<? super T, ? extends R> mapper);
@@ -466,4 +494,25 @@ public class StreamStudy {
         System.out.println("把商品分为价格大于5000的和小于等于5000的:");
         pricePartition.forEach((k,v) -> System.out.println(k+" : "+v));
     }
+
+    /**
+     * stream reduce 归约操作
+     */
+    public static void streamReduce(List<Goods> goodsList){
+        // 利用map和reduce求所有商品的数量之和
+        Integer reduce = goodsList.stream()
+                .map(Goods::getNumber)
+                .reduce(0, (result, element) -> result + element);
+
+        System.out.println("利用map和reduce求所有商品的数量之和 : "+ reduce);
+
+
+//        goodsList.stream().reduce(()-)
+
+        Optional<Goods> max = goodsList.stream().max(Comparator.comparingInt(Goods::getNumber));
+
+        Goods goods = max.get();
+
+    }
+
 }
