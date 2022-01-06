@@ -34,7 +34,7 @@ public class StreamDemo {
 //
 //        test_Collectors_group(goodsList);
 //
-//        //自定义比较器
+//        // 自定义比较器
 //        goodsList.sort(new GoodsComparator().reversed());
 //        goodsList.sort((g1, g2)->{
 //            // 先按价格进行比较

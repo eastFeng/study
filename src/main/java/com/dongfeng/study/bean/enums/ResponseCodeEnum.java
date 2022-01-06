@@ -41,8 +41,8 @@ public enum ResponseCodeEnum {
     DATABASE_BATCH_INSERT_ERROR(3005, "数据库批量插入失败"),
     ;
 
-    private int code;
-    private String msg;
+    private final int code;
+    private final String msg;
 
     ResponseCodeEnum(int code, String msg) {
         this.code = code;

@@ -92,4 +92,13 @@ public class StudyApplication {
         }
     }
 
+
+    /*
+     * SpringBoot的四个特点：
+     * 1. 使开发者快速搭建Spring环境
+     * 2. 提供一系列开箱即用的starter
+     * 3. 提供许多非业务性的功能
+     * 4. 没有XML配置，没有代码生成
+     */
+
 }
