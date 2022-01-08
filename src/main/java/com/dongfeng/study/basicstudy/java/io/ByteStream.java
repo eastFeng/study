@@ -55,6 +55,7 @@ public class ByteStream {
          *
          * 流与数据源或者数据流向的媒介相关联：
          * 输入流（InputStream或Reader）是和数据源相关的，输出流（OutputStream或Writer）是和目标媒介相关的。
+         * (输入流：往流中输入数据 | 输出流：从流中输出数据)
          * 一个程序需要InputStream或者Reader从数据源读取数据，需要OutputStream或者Writer将数据写入到目标媒介中。
          * 如下所示：
          * Source ---> InputStream/Reader ---> Program

@@ -1,5 +1,6 @@
 package com.dongfeng.study.basicstudy.java.otherbasic;
 
+import cn.hutool.core.util.RandomUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
@@ -158,5 +159,12 @@ public class Goods extends Tings implements Serializable,Cloneable {
                 ", number=" + number +
                 ", price=" + price +
                 '}';
+    }
+
+
+    public static Goods getGoods(){
+        Goods goods = new Goods();
+        goods.setId(RandomUtil.randomInt(1000, 1000000));
+        return goods;
     }
 }

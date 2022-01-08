@@ -6,6 +6,7 @@ import com.dongfeng.study.util.MathUtil;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author eastFeng
@@ -15,10 +16,13 @@ public class StreamStudy {
     public static void main(String[] args) {
 
         // Stream 介绍
-        streamIntroduction();
+//        streamIntroduction();
 
         // Stream 用法
-        streamTest();
+//        streamTest();
+
+        // Stream 特点
+        streamCharacter();
     }
 
     public static void streamIntroduction(){
@@ -512,6 +516,33 @@ public class StreamStudy {
         Optional<Goods> max = goodsList.stream().max(Comparator.comparingInt(Goods::getNumber));
 
         Goods goods = max.get();
+
+    }
+
+
+    /**
+     * stream 特点
+     */
+    public static void streamCharacter(){
+
+        /*
+         * 1. 惰性求值：如果没有终结操作，中间操作是不会得到执行的。
+         * 2. 流（stream）是一次性的：一旦一个流对象（Stream对象）经过一次终结操作后，这个流对象（Stream对象）就不能再被使用。
+         * 3. 不会影响原始数据：可以在流中对数据做很多操作，但正常情况下不会影响原始集合中的元素。
+         */
+
+        /*
+         * 流（stream）的一次性演示:
+         */
+        ArrayList<Integer> list = new ArrayList<>();
+        // 生成Stream对象
+        Stream<Integer> stream = list.stream();
+        // Stream对象进行一次终结操作
+        Integer firstInteger = stream.filter(t -> t > 10).findFirst().orElse(null);
+        // Stream对象已经使用一次，不能再次使用，否则会产生异常（下面语句会产生异常）
+        // java.lang.IllegalStateException: stream has already been operated upon or closed
+        List<Integer> collect = stream.filter(t -> t < 10).collect(Collectors.toList());
+
 
     }
 
