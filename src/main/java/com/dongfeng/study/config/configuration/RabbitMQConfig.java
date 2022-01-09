@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     /**
-     * 声明Topic类型的Exchange, 比较通用，其他模式都可以实现
+     * 声明Topic类型的Exchange(交换器), 比较通用，其他模式都可以实现
      *
      * @return TopicExchange
      */

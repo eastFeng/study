@@ -20,4 +20,9 @@ public class Study1 {
      * install : 安装，安装打包的项目到本地仓库，以供其他项目使用。
      * deploy : 拷贝最终的工程包到远程仓库中，以共享给其他开发人员和工程。
      */
+
+
+    public static void main(String[] args) {
+
+    }
 }

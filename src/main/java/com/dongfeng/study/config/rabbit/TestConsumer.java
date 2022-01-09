@@ -32,7 +32,7 @@ public class TestConsumer {
     @Autowired
     private RedisUtil redisUtil;
 
-    // 表示接收消息后的处理方法
+    // 表示接收String类型消息后的处理方法, 根据消息的类型区分不同的方法
     @RabbitHandler
     public void receiveString(String str){
         log.info("消费者接收到消息 String_message:{}", str);
@@ -40,20 +40,22 @@ public class TestConsumer {
         // 进行一些其他耗时业务 : 比如发邮件，下订单等等
     }
 
-    // 表示接收消息后的处理方法 , 根据消息的类型区分不同的方法
+    // 表示接收Map类型消息后的处理方法 , 根据消息的类型区分不同的方法
     @RabbitHandler
     public void receiveMap(Map<String, Object> map){
         log.info("消费者接收到消息 Map_message:{}", map);
     }
 
+    // 表示接收List类型消息后的处理方法 , 根据消息的类型区分不同的方法
     @RabbitHandler
     public void receiveList(List<Object> list){
         log.info("消费者接收到消息 List_message:{}", list);
     }
 
+    // 表示接收Message类型消息后的处理方法 , 根据消息的类型区分不同的方法
     @RabbitHandler
     public void receiveMessage(Message message){
-        String logID = "logID-"+UUID.randomUUID().toString();
+        String logID = "logID-"+ UUID.randomUUID();
         log.info("消费者接收到消息 logID:{},Message:{}", logID, message);
         try {
             // 消息ID

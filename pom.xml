@@ -24,6 +24,8 @@
         <!-- 父项目的artifactId -->
         <!-- spring-boot-starter-parent：是一个特殊的starter依赖，它用来提供相关的Maven默认依赖。
              使用它之后，常用的依赖可以省去version标签 -->
+        <!--按住Ctrl键，鼠标左键点进去spring-boot-starter-parent
+            以此类推一直点进parent里的artifactId会进去到spring-boot-dependencies-->
         <artifactId>spring-boot-starter-parent</artifactId>
         <!-- 父项目的version -->
         <version>2.3.3.RELEASE</version>

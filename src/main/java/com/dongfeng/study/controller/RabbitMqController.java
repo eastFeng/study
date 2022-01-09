@@ -49,6 +49,11 @@ public class RabbitMqController {
 //                    withBody(req.getMsg().getBytes(StandardCharsets.UTF_8)) // 真正要发送的消息内容
 //                    .setMessageId(UUID.randomUUID().toString()) // 设置消息ID
 //                    .build();
+//
+//            rabbitTemplate.convertAndSend(Constants.RABBIT_TOPIC_EXCHANGE_NAME, // 指定交换机
+//                    Constants.RABBIT_ROUTING_KEY, // 指定路由键
+//                    message); // 消息
+
 
             rabbitTemplate.convertAndSend(Constants.RABBIT_TOPIC_EXCHANGE_NAME, // 指定交换机
                     Constants.RABBIT_ROUTING_KEY, // 指定路由键
@@ -83,6 +88,8 @@ public class RabbitMqController {
 
         return Response.errorInstance(ResponseCodeEnum.UNKNOWN);
     }
+
+    // ----------------------------------------------
 
     /**
      * 声明队列

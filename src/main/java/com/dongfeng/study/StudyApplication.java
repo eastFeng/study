@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 
 /**
  * <b> Spring Boot 的启动类
@@ -100,5 +101,70 @@ public class StudyApplication {
      * 3. 提供许多非业务性的功能
      * 4. 没有XML配置，没有代码生成
      */
+
+    /**
+     * <b> SpringBoot自动配置 </b>
+     *
+     * <p> 一 Springboot简化了很多dependency（依赖关系）配置，不用手动配置所有的依赖（dependency） </p>
+     * <ol>
+     *     <li> pom文件中的父依赖spring-boot-starter-parent，指定了starter的版本 </li>
+     *     <li> 这些starter依赖会导入很多jar包 </li>
+     *     <li> 我们只需要配置starter依赖就行 </li>
+     * </ol>
+     *
+     * <p> 二 自动配置底层源码 </p>
+     * <ol>
+     *     <li> {@link org.springframework.boot.autoconfigure.AutoConfigurationImportSelector}是自动配置的核心类 </li>
+     *     <li> 关键方法1：
+     *     {@link org.springframework.boot.autoconfigure.AutoConfigurationImportSelector#selectImports(AnnotationMetadata)}</li>
+     *     <li> 关键方法1中调用的关键方法2：
+     *     {@link org.springframework.boot.autoconfigure.AutoConfigurationImportSelector#getAutoConfigurationEntry(AnnotationMetadata)} </li>
+     *     <li> 关键方法2中调用了自动配置的核心方法：
+     *     {@link org.springframework.boot.autoconfigure.AutoConfigurationImportSelector#getCandidateConfigurations(AnnotationMetadata, AnnotationAttributes)}
+     *     该方法主要是把自动配置列表加载进来
+     *     </li>
+     *     <li> 关键方法2中会移除exclude里面的配置类 </li>
+     *     <li> 关键方法2中会filter（过滤）：根据自动配置类的条件---自动配置类上标注的一系列@ConditionalOnXXX注解 </li>
+     * </ol>
+     *
+     * <p> 自动配置核心方法1：getCandidateConfigurations的源码分析 </p>
+     * <pre>{@code
+     * protected List<String> getCandidateConfigurations(AnnotationMetadata metadata, AnnotationAttributes attributes) {
+     *     List<String> configurations = SpringFactoriesLoader.loadFactoryNames(
+     *     getSpringFactoriesLoaderFactoryClass(), getBeanClassLoader());
+     *
+     *     // 配置文件在：外部依赖包下的Maven:org.springframework.boot:spring-boot:2.3.3.RELEASE
+     *     // 中的META-INF中的spring.factories文件
+     *     Assert.notEmpty(configurations, "No auto configuration classes found in META-INF/spring.factories. If you "
+     * 			   + "are using a custom packaging, make sure that file is correct.");
+     * 	   // 断言里message的意思是：在META-INF/spring.factories中找不到自动配置类。如果您使用的是自定义打包，请确保该文件正确无误。
+     *     return configurations;
+     * }
+     * }</pre>
+     *
+     * 在配置文件spring.factories中，有{@link org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration}
+     * 、{@link org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration}等等很多配置类。
+     * <p> 以{@link org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration}配置类为例：
+     * <lo>
+     *     <li>
+     *     该配置类的方法{@link org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration#redisTemplate(RedisConnectionFactory)}
+     *     上面的注解：@ConditionalOnMissingBean(name = "redisTemplate")，
+     *     就是如果没有自定义{@link org.springframework.data.redis.core.RedisTemplate}类，
+     *     该配置类就会创建RedisTemplate对象并注入到Spring的IoC容器中，所以我们就可以自动装配并直接使用RedisTemplate了。
+     *     </li>
+     *     <li>
+     *     改配置类上有一行注解：@EnableConfigurationProperties(RedisProperties.class)。
+     *     {@link org.springframework.boot.context.properties.EnableConfigurationProperties}注解的作用是
+     *     使使用（被）{@link org.springframework.boot.context.properties.ConfigurationProperties}注解的类生效。
+     *     RedisProperties类里有很多关于Redis的配置信息。
+     *     关于@ConfigurationProperties注解的作用见{@link com.dongfeng.study.config.properties.ConfigurationPropertiesDemo}
+     *     </li>
+     * </lo>
+     *
+     *
+     *
+     */
+    private static void autoConfigurationStudy(){
+    }
 
 }
