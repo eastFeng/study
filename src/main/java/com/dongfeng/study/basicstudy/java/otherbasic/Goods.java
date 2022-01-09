@@ -40,6 +40,24 @@ public class Goods extends Tings implements Serializable,Cloneable {
 
     private Date date;
 
+    private Integer testA;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Integer getTestA() {
+        return testA;
+    }
+
+    public void setTestA(Integer testA) {
+        this.testA = testA;
+    }
+
     public Goods(){
         super();
     }
@@ -158,9 +176,11 @@ public class Goods extends Tings implements Serializable,Cloneable {
                 ", name='" + name + '\'' +
                 ", number=" + number +
                 ", price=" + price +
+                ", testB=" + testB +
+                ", date=" + date +
+                ", testA=" + testA +
                 '}';
     }
-
 
     public static Goods getGoods(){
         Goods goods = new Goods();

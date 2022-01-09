@@ -14,6 +14,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ReflectionUtils;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Method;
@@ -64,7 +65,7 @@ public class RedisLimiterAspect{
         Method method = signature.getMethod();
 
         try {
-            // 获取RedisLimiter注解
+            // 获取RedisLimiter注解  【Spring反射工具AnnotationUtils比较好用, 可以躲过代码检查】
             RedisLimiter limiter = AnnotationUtils.findAnnotation(method, RedisLimiter.class);
             if (limiter!=null && StringUtils.isNotBlank(limiter.value())){
                 // 限流key （定义了key就用定义的可以，否则就根据类路径和方法生成一个唯一key）

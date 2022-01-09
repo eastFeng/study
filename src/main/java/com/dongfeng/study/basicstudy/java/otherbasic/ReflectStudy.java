@@ -4,6 +4,7 @@ import com.dongfeng.study.basicstudy.designpattern.proxypattern.IPrinter;
 import com.dongfeng.study.bean.enums.ResponseCodeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
@@ -63,6 +64,9 @@ public class ReflectStudy {
 //
 //        }
 
+        //
+        // Spring自带的工具类ReflectionUtils比较好用
+        Method myUuid = ReflectionUtils.findMethod(Goods.class, "myUuid");
 
         try {
 //            // 获取Class对象的三种方法

@@ -30,6 +30,8 @@ public class Good extends Thing implements Serializable {
 
     private Boolean testB = false;
 
+    private String testA;
+
     public Good(){}
 
     public Good(String id, String type, String name, Integer number, double price){
