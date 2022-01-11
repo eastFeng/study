@@ -17,14 +17,14 @@ public class IDCardTest {
     public void getAgeByType(){
 
         try {
-            int myage = IdcardUtil.getAgeByIdCard("41142619931124033X");
+            int myAge = IdcardUtil.getAgeByIdCard("41142619931124033X");
             try {
                 int age = IdcardUtil.getAgeByIdCard("144240219570409005");
                 System.out.println(age);
             } catch (Exception e) {
                 log.error("内层tryCatch error:{}", e.getMessage(), e);
             }
-            System.out.println(myage);
+            System.out.println(myAge);
         } catch (Exception e) {
             log.error("外层tryCatch error:{}", e.getMessage(), e);
         }

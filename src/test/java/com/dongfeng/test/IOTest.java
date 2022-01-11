@@ -1,7 +1,15 @@
 package com.dongfeng.test;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
+import com.dongfeng.study.StudyApplication;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.core.io.Resource;
+import org.springframework.util.FileCopyUtils;
 
 import java.io.*;
 
@@ -15,6 +23,18 @@ public class IOTest {
         // 流从概念上来说是一个连续的数据流 【可以从流中读取数据 也可以往流里面写数据】 流与数据源或者目标媒介相关联//
         // InputStream和Reader与数据源相关联， //程序需要InputStream或者Reader从数据源读取数据。
         // OutputStream和Write与目标媒介相关联， //程序需要OutputStream或者Write将数据写到目标媒介中。
+
+        // 资源加载
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(StudyApplication.class);
+        Resource resource = context.getResource("D:\\MyFiles\\Pictures\\blueSky.jpg");
+
+        String filename = resource.getFilename();
+        try {
+            InputStream inputStream = resource.getInputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 

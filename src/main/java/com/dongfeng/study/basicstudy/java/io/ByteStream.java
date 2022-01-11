@@ -1,6 +1,9 @@
 package com.dongfeng.study.basicstudy.java.io;
 
-import com.dongfeng.study.util.IoUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
+import com.dongfeng.study.util.IOUtil;
+import org.springframework.util.FileCopyUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -14,6 +17,21 @@ import java.util.Arrays;
  */
 public class ByteStream {
     public static void main(String[] args) {
+        // IO操作，推按使用hutool或者其他工具类
+        /**
+         * {@link cn.hutool.core.io.IoUtil} 、{@link cn.hutool.core.io.FileUtil}
+         */
+
+        File des = new File("D:\\MyFiles\\Pictures\\work\\textTest1.jpg");
+        File source = new File("D:\\MyFiles\\Pictures\\work\\yellowGirl.jpg");
+        FileUtil.copy(source, des, true);
+        try {
+            FileCopyUtils.copy(des, source);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         // Java IO中流的概念
         ioStream();
 
@@ -40,7 +58,7 @@ public class ByteStream {
 
         byte[] bytes = new byte[10];
         for (int i=0; i<bytes.length; i++){
-            System.out.println("byte is :"+bytes[i]+"LLLL");
+            System.out.println("byte["+i+"] is :"+bytes[i]);
         }
     }
 
@@ -54,7 +72,7 @@ public class ByteStream {
          * 在Java IO中流既可以是字节流(以字节为单位进行读写)，也可以是字符流(以char为单位进行读写)。
          *
          * 流与数据源或者数据流向的媒介相关联：
-         * 输入流（InputStream或Reader）是和数据源相关的，输出流（OutputStream或Writer）是和目标媒介相关的。
+         * 【输入流（InputStream或Reader）是和数据源相关的，输出流（OutputStream或Writer）是和目标媒介相关的。】
          * (输入流：往流中输入数据 | 输出流：从流中输出数据)
          * 一个程序需要InputStream或者Reader从数据源读取数据，需要OutputStream或者Writer将数据写入到目标媒介中。
          * 如下所示：
@@ -232,9 +250,9 @@ public class ByteStream {
          * 如果当前用户没有读的权限，会抛出异常SecurityException。
          */
 
-        // 字节输入流，从数据源中读取数据
+        // 字节输入流，从数据源中读取数据往流中输入
         FileInputStream input = null;
-        // 字节输出流，往目标媒介中写入数据
+        // 字节输出流，从流中输出数据往目标媒介中写入
         FileOutputStream output = null;
         String path = "D:\\Wstudy\\JavaIOTest.txt";
         try {
@@ -460,7 +478,7 @@ public class ByteStream {
             FileOutputStream output = new FileOutputStream(path, true);
 
             // 复制输入流的内容到输出流
-            long copy = IoUtil.copy(input, output);
+            long copy = IOUtil.copy(input, output);
             System.out.println(copy);
 
         } catch (Exception e) {

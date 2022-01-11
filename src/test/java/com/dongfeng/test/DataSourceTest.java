@@ -1,6 +1,5 @@
 package com.dongfeng.test;
 
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import java.util.concurrent.atomic.AtomicInteger;

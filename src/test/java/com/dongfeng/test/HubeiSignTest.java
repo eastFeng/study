@@ -25,7 +25,7 @@ public class HubeiSignTest {
         String code = "41142619931124033X";
         String url = "http://data.hb.cegn.cn/irsp/openApi/jkmxxdetail/v1";
 
-        //会话key (Access Key Id)
+        //会话key (Access Key ID)
         String ak = "a2fd01de7ea6419fb9996f14e4360557";
         String sk = "2d5ba4aee8ef45eb";
         //数据服务标识

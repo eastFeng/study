@@ -36,7 +36,7 @@ public class MultipleImageMarkUtil {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            IoUtil.close(logoInputStream);
+            IOUtil.close(logoInputStream);
         }
 
     }
