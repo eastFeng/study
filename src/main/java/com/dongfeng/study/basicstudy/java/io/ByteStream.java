@@ -1,7 +1,7 @@
 package com.dongfeng.study.basicstudy.java.io;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.IoUtil;
+import com.dongfeng.study.bean.base.Constants;
 import com.dongfeng.study.util.IOUtil;
 import org.springframework.util.FileCopyUtils;
 
@@ -104,8 +104,8 @@ public class ByteStream {
          * 过滤类似于自来水管道，流入的是水，流出的也是水，功能不变，或者只是增加功能。
          * 它有很多子类，这里列举一些：
          * 1）对流起缓冲装饰的子类是BufferedInputStream和BufferedOutputStream。
-         * 2）可以按8种基本类型和字符串对流进行读写的子类是DataInputStream和DataOutput-Stream。
-         * 3）可以对流进行压缩和解压缩的子类有GZIPInputStream、ZipInputStream、GZIPOutput-Stream和ZipOutputStream。
+         * 2）可以按8种基本类型和字符串对流进行读写的子类是DataInputStream和DataOutputStream。
+         * 3）可以对流进行压缩和解压缩的子类有GZIPInputStream、ZipInputStream、GZIPOutputStream和ZipOutputStream。
          * 4）可以将基本类型、对象输出为其字符串表示的子类有PrintStream。
          *
          * 众多的装饰类使得整个类结构变得比较复杂，完成基本的操作也需要比较多的代码；
@@ -211,9 +211,10 @@ public class ByteStream {
 //        for(int i=0; i<bytes.length; i++){
 //            bytes[i] = 1;
 //        }
-        String path = "D:\\Wstudy\\JavaIOTest.txt";
+        String path = Constants.TEXT_TEST1_PATH;
         try (FileOutputStream output = new FileOutputStream(path, true)) {
             System.out.println("bytes length:"+bytes.length);
+            // 写入整个字节数组bytes
             output.write(bytes);
         }catch (Exception e){
             e.printStackTrace();
@@ -221,23 +222,26 @@ public class ByteStream {
     }
 
     /**
-     * {@link FileInputStream}和{@link FileOutputStream}
+     * 文件流：{@link FileInputStream}和{@link FileOutputStream}
      */
     public static void fileInputAndOutputStream(){
         /*
-         * FileInputStream和FileOutputStream的数据源和目标媒介都是文件。
+         * 【FileInputStream和FileOutputStream的数据源和目标媒介都是文件】
          *
          * 1. FileOutputStream
-         * FileOutputStream有多个构造方法，其中两个为：
+         * FileOutputStream有多个构造方法，其中四个为：
          * public FileOutputStream(String name) throws FileNotFoundException
+         * public FileOutputStream(File file) throws FileNotFoundException
          * public FileOutputStream(String name, boolean append) throws FileNotFoundException
+         * public FileOutputStream(File file, boolean append) throws FileNotFoundException
          * File类型的参数file和字符串的类型的参数name都表示文件路径，路径可以是绝对路径，也可以是相对路径，
          * 如果文件已存在，append参数指定是追加还是覆盖，true表示追加， false表示覆盖，
-         * 第二个构造方法没有append参数，表示覆盖。
+         * 第一个和第二个构造方法没有append参数，表示覆盖。
          *
          * new一个FileOutputStream对象会实际打开文件，操作系统会分配相关资源。
          * 如果当前用户没有写权限，会抛出异常SecurityException，它是一种RuntimeException。
-         * 如果指定的文件是一个已存在的目录，或者由于其他原因不能打开文件，会抛出异常FileNotFoundException，它是IOException的一个子类。
+         * 如果指定的文件是一个已存在的目录，或者由于其他原因不能打开文件，不存在但无法创建，会抛出异常FileNotFoundException，
+         * 它是IOException的一个子类。
          *
          * 2. FileInputStream
          * FileInputStream的主要构造方法有：
@@ -250,25 +254,31 @@ public class ByteStream {
          * 如果当前用户没有读的权限，会抛出异常SecurityException。
          */
 
+//        File file = new File(Constants.IMAGE_TEST1_PATH);
+
+        // 测试一些方法的用法：
+
         // 字节输入流，从数据源中读取数据往流中输入
         FileInputStream input = null;
         // 字节输出流，从流中输出数据往目标媒介中写入
         FileOutputStream output = null;
         String path = "D:\\Wstudy\\JavaIOTest.txt";
         try {
-            // 新建一个文件字节输入流
+            // 新建一个文件输入流
             input = new FileInputStream(path);
-            // 新建一个文件字节输出流
+            // 新建一个文件输出流
             output = new FileOutputStream(path, true);
 
+            // 1. 向文件输出流中写入数据
             // OutputStream只能以byte或byte数组写文件，
             // 为了写字符串，需要调用String的getBytes方法得到它的UTF-8编码的字节数组，再调用write()方法
             String data = "Hello World!";
             byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
             System.out.println(Arrays.toString(bytes));
             output.write(bytes);
+            output.flush();
 
-            // 文件中的内容读到内存并输出
+            // 2. 从文件输入流中读取内容并输出
             // 从输入流中读取的字节放入buf数组中，一次最多读取1024个字节
             byte[] buf = new byte[1024];
             int bytesRead = 0;
@@ -280,6 +290,7 @@ public class ByteStream {
                 String s = new String(buf, 0, bytesRead, StandardCharsets.UTF_8);
                 sb.append(s);
             }
+            // 输出从文件输入流中读取到的所有数据
             System.out.println(sb);
         } catch (Exception e) {
             e.printStackTrace();
@@ -303,7 +314,7 @@ public class ByteStream {
     }
 
     /**
-     * {@link ByteArrayInputStream} 和 {@link ByteArrayOutputStream}
+     * 字节数组流 ：{@link ByteArrayInputStream} 和 {@link ByteArrayOutputStream}
      */
     public static void byteArrayInputAndOutputStream(){
         /*
@@ -311,7 +322,7 @@ public class ByteStream {
          * ByteArrayInputStream相当于适配器，ByteArrayOutputStream作为输出封装了动态数组，便于使用。
          *
          * 1. ByteArrayOutputStream
-         * ByteArrayOutputStream的输出目标媒介是其内部的byte数组buf，这个数组的长度是根据数据内容动态扩展的。
+         * 【ByteArrayOutputStream的输出目标媒介是其内部的byte数组buf，这个数组的长度是根据数据内容动态扩展的。】
          * 它有两个实例变量：
          * protected byte buf[];  // 存储数据的缓冲区。这就是ByteArrayOutputStream的输出的目标媒介。
          * protected int count;   // 缓冲区中的有效字节数。就是已经写入的实际字节数量。
@@ -331,10 +342,9 @@ public class ByteStream {
          * public synchronized void reset() ：重置字节个数count为0
          */
 
-        String path = "D:\\Wstudy\\JavaIOTest.txt";
         // 使用ByteArrayOutputStream，我们可以改进前面的读文件代码，确保将所有文件内容读取：
         try (ByteArrayOutputStream output = new ByteArrayOutputStream();
-             FileInputStream input = new FileInputStream(path)) {
+             FileInputStream input = new FileInputStream(Constants.TEXT_TEST1_PATH)) {
 
             // 每次从输入流中读取的数据先写入ByteArrayOutputStream中，读完后，再调用其toString方法获取完整数据。
 
@@ -348,12 +358,21 @@ public class ByteStream {
             }
             String s = output.toString(StandardCharsets.UTF_8.name());
             System.out.println(s);
+
+            // ------------------  【非常重要】 -------------------
+            ////  该方式不建议使用，字节数组流是基于内存的（内部动态数组），有大小限制，
+            // 如果文件内容非常多，那么写入到内部动态数组的数据量就非常多，容易造成内存溢出
         }catch (Exception e){
             e.printStackTrace();
         }
+        // --------- ByteArrayOutputStream用途：二进制了，方便网络上进行传输 ------------------------------
+        // --------------------------------------------------------------------------------------------
+
 
         /*
          * ByteArrayInputStream将byte数组包装为一个输入流，是一种适配器模式。
+         * ByteArrayInputStream的数据源是字节（byte）数组。
+         *
          * 它的构造方法有：
          * public ByteArrayInputStream(byte buf[])
          * public ByteArrayInputStream(byte buf[], int offset, int length)
@@ -394,13 +413,14 @@ public class ByteStream {
          * 2）writeInt：写入4个字节，最高位字节先写入，最低位最后写入。
          * 3）writeUTF：将字符串的UTF-8编码字节写入，这个编码格式与标准的UTF-8编码略有不同，不过，我们不用关心这个细节。
          *
-         * 与FilterOutputStream一样，DataOutputStream的构造方法也是接受一个已有的Output-Stream：
+         * 与FilterOutputStream一样，DataOutputStream的构造方法也是接受一个已有的OutputStream：
          * public DataOutputStream(OutputStream out) {
          *      super(out);
          * }
+         *
+         * // DataOutputStream的输出目标媒介是不确定的，但是write方法写入的数据不仅限于字节，还有其他基本数据类型。
          */
-        String path = "D:\\Wstudy\\test.txt";
-        try (FileOutputStream fileOutputStream = new FileOutputStream(path, true);
+        try (FileOutputStream fileOutputStream = new FileOutputStream(Constants.TEXT_TEST3_PATH, true);
              DataOutputStream output = new DataOutputStream(fileOutputStream)) {
             output.writeBoolean(Boolean.TRUE);
             output.writeBoolean(Boolean.FALSE);
@@ -425,12 +445,12 @@ public class ByteStream {
          *    super(in);
          * }
          *
-         * 使用DataInputStream/DataOutput-Stream读写对象，非常灵活，但比较麻烦，所以Java提供了序列化机制。
+         * 使用DataInputStream/DataOutputStream读写对象，非常灵活，但比较麻烦，所以Java提供了序列化机制。
          */
     }
 
     /**
-     * {@link BufferedInputStream} 和 {@link BufferedOutputStream}
+     * 缓存字节流：{@link BufferedInputStream} 和 {@link BufferedOutputStream}
      */
     public static void bufferedInputAndOutputStream(){
         /*
@@ -452,7 +472,8 @@ public class ByteStream {
          * 与BufferedInputStream类似，BufferedOutputStream的构造方法也有两个，默认的缓冲区大小也是8192，
          * 它的flush方法会将缓冲区的内容写到包装的流中。
          *
-         * 在使用FileInputStream/FileOutputStream时，应该几乎总是在它的外面包上对应的缓冲类。
+         * 【在使用FileInputStream/FileOutputStream时，应该几乎总是在它的外面包上对应的缓冲类。】
+         * 是因为文件的内容都比较多吧
          *
          */
         String path = "D:\\Wstudy\\JavaIOTest.txt";

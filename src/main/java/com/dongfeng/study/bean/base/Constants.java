@@ -1,5 +1,7 @@
 package com.dongfeng.study.bean.base;
 
+import com.microsoft.schemas.office.x2006.encryption.STHashAlgorithm;
+
 /**
  * <b>业务常量</b>
  *
@@ -44,4 +46,18 @@ public interface Constants {
     // 路由键（RoutingKey）
     String RABBIT_ROUTING_KEY = "*.myTest.#";
     /* -------------  RabbitMQ相关, Start ----------------- */
+
+
+    // --------------  我本人电脑一些图片文件或者文本文件路径 start -------------------
+    // 文本文件路径
+    String TEXT_TEST1_PATH = "D:\\CodingStudy\\someFile\\Test1.txt";
+    String TEXT_TEST2_PATH = "D:\\CodingStudy\\someFile\\Test2.txt";
+    String TEXT_TEST3_PATH = "D:\\CodingStudy\\someFile\\Test3.txt";
+    String TEXT_TEST4_PATH = "D:\\CodingStudy\\someFile\\Test4.txt";
+    // 图片路径
+    String IMAGE_TEST1_PATH = "D:\\MyFiles\\Pictures\\work\\test1.jpg";
+    String IMAGE_TEST2_PATH = "D:\\MyFiles\\Pictures\\work\\test2.jpg";
+    String IMAGE_TEST3_PATH = "D:\\MyFiles\\Pictures\\work\\test3.jpg";
+    String IMAGE_TEST4_PATH = "D:\\MyFiles\\Pictures\\work\\test4.jpg";
+    // --------------  我本人电脑一些图片文件或者文本文件路径 end ---------------------
 }

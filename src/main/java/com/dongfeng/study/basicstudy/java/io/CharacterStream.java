@@ -19,6 +19,12 @@ public class CharacterStream {
          * 如果不需要指定编码类型，可使用FileReader，但都应该考虑在外面包上缓冲类BufferedReader。
          */
 
+        // 字符流
+        characterStream();
+
+        // 基本概念
+        baseConcept();
+
         // Reader 和 Writer
         readerAndWriter();
 
@@ -185,7 +191,7 @@ public class CharacterStream {
          * 如果需要指定编码类型，可以使用InputStreamReader/OutputStreamWriter。
          */
         String path = "D:\\Wstudy\\ctest.dat";
-        try (FileReader reader = new FileReader(new File(path));
+        try (FileReader reader = new FileReader(path);
              FileWriter writer = new FileWriter(path)) {
             int read = reader.read();
         }catch (Exception e){

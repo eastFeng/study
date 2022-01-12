@@ -61,7 +61,7 @@ public class FileAndDirectory {
         // 返回父目录的File对象
         final File parentFile = file.getParentFile();
 
-        /**
+        /*
          * File类中有4个静态变量，表示路径分隔符：
          * public static final char separatorChar = fs.getSeparator();
          * public static final String separator = "" + separatorChar;
@@ -93,7 +93,7 @@ public class FileAndDirectory {
      * 文件操作
      */
     public static void fileOperator(File file) throws IOException {
-        /**
+        /*
          * 文件操作主要有创建、删除、重命名。
          */
 
