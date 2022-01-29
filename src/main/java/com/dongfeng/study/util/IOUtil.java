@@ -1,11 +1,8 @@
 package com.dongfeng.study.util;
 
-import cn.hutool.core.convert.Convert;
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.dongfeng.study.bean.base.Constants;
 import com.dongfeng.study.bean.base.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,7 +43,7 @@ public class IOUtil {
          */
 
         try {
-            File file = new File("D:\\Wstudy\\Test1.txt");
+            File file = new File(Constants.TEXT_TEST1_PATH);
 //            InputStream inputStream = Files.newInputStream(file.toPath());
 //            IoUtil.read(inputStream, StandardCharsets.UTF_8);
 
@@ -127,8 +124,10 @@ public class IOUtil {
         Objects.requireNonNull(data, "data is null");
         Objects.requireNonNull(file, "Charset is null");
 
+        // BufferedWriter : 字符输出流，提供缓冲，以及按行写功能
         BufferedWriter bufferedWriter = null;
         try {
+            // OutputStreamWriter : 适配器类，能将OutputStream转换为Writer
             OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file, isAppend), charset);
             bufferedWriter = new BufferedWriter(writer);
             bufferedWriter.write(data);
@@ -140,41 +139,68 @@ public class IOUtil {
 
     // ----------------------------  将多部分内容写入到字节输出流OutputStream中 start ---------------------------------------
     /**
-     * 将多部分内容写到流中，自动转换为字符串
-     *
-     * @param outputStream 字节输出流
-     * @param isCloseOut 写入完毕是否关闭输出流
-     * @param contents 写入的内容，调用toString()方法，不包括不会自动换行
-     * @throws IOException IO异常
-     */
-    public static void write(OutputStream outputStream, boolean isCloseOut, Objects... contents) throws IOException {
-        write(outputStream, StandardCharsets.UTF_8, isCloseOut, contents);
-    }
-
-    /**
-     * 将多部分内容写到流中，自动转换为字符串
+     * 将多个对象写到字节输出流中，自动转换为字符串
      *
      * @param outputStream  字节输出流
      * @param charset    写出的内容的字符集
      * @param isCloseOut 写入完毕是否关闭输出流
-     * @param contents   写入的内容，调用toString()方法，不包括不会自动换行
+     * @param collection   写入的多个对象，不包括不会自动换行
      * @throws IOException IO异常
      */
-    public static void write(OutputStream outputStream, Charset charset, boolean isCloseOut, Object... contents) throws IOException {
+    public static void write2(OutputStream outputStream, Charset charset, boolean isCloseOut, Collection<Object> collection) throws IOException {
         Objects.requireNonNull(outputStream, "outputStream is null");
-        OutputStreamWriter osw = null;
-        if (charset == null){
-            osw = new OutputStreamWriter(outputStream);
-        }else {
-            osw = new OutputStreamWriter(outputStream, charset);
-        }
+        Objects.requireNonNull(collection, "contents is null");
+
+        // collection集合转换成JSON字符串
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.addAll(collection);
+        String str = jsonArray.toJSONString();
+
+        // 将字符串str写到字节输出流outputStream中
+        write(outputStream, charset, isCloseOut, str);
+    }
+
+    /**
+     * 将多个对象（集合）写到字节输出流中
+     *
+     * @param outputStream 字节输出流
+     * @param charset 写出的内容的字符集
+     * @param isCloseOut 写入完毕是否关闭输出流
+     * @param collection 对象集合
+     * @throws IOException IO异常
+     */
+    public static <T> void write(OutputStream outputStream, Charset charset, boolean isCloseOut, Collection<T> collection) throws IOException {
+        Objects.requireNonNull(outputStream, "outputStream is null");
+        Objects.requireNonNull(collection, "collection is null");
+
+        // collection集合转换成JSON字符串
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.addAll(collection);
+        String str = jsonArray.toJSONString();
+
+        // 将字符串str写到字节输出流outputStream中
+        write(outputStream, charset, isCloseOut, str);
+    }
+
+    /**
+     * 将字符串写到字节输出流中
+     *
+     * @param outputStream 字节输出流
+     * @param charset 写出的内容的字符集
+     * @param isCloseOut 写入完毕是否关闭输出流
+     * @param str 字符串
+     * @throws IOException IO异常
+     */
+    public static void write(OutputStream outputStream, Charset charset, boolean isCloseOut, String str) throws IOException {
+        Objects.requireNonNull(outputStream, "outputStream is null");
+        Objects.requireNonNull(str, "str is null");
+
+        // 根据outputStream创建一个OutputStreamWriter对象
+        OutputStreamWriter outputStreamWriter = getOutputStreamWriter(outputStream, charset);
         try {
-            for (Object content : contents) {
-                if (content != null) {
-                    osw.write(Convert.toStr(content, StrUtil.EMPTY));
-                }
-            }
-            osw.flush();
+            // 写入字符串
+            outputStreamWriter.write(str);
+            outputStreamWriter.flush();
         } finally {
             if (isCloseOut){
                 close(outputStream);
@@ -183,11 +209,29 @@ public class IOUtil {
     }
 
     /**
+     * 根据给定的字节输出流生成字符输出流
+     * <p> InputStreamReader和OutputStreamWriter是适配器类，
+     * 能将InputStream/OutputStream转换为Reader/Writer。
+     * （字节流转换为字符流）
+     *
+     * @param outputStream 字节输出流
+     * @param charset 字符集
+     * @return 字符输出流
+     */
+    public static OutputStreamWriter getOutputStreamWriter(OutputStream outputStream, Charset charset){
+        if (charset == null){
+            return new OutputStreamWriter(outputStream);
+        }else {
+            return new OutputStreamWriter(outputStream, charset);
+        }
+    }
+
+    /**
      * 将多部分内容写到流中
      *
-     * @param outputStream        输出流
+     * @param outputStream 字节输出流
      * @param isCloseOut 写入完毕是否关闭输出流
-     * @param contents   写入的内容
+     * @param contents 写入的内容
      * @throws IOException IO异常
      */
     public static void writeObjects(OutputStream outputStream, boolean isCloseOut, Serializable... contents) throws IOException {
@@ -207,34 +251,80 @@ public class IOUtil {
             }
         }
     }
+
+    /**
+     * 将多部分内容写到流中
+     *
+     * @param outputStream 字节输出流
+     * @param isCloseOut 写入完毕是否关闭输出流
+     * @param collection 写入的内容
+     * @throws IOException IO异常
+     */
+    public static void writeObjects(OutputStream outputStream, boolean isCloseOut, Collection<Serializable> collection) throws IOException {
+        /*
+         * 对象操作流：ObjectInputStream 和 ObjectOutputStream
+         * 该流可以将一个对象写出，或者读取一个对象到程序中，也就是执行了序列化和反序列化操作。
+         */
+        ObjectOutputStream osw =
+                outputStream instanceof ObjectOutputStream ? (ObjectOutputStream) outputStream : new ObjectOutputStream(outputStream);
+
+        try {
+            for (Object content : collection) {
+                if (content != null) {
+                    osw.writeObject(content);
+                }
+            }
+            osw.flush();
+        } finally {
+            if (isCloseOut){
+                close(outputStream);
+            }
+        }
+    }
     // ----------------------------  将多部分写入到字节输出流OutputStream中 start ---------------------------------------
 
 
 
     /* ---------------- 从文件中读取每一行数据 start  -------------- */
+    /**
+     * 从文件中读取每一行数据 ,并保存到List集合中
+     *
+     * @param file 文件
+     * @param charset 字符编码集
+     * @return List<String>
+     * @throws IOException 发生IO异常
+     */
     public static List<String> readLines(File file, Charset charset) throws IOException{
         Objects.requireNonNull(file, "File is null");
 
         List<String> list = new ArrayList<>();
-        if (file!=null || charset!=null){
-            readLines(file, charset, list);
-        }
+        readLines(file, charset, list);
         return list;
     }
 
+    /**
+     * 从文件中读取每一行数据 ,并保存到给定集合中
+     *
+     * @param file  文件
+     * @param charset 字符编码集
+     * @param collection 要保存到的集合
+     * @throws IOException 发生IO异常
+     */
     public static void readLines(File file, Charset charset, Collection<String> collection) throws IOException {
-        if (file==null || charset==null || collection==null){
-            return;
-        }
+        Objects.requireNonNull(file, "File is null");
+        Objects.requireNonNull(collection, "Collection is null");
 
+        // BufferedReader : 字符输入流，提供缓冲，以及按行读功能
         BufferedReader bufferedReader = null;
         try {
+            // InputStreamReader : 将字节输入流 转为 字符输入流
             InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file), charset);
             bufferedReader = new BufferedReader(inputStreamReader);
 
             while (true){
+                // 每次读一行
                 String line = bufferedReader.readLine();
-                if (line == null){
+                if (line == null){ // 已读完
                     break;
                 }
                 collection.add(line);
@@ -367,7 +457,7 @@ public class IOUtil {
      *
      * @param inputStream 字节输入流
      * @return 内容（字符串）
-     * @throws IOException
+     * @throws IOException IO异常
      */
     public static String readUTF8(InputStream inputStream) throws IOException{
         Objects.requireNonNull(inputStream, "InputStream is null");
@@ -488,7 +578,7 @@ public class IOUtil {
      * @param isCloseIn 是否关闭输入流
      * @param isCloseOut 是否关闭输出流
      * @return 传输的字节数
-     * @throws IOException
+     * @throws IOException IO异常
      */
     public static long copy(InputStream input, OutputStream output,
                             boolean isCloseIn, boolean isCloseOut) throws IOException{
@@ -564,7 +654,7 @@ public class IOUtil {
             close(inChannel);
         }
     }
-    // --------------------------------- 字节流拷贝 end-------------------------------------
+    // --------------------------------- 字节流拷贝 end -------------------------------------
 
 
     //------------------------------------------------------------------------------------
@@ -621,10 +711,12 @@ public class IOUtil {
      */
     public static void close(Closeable c) {
         // 不需要再判断c是否为null了
-        try {
-            c.close();
-        } catch (IOException e) {
-            log.error("IO close error:{}", e.getMessage(), e);
+        if (c != null){
+            try {
+                c.close();
+            } catch (IOException e) {
+                log.error("IO close error:{}", e.getMessage(), e);
+            }
         }
     }
 }
