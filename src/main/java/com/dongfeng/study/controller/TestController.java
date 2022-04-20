@@ -1,7 +1,7 @@
 package com.dongfeng.study.controller;
 
 import com.dongfeng.study.bean.base.Constants;
-import com.dongfeng.study.bean.base.Response;
+import com.dongfeng.study.bean.base.BaseResponse;
 import com.dongfeng.study.bean.enums.ResponseCodeEnum;
 import com.dongfeng.study.bean.vo.TestVo;
 import com.dongfeng.study.config.properties.ConfigurationPropertiesDemo;
@@ -41,38 +41,38 @@ public class TestController {
 
 
     @GetMapping("/cpdTest")
-    public Response<String> cpdTest(HttpServletRequest request, @RequestParam String userKey){
-        Response<String> response = new Response<>();
+    public BaseResponse<String> cpdTest(HttpServletRequest request, @RequestParam String userKey){
+        BaseResponse<String> baseResponse = new BaseResponse<>();
         String token = request.getHeader(Constants.TOKEN);
         log.info("【token:{}, userKey:{}】", token, userKey);
 
         if (StringUtils.isBlank(userKey)){
-            return Response.setError(response, ResponseCodeEnum.PARAM_IS_EMPTY);
+            return BaseResponse.setError(baseResponse, ResponseCodeEnum.PARAM_IS_EMPTY);
         }
 
         String s = propertiesDemo.toString();
-        response.setData(s);
-        return response;
+        baseResponse.setData(s);
+        return baseResponse;
     }
 
 
     @GetMapping("/demoConfigTest")
-    public Response<String> demoConfigTest(){
-        Response<String> response = new Response<>();
+    public BaseResponse<String> demoConfigTest(){
+        BaseResponse<String> baseResponse = new BaseResponse<>();
 
         String s = testVo.toString();
-        response.setData(s);
-        return response;
+        baseResponse.setData(s);
+        return baseResponse;
     }
 
     @GetMapping("/test111")
-    public Response<String> test111(){
+    public BaseResponse<String> test111(){
         return requestContextHolderService.test111();
     }
 
     @GetMapping("/testNull")
-    public Response<String> testNull(){
+    public BaseResponse<String> testNull(){
         log.info("log test!!!");
-        return new Response<>();
+        return new BaseResponse<>();
     }
 }

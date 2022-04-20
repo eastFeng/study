@@ -1,7 +1,7 @@
 package com.dongfeng.study.config.aop;
 
 import com.dongfeng.study.bean.base.BizException;
-import com.dongfeng.study.bean.base.Response;
+import com.dongfeng.study.bean.base.BaseResponse;
 import com.dongfeng.study.bean.enums.ResponseCodeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
@@ -42,15 +42,15 @@ public class GlobalExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(Exception.class)
-    public <T> Response<T> business(HttpServletRequest request, Exception e){
+    public <T> BaseResponse<T> business(HttpServletRequest request, Exception e){
         String uri = request.getRequestURI();
         log.error(uri + "ControllerException error:{}", e.getMessage(), e);
 
         if (e instanceof BizException){
             BizException biz = (BizException) e;
-            return Response.errorInstance(biz.getCode(), biz.getMessage());
+            return BaseResponse.errorInstance(biz.getCode(), biz.getMessage());
         }else {
-            return Response.errorInstance(ResponseCodeEnum.UNKNOWN.getCode(), e.getMessage());
+            return BaseResponse.errorInstance(ResponseCodeEnum.UNKNOWN.getCode(), e.getMessage());
         }
     }
 }

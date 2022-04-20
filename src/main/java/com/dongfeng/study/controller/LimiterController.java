@@ -1,6 +1,6 @@
 package com.dongfeng.study.controller;
 
-import com.dongfeng.study.bean.base.Response;
+import com.dongfeng.study.bean.base.BaseResponse;
 import com.dongfeng.study.config.aop.flowlimit.ARateLimiter;
 import com.dongfeng.study.config.aop.flowlimit.RedisLimiter;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +22,12 @@ public class LimiterController {
      */
     @RedisLimiter(value = "redisLimiterTest", timeout = 3)
     @GetMapping("/redisLimiterTest")
-    public Response<String> redisLimiterTest(){
+    public BaseResponse<String> redisLimiterTest(){
         log.info("-----redisLimiterTest start");
         for (int i=0; i<10; ++i){
             log.info("{}", i);
         }
-        return Response.successInstance("【redisLimiterTest】被执行了...你不能总是看到我，快速刷新我看一下！");
+        return BaseResponse.successInstance("【redisLimiterTest】被执行了...你不能总是看到我，快速刷新我看一下！");
     }
 
     /**
@@ -35,8 +35,8 @@ public class LimiterController {
      */
     @ARateLimiter(value = "rateLimiterTest", qps=5.0)
     @GetMapping("rateLimiterTest")
-    public Response<String> rateLimiterTest(){
-        return Response.successInstance("【rateLimiterTest】被执行了...你不能总是看到我，快速刷新我看一下！");
+    public BaseResponse<String> rateLimiterTest(){
+        return BaseResponse.successInstance("【rateLimiterTest】被执行了...你不能总是看到我，快速刷新我看一下！");
     }
 
     public static void main(String[] args) {

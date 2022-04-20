@@ -3,7 +3,7 @@ package com.dongfeng.study.util;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.dongfeng.study.bean.base.Constants;
-import com.dongfeng.study.bean.base.Response;
+import com.dongfeng.study.bean.base.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -54,7 +54,7 @@ public class IOUtil {
         }
     }
 
-    public Response<String> uploadImage(MultipartFile file){
+    public BaseResponse<String> uploadImage(MultipartFile file){
         try {
             InputStream inputStream = file.getInputStream();
             File tempFile = File.createTempFile("hhhhh", ".jpg");
@@ -63,7 +63,7 @@ public class IOUtil {
             e.printStackTrace();
         } finally {
         }
-        return Response.successInstance("success");
+        return BaseResponse.successInstance("success");
     }
 
     //------------------------------------------------------------------------------------

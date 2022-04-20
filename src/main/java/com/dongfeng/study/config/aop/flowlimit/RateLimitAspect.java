@@ -1,6 +1,6 @@
 package com.dongfeng.study.config.aop.flowlimit;
 
-import com.dongfeng.study.bean.base.Response;
+import com.dongfeng.study.bean.base.BaseResponse;
 import com.google.common.util.concurrent.RateLimiter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -54,7 +54,7 @@ public class RateLimitAspect {
                     limiter.timeUnit())){
                 // 没有获取到令牌
                 log.info("【{}没有获取到令牌】请求频繁，请稍后再试~", rateKey);
-                return Response.errorInstance(2020, "系统繁忙，请稍后再试");
+                return BaseResponse.errorInstance(2020, "系统繁忙，请稍后再试");
             }
         }
 

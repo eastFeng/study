@@ -1,7 +1,7 @@
 package com.dongfeng.study.service;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.dongfeng.study.bean.base.Response;
+import com.dongfeng.study.bean.base.BaseResponse;
 import com.dongfeng.study.bean.entity.UserInfo;
 import com.dongfeng.study.bean.enums.ResponseCodeEnum;
 import com.dongfeng.study.bean.mapper.UserInfoMapper;
@@ -28,59 +28,59 @@ public class UserInfoService {
     private UserInfoMapper2 userInfoMapper2;
 
 
-    public Response<List<UserInfo>> getAllUsers(){
+    public BaseResponse<List<UserInfo>> getAllUsers(){
         List<UserInfo> allUsers = userInfoMapper.getAllUsers();
-        return Response.successInstance(allUsers);
+        return BaseResponse.successInstance(allUsers);
     }
 
-    public Response<List<UserInfo>> getAllUsers2(){
+    public BaseResponse<List<UserInfo>> getAllUsers2(){
         List<UserInfo> allUsers = userInfoMapper2.getAllUsers();
-        return Response.successInstance(allUsers);
+        return BaseResponse.successInstance(allUsers);
     }
 
-    public Response<UserInfo> getUserById(Integer id){
+    public BaseResponse<UserInfo> getUserById(Integer id){
         log.info("getUserById id:{}", id);
 
         if (id == null){
-            return Response.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
+            return BaseResponse.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
         }
 
         UserInfo userInfo = userInfoMapper.getUserById(id);
-        return Response.successInstance(userInfo);
+        return BaseResponse.successInstance(userInfo);
     }
 
-    public Response<List<UserInfo>> getUserByMemberLevel(Integer memberLevel, Integer isDelete){
+    public BaseResponse<List<UserInfo>> getUserByMemberLevel(Integer memberLevel, Integer isDelete){
         log.info("getUserByMemberLevel memberLevel:{},isDelete:{}", memberLevel, isDelete);
 
         if (memberLevel == null){
-            return Response.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
+            return BaseResponse.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
         }
 
         List<UserInfo> userInfos = userInfoMapper.getUserByMemberLevel(memberLevel, isDelete);
-        return Response.successInstance(userInfos);
+        return BaseResponse.successInstance(userInfos);
     }
 
-    public Response<Integer> addUserInfo(UserInfo userInfo){
+    public BaseResponse<Integer> addUserInfo(UserInfo userInfo){
         log.info("addUserInfo userInfo:{}", userInfo);
         if (userInfo==null){
-            return Response.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
+            return BaseResponse.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
         }
         Date now = new Date();
         userInfo.setCreateTime(now);
         userInfo.setUpdateTime(now);
         Integer integer = userInfoMapper.addUserInfo(userInfo);
-        return Response.successInstance(integer);
+        return BaseResponse.successInstance(integer);
     }
 
-    public Response<List<UserInfo>> getByIds(List<Integer> ids){
+    public BaseResponse<List<UserInfo>> getByIds(List<Integer> ids){
         log.info("getByIds ids:{}", ids);
         if (CollectionUtil.isEmpty(ids)){
-            return Response.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
+            return BaseResponse.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
         }
 
         List<UserInfo> userInfos = userInfoMapper.getByIds(ids);
 
-        return Response.successInstance(userInfos);
+        return BaseResponse.successInstance(userInfos);
     }
 
     /**

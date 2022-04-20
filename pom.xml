@@ -235,6 +235,11 @@
             <version>1.7</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+
         <!-- Springboot的特性之一：提供starter依赖（starter dependence）来简化项目构建配置
              starter依赖基于坐标（比如Maven的坐标）。
         -->

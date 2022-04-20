@@ -1,6 +1,6 @@
 package com.dongfeng.study.controller;
 
-import com.dongfeng.study.bean.base.Response;
+import com.dongfeng.study.bean.base.BaseResponse;
 import com.dongfeng.study.bean.entity.UserInfo;
 import com.dongfeng.study.service.UserInfoService;
 import org.slf4j.Logger;
@@ -25,33 +25,33 @@ public class UserInfoController {
     private UserInfoService userInfoService;
 
     @GetMapping("/getAllUsers")
-    public Response<List<UserInfo>> getAllUsers(){
+    public BaseResponse<List<UserInfo>> getAllUsers(){
         LOGGER.info("getAllUsers start--------------");
         return userInfoService.getAllUsers();
     }
 
     @GetMapping("/getAllUsers2")
-    public Response<List<UserInfo>> getAllUsers2(){
+    public BaseResponse<List<UserInfo>> getAllUsers2(){
         return userInfoService.getAllUsers2();
     }
 
     @GetMapping("/getUserById")
-    public Response<UserInfo> getUserById(Integer id){
+    public BaseResponse<UserInfo> getUserById(Integer id){
         return userInfoService.getUserById(id);
     }
 
     @GetMapping("/getUserByMemberLevel")
-    public Response<List<UserInfo>> getUserByMemberLevel(Integer memberLevel, Integer isDelete){
+    public BaseResponse<List<UserInfo>> getUserByMemberLevel(Integer memberLevel, Integer isDelete){
         return userInfoService.getUserByMemberLevel(memberLevel, isDelete);
     }
 
     @PostMapping("/addUserInfo")
-    public Response<Integer> addUserInfo(@RequestBody UserInfo userInfo){
+    public BaseResponse<Integer> addUserInfo(@RequestBody UserInfo userInfo){
         return userInfoService.addUserInfo(userInfo);
     }
 
     @PostMapping("/getByIds")
-    public Response<List<UserInfo>> getByIds(@RequestBody List<Integer> ids){
+    public BaseResponse<List<UserInfo>> getByIds(@RequestBody List<Integer> ids){
         return userInfoService.getByIds(ids);
     }
 }

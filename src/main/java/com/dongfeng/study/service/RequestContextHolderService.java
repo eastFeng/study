@@ -1,6 +1,6 @@
 package com.dongfeng.study.service;
 
-import com.dongfeng.study.bean.base.Response;
+import com.dongfeng.study.bean.base.BaseResponse;
 import com.dongfeng.study.bean.vo.InterfaceA;
 import com.dongfeng.study.bean.vo.TestVo;
 import com.dongfeng.study.config.interceptor.LoginInterceptor;
@@ -65,30 +65,30 @@ public class RequestContextHolderService {
     private List<InterfaceA> aList;
 
 
-    public Response<String> test111(){
+    public BaseResponse<String> test111(){
         log.info("【aBoolean:{}】", aBoolean);
         log.info("【anInt:{}】", anInt);
         log.info("【name:{}】", name);
-        Response<String> response = new Response<>();
+        BaseResponse<String> baseResponse = new BaseResponse<>();
 
         // 1. 首先获取当前线程的RequestAttributes对象
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes==null){
-            return response;
+            return baseResponse;
         }
 
         // 2. 从RequestAttributes对象中获取属性
         String token = (String) requestAttributes.getAttribute(LoginInterceptor.CURRENT_USER, RequestAttributes.SCOPE_REQUEST);
-        response.setData(token);
+        baseResponse.setData(token);
 
         log.info("aList.size:{}", aList.size());
         log.info("aList:{}", aList);
-        return response;
+        return baseResponse;
     }
 
-    public Response<TestVo> test2(){
-        Response<String> response = Response.successInstance("hhh");
-        return Response.successInstance(new TestVo());
+    public BaseResponse<TestVo> test2(){
+        BaseResponse<String> baseResponse = BaseResponse.successInstance("hhh");
+        return BaseResponse.successInstance(new TestVo());
     }
 
 

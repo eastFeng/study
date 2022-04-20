@@ -1,11 +1,13 @@
 package com.dongfeng.study.bean.enums;
 
+import com.dongfeng.study.bean.base.BaseResponse;
+
 import java.util.Arrays;
 
 /**
  * <b> 响应枚举 </b>
  *
- * @see com.dongfeng.study.bean.base.Response
+ * @see BaseResponse
  * @see com.dongfeng.study.bean.base.BizException
  * @author eastFeng
  * @date 2020-10-24 14:08

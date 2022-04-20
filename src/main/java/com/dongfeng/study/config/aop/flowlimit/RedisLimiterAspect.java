@@ -1,6 +1,6 @@
 package com.dongfeng.study.config.aop.flowlimit;
 
-import com.dongfeng.study.bean.base.Response;
+import com.dongfeng.study.bean.base.BaseResponse;
 import com.dongfeng.study.util.MethodUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -13,8 +13,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.scripting.support.ResourceScriptSource;
-import org.springframework.stereotype.Component;
-import org.springframework.util.ReflectionUtils;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Method;
@@ -85,7 +83,7 @@ public class RedisLimiterAspect{
                 if (result==null || result==0){
                     // result为0就是被限流了(lua脚本中指定的)
                     log.info("【{}】被限流----系统繁忙，请稍后再试", limitKey);
-                    return Response.errorInstance(2020, "系统繁忙，请稍后再试");
+                    return BaseResponse.errorInstance(2020, "系统繁忙，请稍后再试");
                 }
             }
         }catch (Exception e){

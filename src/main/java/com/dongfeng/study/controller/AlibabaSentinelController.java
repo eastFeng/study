@@ -1,6 +1,6 @@
 package com.dongfeng.study.controller;
 
-import com.dongfeng.study.bean.base.Response;
+import com.dongfeng.study.bean.base.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AlibabaSentinelController {
 
     @GetMapping("/test")
-    public Response<String> test(){
-        return Response.successInstance("----Alibaba sentinel test----");
+    public BaseResponse<String> test(){
+        return BaseResponse.successInstance("----Alibaba sentinel test----");
     }
 }

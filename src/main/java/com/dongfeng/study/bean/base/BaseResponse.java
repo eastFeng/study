@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author eastFeng
  * @date 2020/8/15 - 12:49
  */
-public class Response<T> implements Serializable {
+public class BaseResponse<T> implements Serializable {
 
     private static final long serialVersionUID = -1075989307245937233L;
 
@@ -34,7 +34,7 @@ public class Response<T> implements Serializable {
     /**
      * 构造方法
      */
-    public Response(){
+    public BaseResponse(){
         try {
             this.traceId = MDC.get(Constants.TRACE_ID);
         } catch (Exception ignored) {
@@ -70,73 +70,73 @@ public class Response<T> implements Serializable {
     }
 
     /**
-     * 设置并返回成功的{@link Response}
+     * 设置并返回成功的{@link BaseResponse}
      *
      * @param data {@link #data}
      * @param <T> 类型变量（参数类型）
      */
-    public static <T> Response<T> successInstance(T data){
-        Response<T> tResponse = new Response<>();
-        tResponse.setData(data);
-        return tResponse;
+    public static <T> BaseResponse<T> successInstance(T data){
+        BaseResponse<T> tBaseResponse = new BaseResponse<>();
+        tBaseResponse.setData(data);
+        return tBaseResponse;
     }
 
     /**
-     * 设置并返回失败的{@link Response}
+     * 设置并返回失败的{@link BaseResponse}
      *
      * @param codeEnum {@link ResponseCodeEnum}
      * @param <T> 类型变量（参数类型）
-     * @return {@link Response}
+     * @return {@link BaseResponse}
      */
-    public static <T> Response<T> errorInstance(ResponseCodeEnum codeEnum){
-        Response<T> tResponse = new Response<>();
-        tResponse.setCode(codeEnum.getCode());
-        tResponse.setMsg(codeEnum.getMsg());
-        return tResponse;
+    public static <T> BaseResponse<T> errorInstance(ResponseCodeEnum codeEnum){
+        BaseResponse<T> tBaseResponse = new BaseResponse<>();
+        tBaseResponse.setCode(codeEnum.getCode());
+        tBaseResponse.setMsg(codeEnum.getMsg());
+        return tBaseResponse;
     }
 
     /**
-     * 设置并返回失败的{@link Response}
+     * 设置并返回失败的{@link BaseResponse}
      *
      * @param code 响应码{@link #code}
      * @param msg 响应信息{@link #msg}
      * @param <T> 类型变量（参数类型）
-     * @return {@link Response}
+     * @return {@link BaseResponse}
      */
-    public static <T> Response<T> errorInstance(int code, String msg){
-        Response<T> tResponse = new Response<>();
-        tResponse.setCode(code);
-        tResponse.setMsg(msg);
-        return tResponse;
+    public static <T> BaseResponse<T> errorInstance(int code, String msg){
+        BaseResponse<T> tBaseResponse = new BaseResponse<>();
+        tBaseResponse.setCode(code);
+        tBaseResponse.setMsg(msg);
+        return tBaseResponse;
     }
 
     /**
-     * 对 {@link Response} 设置code和msg并返回
+     * 对 {@link BaseResponse} 设置code和msg并返回
      *
-     * @param response {@link Response}
+     * @param baseResponse {@link BaseResponse}
      * @param codeEnum {@link ResponseCodeEnum}
      * @param <T> 类型变量（参数类型）
-     * @return {@link Response}
+     * @return {@link BaseResponse}
      */
-    public static <T> Response<T> setError(Response<T> response, ResponseCodeEnum codeEnum){
-        response.setCode(codeEnum.getCode());
-        response.setMsg(codeEnum.getMsg());
-        return response;
+    public static <T> BaseResponse<T> setError(BaseResponse<T> baseResponse, ResponseCodeEnum codeEnum){
+        baseResponse.setCode(codeEnum.getCode());
+        baseResponse.setMsg(codeEnum.getMsg());
+        return baseResponse;
     }
 
     /**
-     * 对 {@link Response} 设置code和msg并返回
+     * 对 {@link BaseResponse} 设置code和msg并返回
      *
-     * @param response {@link Response}
+     * @param baseResponse {@link BaseResponse}
      * @param code 响应码
      * @param msg 响应信息
      * @param <T> 类型变量（参数类型）
-     * @return {@link Response}
+     * @return {@link BaseResponse}
      */
-    public static <T> Response<T> setError(Response<T> response, int code, String msg){
-        response.setCode(code);
-        response.setMsg(msg);
-        return response;
+    public static <T> BaseResponse<T> setError(BaseResponse<T> baseResponse, int code, String msg){
+        baseResponse.setCode(code);
+        baseResponse.setMsg(msg);
+        return baseResponse;
     }
 
     /**
@@ -148,7 +148,7 @@ public class Response<T> implements Serializable {
      * @param <R> target的类型
      * @return Response<T>
      */
-    public static <T, R> Response<R> copyError(Response<T> source, Response<R> target){
+    public static <T, R> BaseResponse<R> copyError(BaseResponse<T> source, BaseResponse<R> target){
         target.setCode(source.getCode());
         target.setMsg(source.getMsg());
         return target;

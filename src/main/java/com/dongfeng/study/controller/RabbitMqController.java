@@ -3,20 +3,17 @@ package com.dongfeng.study.controller;
 import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson.JSON;
 import com.dongfeng.study.bean.base.Constants;
-import com.dongfeng.study.bean.base.Response;
+import com.dongfeng.study.bean.base.BaseResponse;
 import com.dongfeng.study.bean.enums.ResponseCodeEnum;
 import com.dongfeng.study.bean.req.DeclareQueueReq;
 import com.dongfeng.study.bean.req.MqSendReq;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.nio.charset.StandardCharsets;
-import java.util.UUID;
 
 /**
  *
@@ -38,10 +35,10 @@ public class RabbitMqController {
 
 
     @PostMapping("/sendList")
-    public Response<String> sendList(@RequestBody MqSendReq req){
+    public BaseResponse<String> sendList(@RequestBody MqSendReq req){
         log.info("sendList req:{}", req);
         if (CollectionUtil.isEmpty(req.getListMsg())){
-            return Response.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
+            return BaseResponse.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
         }
 
         try {
@@ -58,12 +55,12 @@ public class RabbitMqController {
             rabbitTemplate.convertAndSend(Constants.RABBIT_TOPIC_EXCHANGE_NAME, // 指定交换机
                     Constants.RABBIT_ROUTING_KEY, // 指定路由键
                     req.getListMsg()); // 消息
-            return Response.successInstance("success");
+            return BaseResponse.successInstance("success");
         } catch (Exception e) {
             log.error("sendList error:{}", e.getMessage(), e);
         }
 
-        return Response.errorInstance(ResponseCodeEnum.UNKNOWN);
+        return BaseResponse.errorInstance(ResponseCodeEnum.UNKNOWN);
     }
 
 
@@ -71,22 +68,22 @@ public class RabbitMqController {
      * 发送消息
      */
     @PostMapping("/sendString")
-    public Response<String> sendString(@RequestBody MqSendReq req){
+    public BaseResponse<String> sendString(@RequestBody MqSendReq req){
         log.info("sendString req:{}", req);
         if (StringUtils.isBlank(req.getMsg())){
-            return Response.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
+            return BaseResponse.errorInstance(ResponseCodeEnum.PARAM_IS_EMPTY);
         }
 
         try {
             rabbitTemplate.convertAndSend(Constants.RABBIT_TOPIC_EXCHANGE_NAME, // 指定交换机
                                           Constants.RABBIT_ROUTING_KEY, // 指定路由键
                                           req.getMsg()); // 消息
-            return Response.successInstance("success");
+            return BaseResponse.successInstance("success");
         } catch (Exception e) {
             log.error("sendString error:{}", e.getMessage(), e);
         }
 
-        return Response.errorInstance(ResponseCodeEnum.UNKNOWN);
+        return BaseResponse.errorInstance(ResponseCodeEnum.UNKNOWN);
     }
 
     // ----------------------------------------------
@@ -95,9 +92,9 @@ public class RabbitMqController {
      * 声明队列
      */
     @PostMapping("/declareQueue")
-    public Response<String> declareQueue(@RequestBody DeclareQueueReq req){
+    public BaseResponse<String> declareQueue(@RequestBody DeclareQueueReq req){
         log.info("declareQueue req:{}", req);
-        Response<String> response = new Response<>();
+        BaseResponse<String> baseResponse = new BaseResponse<>();
         try {
             // 新建一个topic类型交换器
             TopicExchange topicExchange = new TopicExchange(req.getExchange());
@@ -112,57 +109,57 @@ public class RabbitMqController {
             QueueInformation queueInfo = amqpAdmin.getQueueInfo(req.getQueueName());
             log.info("declareQueue success queueInfo:{}", JSON.toJSONString(queueInfo));
 
-            response.setData(JSON.toJSONString(queueInfo));
-            return response;
+            baseResponse.setData(JSON.toJSONString(queueInfo));
+            return baseResponse;
         } catch (Exception e) {
             log.error("declareQueue Exception req:{}, error:{}",req, e.getMessage(), e);
         }
 
-        return Response.setError(response, ResponseCodeEnum.UNKNOWN);
+        return BaseResponse.setError(baseResponse, ResponseCodeEnum.UNKNOWN);
     }
 
     /**
      * 发送消息
      */
     @PostMapping("/send")
-    public Response<String> send(@RequestBody MqSendReq req){
+    public BaseResponse<String> send(@RequestBody MqSendReq req){
         log.info("send req:{}", req);
-        Response<String> response = new Response<>();
+        BaseResponse<String> baseResponse = new BaseResponse<>();
         if (StringUtils.isAnyBlank(req.getExchange(), req.getRoutingKey(), req.getMsg())){
-            return Response.setError(response, ResponseCodeEnum.PARAM_IS_EMPTY);
+            return BaseResponse.setError(baseResponse, ResponseCodeEnum.PARAM_IS_EMPTY);
         }
 
         try {
             rabbitTemplate.convertAndSend(req.getExchange(), req.getRoutingKey(), req.getMsg());
 
-            response.setData("SUCCESS");
-            return response;
+            baseResponse.setData("SUCCESS");
+            return baseResponse;
         } catch (Exception e) {
             log.error("send Exception req:{}, error:{}",req, e.getMessage(), e);
         }
 
-        return Response.setError(response, ResponseCodeEnum.UNKNOWN);
+        return BaseResponse.setError(baseResponse, ResponseCodeEnum.UNKNOWN);
     }
 
     @GetMapping("receive")
-    public Response<String> receive(@RequestParam String queueName){
+    public BaseResponse<String> receive(@RequestParam String queueName){
         log.info("receive queueName:{}", queueName);
-        Response<String> response = new Response<>();
+        BaseResponse<String> baseResponse = new BaseResponse<>();
         if (StringUtils.isBlank(queueName)){
-            return Response.setError(response, ResponseCodeEnum.PARAM_IS_EMPTY);
+            return BaseResponse.setError(baseResponse, ResponseCodeEnum.PARAM_IS_EMPTY);
         }
 
         try {
             Object result = rabbitTemplate.receiveAndConvert(queueName);
             log.info("receive result:{}", JSON.toJSONString(result));
 
-            response.setData(JSON.toJSONString(result));
-            return response;
+            baseResponse.setData(JSON.toJSONString(result));
+            return baseResponse;
         } catch (Exception e) {
             log.error("receive Exception queueName:{}, error:{}",queueName, e.getMessage(), e);
         }
 
-        return Response.setError(response, ResponseCodeEnum.UNKNOWN);
+        return BaseResponse.setError(baseResponse, ResponseCodeEnum.UNKNOWN);
     }
 
     /**
