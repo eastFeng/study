@@ -44,9 +44,9 @@ public class UserPunchDao {
      */
     public List<UserPunch> selectByFormId(String userId) {
         return mongoTemplate.find(Query.query(Criteria.where("userId").is(userId))
-                // 根據createTime字段倒序查詢
+                // 根据createTime字段倒序查詢
                 .with(Sort.by(Sort.Direction.DESC, "createTime")).
-                // 最多查詢5條記錄
+                // 最多查询5条记录
                 limit(5),
                 UserPunch.class);
     }

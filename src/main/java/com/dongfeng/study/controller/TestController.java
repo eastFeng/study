@@ -6,6 +6,7 @@ import com.dongfeng.study.bean.enums.ResponseCodeEnum;
 import com.dongfeng.study.bean.vo.TestVo;
 import com.dongfeng.study.config.properties.ConfigurationPropertiesDemo;
 import com.dongfeng.study.service.RequestContextHolderService;
+import com.dongfeng.study.service.UserInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,20 @@ public class TestController {
     @Autowired
     private RequestContextHolderService requestContextHolderService;
 
+    /**
+     * @Autowired : 属性注入（不推荐）
+     */
     @Autowired
     private ConfigurationPropertiesDemo propertiesDemo;
+
+    /**
+     * @Autowired : 构造方法注入（推荐）
+     */
+    private UserInfoService userInfoService;
+    @Autowired
+    public TestController(UserInfoService userInfoService){
+        this.userInfoService = userInfoService;
+    }
 
     @Autowired
     private TestVo testVo;

@@ -47,9 +47,13 @@ public class GlobalExceptionHandler {
         log.error(uri + "ControllerException error:{}", e.getMessage(), e);
 
         if (e instanceof BizException){
+            // 自定义的业务异常
             BizException biz = (BizException) e;
+            // 返回具体的错误代码和错误信息
             return BaseResponse.errorInstance(biz.getCode(), biz.getMessage());
         }else {
+            // 其他异常
+            // 返回统一的未知错误代码 和 具体的错误信息
             return BaseResponse.errorInstance(ResponseCodeEnum.UNKNOWN.getCode(), e.getMessage());
         }
     }

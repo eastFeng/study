@@ -2,6 +2,9 @@ package com.dongfeng.study.basicstudy.java.function;
 
 import com.dongfeng.study.basicstudy.java.otherbasic.Goods;
 
+import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -24,6 +27,9 @@ public class OptionalStudy {
         // Optional类的静态方法ofNullable可以把数据封装成一个Optional对象
         Optional<Goods> goodsOptional = Optional.ofNullable(goods);
         goodsOptional.ifPresent(g -> System.out.println(g.getId()));
+        List<Integer> integerList = new ArrayList<>(10);
+        goodsOptional.ifPresent(g -> integerList.add(g.getId()));
+        integerList.forEach(System.out::println);
     }
 
 

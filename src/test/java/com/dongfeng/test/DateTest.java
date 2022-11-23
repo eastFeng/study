@@ -2,7 +2,8 @@ package com.dongfeng.test;
 
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
-import com.dongfeng.study.util.DateUtil;
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
@@ -26,11 +27,16 @@ public class DateTest {
 
 //        isLeapYear(1900);
 
-        System.out.println(DateUtil.isWeekend(new Date(1609569373000L)));
-        String isHo = "Y";
-        if (DateUtil.isWeekend(new Date())){
-            isHo = "N";
-        }
+//        System.out.println(DateUtil.isWeekend(new Date(1609569373000L)));
+//        String isHo = "Y";
+//        if (DateUtil.isWeekend(new Date())){
+//            isHo = "N";
+//        }
+
+        Date start = new Date(1642934870000L);
+        Date end = new Date(1651488470000L);
+        long between = DateUtil.between(DateUtil.beginOfDay(start), DateUtil.beginOfDay(end), DateUnit.DAY);
+        System.out.println(between);
     }
 
     @Test
@@ -93,21 +99,21 @@ public class DateTest {
 
     @Test
     public void splitTest(){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String today = dateFormat.format(new Date());
-        System.out.println("today: -- "+today);
-
-        SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String begin = timeFormat.format(new Date(1603417839000L));
-        //根据空格" "把begin(2020-10-23 09:50:39)分成2020-10-23和09:50:39两个部分
-        String[] s = begin.split(" ");
-        //beginStr: 第二部分09:50:39  时分秒
-        String beginStr = s[1];
-        System.out.println("beginStr: -- "+beginStr);
-
-        Date date = DateUtil.parseDate(today + " " + beginStr, "yyyy-MM-dd HH:mm:ss");
-        System.out.println(date.getTime());
-        System.out.println(timeFormat.format(date));
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        String today = dateFormat.format(new Date());
+//        System.out.println("today: -- "+today);
+//
+//        SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String begin = timeFormat.format(new Date(1603417839000L));
+//        //根据空格" "把begin(2020-10-23 09:50:39)分成2020-10-23和09:50:39两个部分
+//        String[] s = begin.split(" ");
+//        //beginStr: 第二部分09:50:39  时分秒
+//        String beginStr = s[1];
+//        System.out.println("beginStr: -- "+beginStr);
+//
+//        Date date = DateUtil.parseDate(today + " " + beginStr, "yyyy-MM-dd HH:mm:ss");
+//        System.out.println(date.getTime());
+//        System.out.println(timeFormat.format(date));
     }
 }
 

@@ -192,7 +192,7 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.7.12</version>
+            <version>5.8.10</version>
         </dependency>
         <!-- alibaba fastjson: 阿里巴巴的开源JSON解析库，
         它可以解析JSON格式的字符串，

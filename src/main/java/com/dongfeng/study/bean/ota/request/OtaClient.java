@@ -149,9 +149,9 @@ public class OtaClient {
      * 需要通过它来创建用于转换Java对象到XML的Marshaller或是创建用于转换XML到Java对象的Unmarshaller
      */
     private static String marshall(OtaRequest request) throws JAXBException {
-        //创建JAXBContext
+        // 创建JAXBContext
         JAXBContext jaxbContext = JAXBContext.newInstance(request.getClass());
-        //创建Marshaller对象
+        // 创建Marshaller对象
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         StringWriter writer = new StringWriter();

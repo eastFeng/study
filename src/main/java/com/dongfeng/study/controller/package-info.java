@@ -34,4 +34,6 @@ package com.dongfeng.study.controller;
  *
  *
  *
+ * @Component注解 和 @Bean注解
+ *
  */

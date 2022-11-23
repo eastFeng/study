@@ -2,7 +2,9 @@ package com.dongfeng.study.controller;
 
 import com.dongfeng.study.bean.base.BaseResponse;
 import com.dongfeng.study.bean.vo.Good;
+import com.dongfeng.study.service.UserInfoService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/common/annotation")
 @Controller
 public class CommonAnnotationController {
+
+    @Autowired
+    private UserInfoService userInfoService;
 
     /**
      * {@link ResponseBody} : Java对象序列化为Json
