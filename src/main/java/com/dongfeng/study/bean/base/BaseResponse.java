@@ -110,6 +110,14 @@ public class BaseResponse<T> implements Serializable {
         return tBaseResponse;
     }
 
+    /**
+     * 根据source中的code和msg构造一个新的类型参数为T的BaseResponse并返回
+     *
+     * @param source 源BaseResponse（类型参数为S）
+     * @param <S> source的类型参数
+     * @param <T> 新创建BaseResponse的类型参数
+     * @return 类型参数为T的BaseResponse
+     */
     public static <S, T> BaseResponse<T> errorInstance(BaseResponse<S> source){
         BaseResponse<T> tBaseResponse = new BaseResponse<>();
         tBaseResponse.setCode(source.getCode());

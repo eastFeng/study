@@ -50,6 +50,8 @@ public enum ResponseCodeEnum {
     FILE_UPLOAD_FIELD(4001, "文件上传失败"),
     FILE_NAME_IS_TOO_LONG(4002, "文件名太长"),
     FILE_IS_TOO_LARGE(4003, "文件太大"),
+    DIRECTORY_LEVEL_JUMP_UP(4004, "禁止目录上跳级别"),
+
     ;
 
     private final int code;

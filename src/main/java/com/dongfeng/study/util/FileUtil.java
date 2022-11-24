@@ -2,17 +2,22 @@ package com.dongfeng.study.util;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.CharUtil;
+import cn.hutool.core.util.StrUtil;
 import com.dongfeng.study.bean.base.BaseResponse;
 import com.dongfeng.study.bean.enums.ResponseCodeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 文件工具类
@@ -32,6 +37,11 @@ public class FileUtil {
      * 默认的文件大小最大为50M
      */
     public static final long DEFAULT_MAX_FILE_SIZE = 50 * 1024 * 1024;
+
+    /**
+     * 特殊的后缀
+     */
+    public static final CharSequence[] SPECIAL_SUFFIX = new CharSequence[]{"tar.bz2", "tar.Z", "tar.gz", "tar.xz"};
 
     /**
      * 文件上传到本地
@@ -76,12 +86,6 @@ public class FileUtil {
 
         // 上传失败
         return BaseResponse.errorInstance(ResponseCodeEnum.FILE_UPLOAD_FIELD);
-
-        //        // 获取原文件（上传的文件）名称的前缀(prefix)和后缀(suffix)
-//        // substring(int beginIndex, int endIndex) : 以beginIndex起始索引(包含)，以endIndex为终止索(不包含)
-//        String prefix = originalFilename.substring(0, originalFilename.lastIndexOf("."));
-//        String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
-//        String fileName = "springBootStudy-"+prefix+"-fileUpload-"+nowTimeString+"."+suffix;
     }
 
     /**
@@ -115,9 +119,9 @@ public class FileUtil {
             return BaseResponse.errorInstance(4003, "文件太大，允许上传文件最大为50M");
         }
 
-        // 获取文件名后缀
-        String suffix = cn.hutool.core.io.FileUtil.getSuffix(originalFilename);
-        // 判断文件的类型/后缀是否超出允许上传文件类型/后缀
+        // 获取文件后缀/拓展名
+        String suffix = getSuffix(originalFilename);
+        // 判断文件的后缀/拓展名是否超出允许上传文件后缀/拓展名
         boolean contains = ArrayUtil.containsIgnoreCase(FileTypeUtil.DEFAULT_ALLOWED_SUFFIX, suffix);
         if (!contains){
             return BaseResponse.errorInstance(4004,
@@ -129,6 +133,155 @@ public class FileUtil {
         return BaseResponse.successInstance(originalFilename);
     }
 
+
+    /**
+     * 检查文件是否可/允许下载
+     *
+     * @param fileName 需要下载的文件
+     * @return true：正常/允许， false：非法/不允许
+     */
+    public static BaseResponse<Boolean> checkAllowDownload(String fileName){
+        BaseResponse<Boolean> response = new BaseResponse<>();
+        response.setData(Boolean.FALSE);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("fileName", fileName);
+
+        // 检查参数是否为空
+        if (StrUtil.isBlank(fileName)){
+            log.info("文件名称:{}为空，无法下载。", fileName);
+            String format = StrUtil.format("文件名称{fileName}为空，无法下载。", map);
+            BaseResponse.setError(response, 4003, format);
+            return response;
+        }
+
+        // 禁止目录上跳级别
+        if (StrUtil.contains(fileName, "..")){
+            log.info("文件名称:{}为禁止目录上跳级别，不允许下载。", fileName);
+            String format = StrUtil.format("文件名称{fileName}为禁止目录上跳级别，不允许下载。", map);
+            BaseResponse.setError(response, 4004, format);
+            return response;
+        }
+
+        // 获取文件后缀/拓展名
+        String suffix = getSuffix(fileName);
+        // 检查要下载的文件后缀/拓展名 是否 包含在默认允许的文件后缀/拓展名中
+        if (ArrayUtil.containsIgnoreCase(FileTypeUtil.DEFAULT_ALLOWED_SUFFIX, suffix)){
+            // 包含在里面，可以下载
+            response.setData(Boolean.TRUE);
+            return response;
+        }
+
+        log.info("文件名称:{}非法，不允许下载。", fileName);
+        String format = StrUtil.format("文件名称{fileName}非法，不允许下载。", map);
+        BaseResponse.setError(response, 4006, format);
+        return  response;
+    }
+
+
+    /**
+     * 根据完整文件名获取主文件名
+     *
+     * @param fileName 完整文件名
+     * @return 主文件名
+     */
+    public static String getPrefix(String fileName) {
+        if (null == fileName) {
+            return null;
+        } else {
+            int len = fileName.length();
+            if (0 == len) {
+                return fileName;
+            } else {
+                CharSequence[] var2 = SPECIAL_SUFFIX;
+                int end = var2.length;
+
+                for(int var4 = 0; var4 < end; ++var4) {
+                    CharSequence specialSuffix = var2[var4];
+                    if (StrUtil.endWith(fileName, "." + specialSuffix)) {
+                        return StrUtil.subPre(fileName, len - specialSuffix.length() - 1);
+                    }
+                }
+
+                if (CharUtil.isFileSeparator(fileName.charAt(len - 1))) {
+                    --len;
+                }
+
+                int begin = 0;
+                end = len;
+
+                for(int i = len - 1; i >= 0; --i) {
+                    char c = fileName.charAt(i);
+                    if (len == end && '.' == c) {
+                        end = i;
+                    }
+
+                    if (CharUtil.isFileSeparator(c)) {
+                        begin = i + 1;
+                        break;
+                    }
+                }
+
+                return fileName.substring(begin, end);
+            }
+        }
+    }
+
+    /**
+     * 根据完整文件名（文件名称+文件拓展名）获取文件后缀/拓展名
+     * <p>获得文件后缀名，扩展名不带“.”</p>
+     *
+     * @param fileName 整文件名（文件名称+文件拓展名）
+     * @return 文件后缀名，扩展名不带“.”
+     */
+    public static String getSuffix(String fileName) {
+        if (fileName == null) {
+            return null;
+        } else {
+            int index = fileName.lastIndexOf(".");
+            if (index == -1) {
+                return "";
+            } else {
+                int secondToLastIndex = fileName.substring(0, index).lastIndexOf(".");
+                String substr = fileName.substring(secondToLastIndex == -1 ? index : secondToLastIndex + 1);
+                if (StrUtil.containsAny(substr, SPECIAL_SUFFIX)) {
+                    return substr;
+                } else {
+                    String ext = fileName.substring(index + 1);
+                    return StrUtil.containsAny(ext, new char[]{'/', '\\'}) ? "" : ext;
+                }
+            }
+        }
+
+          // 获取fileName名称的前缀(prefix)和后缀(suffix)简单方法：但是不准确
+//        // substring(int beginIndex, int endIndex) : 以beginIndex起始索引(包含)，以endIndex为终止索(不包含)
+//        String prefix = fileName.substring(0, fileName.lastIndexOf("."));
+//        String suffix = fileName.substring(fileName.lastIndexOf("."));
+    }
+
+    /**
+     * 删除文件
+     *
+     * @param filePath 文件路径
+     * @return true:删除成功，false:删除失败
+     */
+    public static boolean deleteFile(String filePath) {
+        boolean flag = false;
+        try {
+            File file = new File(filePath);
+            // 路径为文件且不为空则进行删除
+            if (file.isFile() && file.exists())
+            {
+                file.delete();
+                flag = true;
+            }
+        } catch (Exception e) {
+            // 删除失败也不往外抛出异常
+            log.error("文件:{}删除失败", filePath, e);
+            e.printStackTrace();
+        }
+        return flag;
+    }
 
 
 }

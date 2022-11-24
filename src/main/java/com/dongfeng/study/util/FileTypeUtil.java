@@ -27,6 +27,7 @@ public class FileTypeUtil {
 
     public static final String[] VIDEO_SUFFIX = { "mp4", "avi", "rmvb" };
 
+    // 默认允许的文件类型/后缀
     public static final String[] DEFAULT_ALLOWED_SUFFIX = {
             // 图片
             "bmp", "gif", "jpg", "jpeg", "png",

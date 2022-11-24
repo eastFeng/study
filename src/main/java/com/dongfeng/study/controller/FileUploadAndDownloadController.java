@@ -1,14 +1,14 @@
 package com.dongfeng.study.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.collection.ListUtil;
-import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import com.dongfeng.study.bean.base.BaseResponse;
+import com.dongfeng.study.bean.base.BizException;
 import com.dongfeng.study.bean.base.Constants;
 import com.dongfeng.study.bean.enums.ResponseCodeEnum;
 import com.dongfeng.study.util.FileUtil;
+import com.dongfeng.study.util.IOUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,9 +18,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
+ * 文件上传和下载功能
+ *
  * @author eastFeng
  * @date 2022-11-23 15:45
  */
@@ -87,18 +91,50 @@ public class FileUploadAndDownloadController {
     }
 
     /**
-     * 文件下载请求
+     * 文件下载请求：从上传的文件夹中下载文件
+     * <p>使用response输出流下载，这种方式方法的返回值必须为void</p>
      *
      * @param fileName 文件名称
      * @param delete 下载之后是否删除
+     * @param response 响应
+     * @param request 请求
      */
     @GetMapping("/download")
-    public void fileDownload(String fileName,
-                             Boolean delete,
+    public void fileDownload(String fileName, Boolean delete,
                              HttpServletResponse response,
                              HttpServletRequest request) {
 
+        if (delete == null){
+            // 默认不删除原始文件
+            delete = Boolean.FALSE;
+        }
 
+        // 首先检测文件是否允许下载
+        BaseResponse<Boolean> allowDownloadResponse = FileUtil.checkAllowDownload(fileName);
+
+        try {
+            if (!allowDownloadResponse.getData()){
+                throw new Exception(allowDownloadResponse.getMsg());
+            }
+
+            // 存储路径+文件名
+            String filePath = Constants.UPLOAD_FILE_STORAGE_PATH + fileName;
+            log.info("filePath:{}", filePath);
+            // 告诉浏览器发送的数据属于什么文件类l型
+            response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+            String contentDisposition = "attachment; filename=" + fileName;
+            // 设置响应头
+            response.setHeader("Content-disposition", contentDisposition);
+            // 将文件写入响应的输出流中
+            IOUtil.writeToStream(filePath, response.getOutputStream(), true);
+
+            if (delete){
+                FileUtil.deleteFile(filePath);
+            }
+        } catch (Exception e) {
+            log.error("下载文件失败:", e);
+            e.printStackTrace();
+        }
     }
 
 

@@ -1,10 +1,12 @@
 package com.dongfeng.study.util;
 
+import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.dongfeng.study.bean.base.Constants;
 import com.dongfeng.study.bean.base.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -23,18 +25,26 @@ import java.util.Objects;
  */
 @Slf4j
 public class IOUtil {
+
     /**
      * 4096、8192都可以
      */
     private static final int DEFAULT_BUFFER_SIZE = 4096;
+
     /**
      * 数据流末尾
      */
     public static final int EOF = -1;
+
     /**
-     *
+     * 空内容的字符串
      */
     public static final String EMPTY = "";
+
+    /**
+     * 是否每次写出一个buffer内容就执行flush
+     */
+    public static final boolean flushEveryBuffer = true;
 
     public static void main(String[] args) {
         // IO操作，推按使用hutool或者其他工具类
@@ -534,6 +544,59 @@ public class IOUtil {
         return outputStream;
     }
 
+
+    /**
+     * 将路径对应文件写入流中
+     *
+     * @param fullFilePath 文件的绝对路径
+     * @param outputStream 输出流
+     * @param isCloseOut 是否关闭输出流
+     * @return 传输（拷贝）的byte（字节）数
+     * @throws Exception 异常
+     */
+    public static long writeToStream(String fullFilePath, OutputStream outputStream,
+                                     boolean isCloseOut) throws Exception {
+
+        if (StrUtil.isBlank(fullFilePath)){
+            throw new Exception("参数fullFilePath="+fullFilePath+"为空");
+        }
+
+        File file = new File(fullFilePath);
+        if (file == null || !file.exists()){
+            throw new Exception("文件的绝对路径不正确，文件不存在");
+        }
+
+        if (file.isDirectory()){
+            throw new Exception("文件的绝对路径不正确，这是一个文件夹");
+        }
+
+        if (!file.isFile()){
+            throw new Exception("文件的绝对路径不正确，这不是一个文件");
+        }
+
+        return writeToStream(file, outputStream, isCloseOut);
+    }
+
+    /**
+     * 将文件写入输出流中
+     *
+     * @param file 文件
+     * @param outputStream 输出流
+     * @param isCloseOut 是否关闭输出流
+     * @return 传输（拷贝）的byte（字节）数
+     * @throws IOException IO异常
+     */
+    public static long writeToStream(File file, OutputStream outputStream,
+                                     boolean isCloseOut) throws IOException {
+        Objects.requireNonNull(file, "source file is null");
+        Objects.requireNonNull(outputStream, "outputStream is null");
+
+
+        FileInputStream fileInputStream = new FileInputStream(file);
+        return copy(fileInputStream, outputStream, true, isCloseOut);
+    }
+
+
     // --------------------------------------- 字节流拷贝 start --------------------------------------
     /**
      * 将流的内容写入文件
@@ -543,7 +606,8 @@ public class IOUtil {
      * @param isCloseIn 是否关闭输入流
      * @return 传输（拷贝）的byte（字节）数
      */
-    public static long copyInputStreamToFile(InputStream source, File destination, boolean append, boolean isCloseIn) throws IOException {
+    public static long copyInputStreamToFile(InputStream source, File destination,
+                                             boolean append, boolean isCloseIn) throws IOException {
         Objects.requireNonNull(source, "source is null");
         Objects.requireNonNull(destination, "destination File is null");
 
@@ -567,7 +631,7 @@ public class IOUtil {
      * @return 传输的byte数
      */
     public static long copy(InputStream input, OutputStream output) throws IOException{
-        return copy(input, output, DEFAULT_BUFFER_SIZE, true, true);
+        return copy(input, output, DEFAULT_BUFFER_SIZE, -1, true, true);
     }
 
     /**
@@ -582,7 +646,7 @@ public class IOUtil {
      */
     public static long copy(InputStream input, OutputStream output,
                             boolean isCloseIn, boolean isCloseOut) throws IOException{
-        return copy(input, output, DEFAULT_BUFFER_SIZE, isCloseIn, isCloseOut);
+        return copy(input, output, DEFAULT_BUFFER_SIZE, -1, isCloseIn, isCloseOut);
     }
 
     /**
@@ -591,33 +655,53 @@ public class IOUtil {
      * @param input 输入流
      * @param output 输出流
      * @param bufferSize 数组大小（缓存大小），可不传，有默认值
+     * @param maxNumToRead 限制拷贝的最大字节数，如果是-1就是不限制
      * @param isCloseIn 是否关闭输入流
      * @param isCloseOut 是否关闭输出流
      * @return 传输（拷贝）的byte（字节）数
      */
-    public static long copy(InputStream input, OutputStream output, int bufferSize,
+    public static long copy(InputStream input, OutputStream output,
+                            int bufferSize, long maxNumToRead,
                             boolean isCloseIn, boolean isCloseOut) throws IOException {
         Objects.requireNonNull(input, "InputStream is null!");
         Objects.requireNonNull(output, "OutputStream is null");
+
         if (bufferSize <= 0){
             bufferSize = DEFAULT_BUFFER_SIZE;
+        }
+
+        // 如果设置了限制拷贝的最大字节数（大于0）就用设置的，否则就不限制
+        if (maxNumToRead < 0){
+            maxNumToRead = Long.MAX_VALUE;
         }
 
         // 总共拷贝的字节数量
         long byteCount = 0;
         // 从输入流中读取的字节放入buf数组中，一次最多读取bufferSize个字节
         byte[] buf = new byte[bufferSize];
-        // 每次从输入流中读取的字节数量
-        int readBytes;
         try {
             // 循环从输入流中读取字节数据，只要读取到就写入输出流
-            while ((readBytes=input.read(buf)) != EOF){
+            while (maxNumToRead > 0){ // 读取的字节总数没有超过最大限制
+                // 每次从输入流中读取的字节数量
+                int readBytes = input.read(buf);
+                if (readBytes == EOF){
+                    // 提前读取到末尾
+                    break;
+                }
+
                 // 将充输入流中读取到的数据（字节）写入到输出流中
                 // 第一个写入的字节为buf[0],写入个数为readBytes
                 output.write(buf, 0, readBytes);
+
                 // 将缓冲而未实际写的数据进行实际写入
-                output.flush();
+                if (flushEveryBuffer){
+                    output.flush();
+                }
+
+                // 每次读取的字节数加到拷贝的总字节数
                 byteCount += readBytes;
+                // 拷贝的最大字节数减去每次读取的字节数，为了下次循环判断是否超过最大限制
+                maxNumToRead -= readBytes;
             }
         } finally {
             if (isCloseIn){
