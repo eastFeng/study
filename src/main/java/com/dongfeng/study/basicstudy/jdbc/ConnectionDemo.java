@@ -47,7 +47,7 @@ public class ConnectionDemo {
      */
     private static void test_connection_1()throws Exception{
         // 1. 获取驱动: 创建Driver实现类对象
-        //com.mysql.jdbc.Driver(): MySQL数据库实现的驱动类
+        // com.mysql.jdbc.Driver(): MySQL数据库实现的驱动类
         Driver driver = null;
 //        Driver driver = new com.mysql.jdbc.Driver();
 

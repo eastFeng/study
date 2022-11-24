@@ -68,6 +68,8 @@ public class UserInfoService {
         Date now = new Date();
         userInfo.setCreateTime(now);
         userInfo.setUpdateTime(now);
+        // 字符串去掉前后空格
+//        userInfo.getEmail().trim();
         Integer integer = userInfoMapper.addUserInfo(userInfo);
         return BaseResponse.successInstance(integer);
     }

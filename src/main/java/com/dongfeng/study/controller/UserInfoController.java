@@ -45,6 +45,11 @@ public class UserInfoController {
         return userInfoService.getUserByMemberLevel(memberLevel, isDelete);
     }
 
+    /**
+     * {@link ResponseBody} : Java对象序列化为Json
+     * <p> {@link RequestBody} : Json反序列化为Java对象
+     * @param userInfo 要添加的用户信息
+     */
     @PostMapping("/addUserInfo")
     public BaseResponse<Integer> addUserInfo(@RequestBody UserInfo userInfo){
         return userInfoService.addUserInfo(userInfo);
