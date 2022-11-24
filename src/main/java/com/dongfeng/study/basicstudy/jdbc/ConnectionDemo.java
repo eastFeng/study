@@ -103,7 +103,7 @@ public class ConnectionDemo {
         // 2. 注册驱动
         DriverManager.registerDriver(driver);
 
-        //获取连接所需要的url,用户名和密码
+        // 获取连接所需要的url,用户名和密码
         String url = "jdbc:mysql://localhost:3306/dongfeng_test";
         String user = "root";
         String password = "zdf123";
@@ -168,10 +168,14 @@ public class ConnectionDemo {
         Properties properties = new Properties();
         properties.load(in);
 
-        final String user = properties.getProperty("user");
-        final String password = properties.getProperty("password");
-        final String url = properties.getProperty("url");
+
         final String driverClass = properties.getProperty("driverClass");
+        // 获取连接所需要的url
+        final String url = properties.getProperty("url");
+        // 用户名
+        final String user = properties.getProperty("user");
+        // 密码
+        final String password = properties.getProperty("password");
 
         //2. 加载驱动类
         Class.forName(driverClass);
