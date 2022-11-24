@@ -457,9 +457,9 @@ public class ReflectStudy {
         Annotation[] annotations = cls.getAnnotations();
 
         // 获取指定类型的注解，包括继承得到的
-        MyAnnotation annotation = cls.getAnnotation(MyAnnotation.class);
+        AnnotationStudy annotation = cls.getAnnotation(AnnotationStudy.class);
         // 检查是声明了指定的注解，包括继承得到的
-        boolean annotationPresent = cls.isAnnotationPresent(MyAnnotation.class);
+        boolean annotationPresent = cls.isAnnotationPresent(AnnotationStudy.class);
     }
 
     /**

@@ -1,7 +1,9 @@
 package com.dongfeng.study.basicstudy.spring;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * {@link org.springframework.web.bind.annotation.RequestMapping}注解学习
@@ -53,10 +55,13 @@ public class RequestMappingAnnotation {
     public static void main(String[] args) {
     }
 
-    // RequestMapping注解属性用法举例
+    // RequestMapping注解中的属性用法举例
 
     /**
-     * {@link RequestMapping#value()}：指定请求的实际地址，指定的地址可以是URI Template模式。
+     * {@link RequestMapping#value()}和{@link RequestMapping#path()}：指定请求的实际地址，指定的地址可以是URI Template模式。
+     * <p>指定请求的url地址。value属性和path属性的作用相同，可以互相替换。
+     * value是默认属性，所以@RequestMapping(value=“/example”)和@RequestMapping(“/example”)是等价的。</p>
+     *
      * <p>该属性必须设值。</p>
      * <p> value属性是通过当前请求的请求地址来匹配请求。 </p>
      * <p>从源码中可以看到value属性是一个字符串类型的数组，因此说明可以将多个请求映射到一个方法上，
@@ -76,8 +81,13 @@ public class RequestMappingAnnotation {
      *
      * <p>例如，该映射方法中明确要求请求方式为get，所以post方式不被允许</p>
      */
-    @RequestMapping(value = "/test2",method = RequestMethod.GET)
+    @RequestMapping(value = "/test2"
+            ,method = RequestMethod.GET) // 只支持GET请求
     public void test2(){}
+    @RequestMapping(value = "/test21"
+            ,method = {RequestMethod.GET,RequestMethod.POST}) // 支持GET和POST请求
+    public void test21(){}
+
 
     /**
      * {@link RequestMapping#params()}属性是通过当前请求的请求参数来匹配请求。
@@ -105,13 +115,35 @@ public class RequestMappingAnnotation {
      * </p>
      *
      */
-    @RequestMapping(value = "/test4",method = RequestMethod.HEAD)
+    @RequestMapping(value = "/test4",
+            method = RequestMethod.HEAD,
+            headers = {"headerA=AAAAAAAA"})
     public void test4(){}
 
-    @RequestMapping(value = "/test5",method = RequestMethod.GET)
+    /**
+     * {@link RequestMapping#consumes()}属性 ：
+     * 指定处理请求的提交内容类型（Content-Type），例如application/json, text/html。
+     */
+    @RequestMapping(value = "/test5",
+            method = RequestMethod.GET,
+            consumes = MediaType.APPLICATION_JSON_VALUE) // 只接收json类型
     public void test5(){}
 
-    @RequestMapping(value = "/test6",method = RequestMethod.GET)
+    /**
+     * {@link RequestMapping#produces()}属性:
+     * 指定返回的内容类型，仅当request请求头中的(Accept)类型中包含该指定类型才返回。
+     */
+    @RequestMapping(value = "/test6",method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public void test6(){}
 
+
+    // RequestMapping注解配合其他注解
+    /*
+     * 教程：
+     * 1. https://blog.csdn.net/qq15035899256/article/details/126041210?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-126041210-blog-125427414.pc_relevant_multi_platform_whitelistv3&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-126041210-blog-125427414.pc_relevant_multi_platform_whitelistv3&utm_relevant_index=2
+     * 2. https://blog.csdn.net/qq_40749830/article/details/115701610
+     *
+     *
+     */
 }

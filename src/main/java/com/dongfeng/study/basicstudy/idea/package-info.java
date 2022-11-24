@@ -14,4 +14,7 @@ package com.dongfeng.study.basicstudy.idea;
  * Shift+Shift : 搜索任何东西
  * Ctrl+N : 按名字搜索类
  * Ctrl+Alt+上下左右键 ： 退回或者前进
+ *
+ * Ctrl+Alt+T : 调出try/catch等快捷方法
+ * Ctrl+? : 注释快捷键
  */

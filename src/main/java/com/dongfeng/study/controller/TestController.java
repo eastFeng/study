@@ -2,6 +2,7 @@ package com.dongfeng.study.controller;
 
 import com.dongfeng.study.bean.base.Constants;
 import com.dongfeng.study.bean.base.BaseResponse;
+import com.dongfeng.study.bean.base.LoginUser;
 import com.dongfeng.study.bean.enums.ResponseCodeEnum;
 import com.dongfeng.study.bean.vo.TestVo;
 import com.dongfeng.study.config.properties.ConfigurationPropertiesDemo;
@@ -79,7 +80,7 @@ public class TestController {
     }
 
     @GetMapping("/test111")
-    public BaseResponse<String> test111(){
+    public BaseResponse<LoginUser> test111(){
         return requestContextHolderService.test111();
     }
 

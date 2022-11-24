@@ -4,7 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
@@ -61,7 +63,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 //@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @ServletComponentScan // 在SpringBoot启动时会扫描有@WebServlet、@WebFilter注解的类，并将该类实例化
 @MapperScan(basePackages = "com.dongfeng.study.bean.mapper") // Mybatis:扫描mapper接口
-@SpringBootApplication
+@SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 public class StudyApplication {
 
     /**

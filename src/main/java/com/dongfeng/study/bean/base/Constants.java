@@ -1,6 +1,5 @@
 package com.dongfeng.study.bean.base;
 
-import com.microsoft.schemas.office.x2006.encryption.STHashAlgorithm;
 
 /**
  * <b>业务常量</b>
@@ -35,6 +34,10 @@ public interface Constants {
      * 请求如果是加密的，这个就是密码Base64编码后的的
      */
     String REQUEST_ENCRYPTION_CODE = "reCode";
+    /**
+     * 上传到本地的文件存储路径
+     */
+    String UPLOAD_FILE_STORAGE_PATH = "D:\\CodingStudy\\UploadFile\\springboot-study\\";
 
     /* -------------  RabbitMQ相关, Start ----------------- */
     // Topic类型的Exchange的名字

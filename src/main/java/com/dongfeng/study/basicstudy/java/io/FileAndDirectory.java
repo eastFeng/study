@@ -87,6 +87,10 @@ public class FileAndDirectory {
         // 需要说明的是，File对象没有返回创建时间的方法，因为创建时间不是一个公共概念， Linux/Unix就没有创建时间的概念。
 
 
+        // 判断文件目录是否存在（文件的父目录是否存在）
+        if (!file.getParentFile().exists()){
+            file.getParentFile().mkdirs();
+        }
     }
 
     /**
@@ -106,7 +110,9 @@ public class FileAndDirectory {
         File directory = new File("\\Wstudy");
         File tempFile1 = File.createTempFile("createTempFileTest", "txt", directory);
         // 临时文件的完整路径名是系统指定的、唯一的，但可以通过参数指定前缀（prefix）、后缀（suffix）和目录（directory）。
-        // prefix是必需的，且至少要三个字符；suffix如果为null，则默认为．tmp; directory如果不指定或指定为null，则使用系统默认目录。
+        // prefix是必需的，且至少要三个字符;
+        // suffix如果为null，则默认为.tmp;
+        // directory如果不指定或指定为null，则使用系统默认目录.
 
         // File类的删除方法为：
         // final boolean delete = file.delete();

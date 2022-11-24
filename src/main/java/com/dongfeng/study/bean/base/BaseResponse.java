@@ -110,6 +110,13 @@ public class BaseResponse<T> implements Serializable {
         return tBaseResponse;
     }
 
+    public static <S, T> BaseResponse<T> errorInstance(BaseResponse<S> source){
+        BaseResponse<T> tBaseResponse = new BaseResponse<>();
+        tBaseResponse.setCode(source.getCode());
+        tBaseResponse.setMsg(source.getMsg());
+        return tBaseResponse;
+    }
+
     /**
      * 对 {@link BaseResponse} 设置code和msg并返回
      *
@@ -148,7 +155,7 @@ public class BaseResponse<T> implements Serializable {
      * @param <R> target的类型
      * @return Response<T>
      */
-    public static <T, R> BaseResponse<R> copyError(BaseResponse<T> source, BaseResponse<R> target){
+    public static <S, T> BaseResponse<T> copyError(BaseResponse<S> source, BaseResponse<T> target){
         target.setCode(source.getCode());
         target.setMsg(source.getMsg());
         return target;

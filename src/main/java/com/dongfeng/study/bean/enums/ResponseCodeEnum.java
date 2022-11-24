@@ -25,6 +25,9 @@ public enum ResponseCodeEnum {
     PARAM_IS_ILLEGAL(1003, "参数异常"),
     PARAM_TYPE_ERROR(1004, "参数类型错误"),
     PARAM_NOT_COMPLETE(1005, "参数不完整"),
+    FILE_IS_EMPTY(1006, "文件为空, 请重新上传"),
+    FILE_NAME_IS_EMPTY(1006, "文件名称为空, 请重新上传"),
+
 
     /**
      * 用户账号错误: 2001-2999
@@ -41,6 +44,12 @@ public enum ResponseCodeEnum {
     DATABASE_UPDATE_ERROR(3003, "数据库更新失败"),
     DATABASE_SELECT_ERROR(3004, "数据库查询失败"),
     DATABASE_BATCH_INSERT_ERROR(3005, "数据库批量插入失败"),
+
+
+    // 其他：4001-4999
+    FILE_UPLOAD_FIELD(4001, "文件上传失败"),
+    FILE_NAME_IS_TOO_LONG(4002, "文件名太长"),
+    FILE_IS_TOO_LARGE(4003, "文件太大"),
     ;
 
     private final int code;

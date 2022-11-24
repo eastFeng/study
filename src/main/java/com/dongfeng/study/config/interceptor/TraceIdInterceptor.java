@@ -47,8 +47,11 @@ public class TraceIdInterceptor extends HandlerInterceptorAdapter {
          * 具体实现方式有很多，如过滤器、拦截器、AOP等等。个人比较推荐Filter实现，因为Filter是请求最先碰到的，也是响应给前端前最后一个碰到的。
          */
         try {
+            // 从请求头中获取token
+            String token = request.getHeader(Constants.TOKEN);
+
             String traceId = UUID.randomUUID().toString().replace("-", "");
-            log.info("日志traceId:{}", traceId);
+            log.info("token:{},日志traceId:{}", token, traceId);
             MDC.put(Constants.TRACE_ID, traceId);
 
             String ipAddress = request.getRemoteAddr();

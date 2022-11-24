@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import com.mchange.lang.ShortUtils;
 import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
@@ -33,10 +34,16 @@ public class DateTest {
 //            isHo = "N";
 //        }
 
-        Date start = new Date(1642934870000L);
-        Date end = new Date(1651488470000L);
-        long between = DateUtil.between(DateUtil.beginOfDay(start), DateUtil.beginOfDay(end), DateUnit.DAY);
-        System.out.println(between);
+//        Date start = new Date(1642934870000L);
+//        Date end = new Date(1651488470000L);
+//        long between = DateUtil.between(DateUtil.beginOfDay(start), DateUtil.beginOfDay(end), DateUnit.DAY);
+//        System.out.println(between);
+
+        DateTime now = new DateTime(System.currentTimeMillis());
+        System.out.println(now);
+
+        String yyyyMMddHHmmssSSS = DateUtil.format(new Date(System.currentTimeMillis()), "yyyyMMddHHmmssSSS");
+        System.out.println(yyyyMMddHHmmssSSS);
     }
 
     @Test

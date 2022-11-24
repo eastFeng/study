@@ -30,7 +30,7 @@ import java.lang.annotation.*;
 @Documented
 @Target({ElementType.METHOD}) // 该注解可以在方法上声明使用
 @Retention(RetentionPolicy.RUNTIME)
-public @interface MyAnnotation {
+public @interface AnnotationStudy {
 
     String[] value() default "unknown";
 }

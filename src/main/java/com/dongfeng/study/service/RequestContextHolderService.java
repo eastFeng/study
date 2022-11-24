@@ -1,6 +1,8 @@
 package com.dongfeng.study.service;
 
 import com.dongfeng.study.bean.base.BaseResponse;
+import com.dongfeng.study.bean.base.LoginUser;
+import com.dongfeng.study.bean.enums.ResponseCodeEnum;
 import com.dongfeng.study.bean.vo.InterfaceA;
 import com.dongfeng.study.bean.vo.TestVo;
 import com.dongfeng.study.config.interceptor.LoginInterceptor;
@@ -65,21 +67,21 @@ public class RequestContextHolderService {
     private List<InterfaceA> aList;
 
 
-    public BaseResponse<String> test111(){
+    public BaseResponse<LoginUser> test111(){
         log.info("【aBoolean:{}】", aBoolean);
         log.info("【anInt:{}】", anInt);
         log.info("【name:{}】", name);
-        BaseResponse<String> baseResponse = new BaseResponse<>();
+        BaseResponse<LoginUser> baseResponse = new BaseResponse<>();
 
         // 1. 首先获取当前线程的RequestAttributes对象
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes==null){
-            return baseResponse;
+            return BaseResponse.errorInstance(ResponseCodeEnum.UNKNOWN);
         }
 
         // 2. 从RequestAttributes对象中获取属性
-        String token = (String) requestAttributes.getAttribute(LoginInterceptor.CURRENT_USER, RequestAttributes.SCOPE_REQUEST);
-        baseResponse.setData(token);
+        LoginUser loginUser = (LoginUser) requestAttributes.getAttribute(LoginInterceptor.CURRENT_USER, RequestAttributes.SCOPE_REQUEST);
+        baseResponse.setData(loginUser);
 
         log.info("aList.size:{}", aList.size());
         log.info("aList:{}", aList);

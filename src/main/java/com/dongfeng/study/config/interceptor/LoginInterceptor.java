@@ -1,6 +1,8 @@
 package com.dongfeng.study.config.interceptor;
 
+import cn.hutool.core.date.DateUtil;
 import com.dongfeng.study.bean.base.Constants;
+import com.dongfeng.study.bean.base.LoginUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -10,7 +12,9 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.util.Date;
 
 /**
  * <b> 登录拦截器 </b>
@@ -39,8 +43,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         try {
 //            log.info("------登录拦截器 方法执行前------");
+            log.info("------登录拦截器 方法执行前,request请求地址path{},URI{}",request.getPathInfo(), request.getRequestURI());
 
-            // 从请求头中获取token
+            // 登录凭证根据业务而定。
+            // 1.把用户token放入请求头中，根据用户token获取用户ID信息。
+            // 2.登录成功的用户会在session中加入loginUser对象。
+
+            // 1.从请求头中获取token
             String token = request.getHeader(Constants.TOKEN);
             log.info("登录拦截器 请求头中token:{}", token);
             if (StringUtils.isBlank(token)){
@@ -48,11 +57,32 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                 setUnLoginJson(response);
                 return false;
             }
+            LoginUser loginUser = getLoginUserByToken(token);
+            if (null==loginUser || !checkAuth(loginUser.getUserId(),request.getRequestURI())){
+                // 无UserId 或者 权限校验不通过
+                setUnLoginJson(response);
+                return false;
+            }
+
+
+            // 2. 判断session中是否存在loginUser，登录成功的用户会在session中加入loginUser对象
+            HttpSession session = request.getSession();
+            LoginUser loginUser1 = (LoginUser)session.getAttribute("loginUser");
+            log.info("loginUser1:{}",loginUser1);
+//            if (null==loginUser1 || StringUtils.isBlank(loginUser1.getUserId()) ||
+//                    checkAuth(loginUser1.getUserId(), request.getRequestURI())){
+//                // 无UserId 或者 权限校验不通过
+//                setUnLoginJson(response);
+//                return false;
+//            }
+
+
+            // 登录校验通过
 
             // RequestContextHolder: 请求上下文持有者
             RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
             if (attributes != null){
-                attributes.setAttribute(CURRENT_USER, token, 0);
+                attributes.setAttribute(CURRENT_USER, loginUser, RequestAttributes.SCOPE_REQUEST);
             }
 
             return true;
@@ -61,6 +91,39 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         }
         setUnLoginJson(response);
         return false;
+    }
+
+    /**
+     * 根据用户token获取用户登录信息
+     *
+     * @param token 用户token
+     * @return 用户登录信息
+     */
+    private LoginUser getLoginUserByToken(String token){
+        LoginUser loginUser = new LoginUser();
+        loginUser.setToken(token);
+        // 模拟获取用户信息过程
+        String nowTimeString =
+                DateUtil.format(new Date(System.currentTimeMillis()), "yyyyMMddHHmmssSSS");
+        loginUser.setUserId(nowTimeString);
+        loginUser.setPhoneNumber("18888888888");
+
+        if (StringUtils.isBlank(loginUser.getUserId())){
+            return null;
+        }
+
+        return loginUser;
+    }
+
+    /**
+     * 校验用户访问权限
+     *
+     * @param userId 用户ID
+     * @param requestURI request请求地址中的URI
+     * @return true:校验通过，false:校验不通过
+     */
+    public boolean checkAuth(String userId, String requestURI){
+        return true;
     }
 
     /**

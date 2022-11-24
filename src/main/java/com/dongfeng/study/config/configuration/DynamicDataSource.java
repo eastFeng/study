@@ -52,8 +52,8 @@ import java.util.Map;
  * @author eastFeng
  * @date 2022-11-22 13:30
  */
-@Component
-@Primary // 该项目有多个Primary注解会将该Bean设置为主要的DataSource注入Bean
+//@Component
+//@Primary // 该项目有多个Primary注解会将该Bean设置为主要的DataSource注入Bean
 public class DynamicDataSource extends AbstractRoutingDataSource {
 
 
