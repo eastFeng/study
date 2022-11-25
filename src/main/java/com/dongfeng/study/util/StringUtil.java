@@ -27,6 +27,22 @@ public class StringUtil {
         System.out.println(listToStringByStream(list, "."));
     }
 
+    /**
+     * 字符串常量：{@code "null"} <br>
+     * 注意：{@code "null" != null}
+     */
+    public static final String NULL = "null";
+
+    /**
+     * 字符串常量：空字符串 {@code ""}
+     */
+    public static final String EMPTY = "";
+
+    /**
+     * 字符串常量：空格符 {@code " "}
+     */
+    public static final String SPACE = " ";
+
 
     /**
      * String 转换为 List<String>,,用逗号分隔符
@@ -50,7 +66,7 @@ public class StringUtil {
      */
     public static String listToString(List<String> list, String connectStr){
         if (CollectionUtil.isEmpty(list)){
-            return "";
+            return EMPTY;
         }
         int size = list.size();
         if (size==1){
@@ -77,7 +93,7 @@ public class StringUtil {
      */
     public static String listToStringByStream(List<String> list, String connectStr){
         if (CollectionUtil.isEmpty(list)){
-            return "";
+            return EMPTY;
         }
 
         return list.stream().collect(Collectors.joining(connectStr));
@@ -85,7 +101,7 @@ public class StringUtil {
 
     public static String listToStringByJoin(List<String> list, String connectStr){
         if (CollectionUtil.isEmpty(list)){
-            return "";
+            return EMPTY;
         }
         return String.join(connectStr, list);
     }

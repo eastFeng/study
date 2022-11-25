@@ -27,6 +27,12 @@ import java.util.Map;
  */
 @Slf4j
 public class FileUtil {
+    public static void main(String[] args) {
+        String suffix = getSuffix("zlahgagh");
+        System.out.println(null == suffix);
+        System.out.println(StrUtil.isBlank(suffix));
+        System.out.println("suffix="+suffix+"======");
+    }
 
     /**
      * 默认的文件名最大长度为100
@@ -121,12 +127,15 @@ public class FileUtil {
 
         // 获取文件后缀/拓展名
         String suffix = getSuffix(originalFilename);
-        // 判断文件的后缀/拓展名是否是允许上传文件后缀/拓展名
-        boolean containsSuffix = ArrayUtil.containsIgnoreCase(FileTypeUtil.DEFAULT_ALLOWED_SUFFIX, suffix);
-        if (!containsSuffix){
-            return BaseResponse.errorInstance(4004,
-                    "文件[" + originalFilename + "]后缀[" + suffix + "]不正确，请上传" +
-                            Arrays.toString(FileTypeUtil.DEFAULT_ALLOWED_SUFFIX) + "格式");
+        // 当文件无后缀名时(如C盘下的hosts文件就没有后缀名),就不用判断后缀名
+        if (!StringUtil.EMPTY.equals(suffix)){
+            // 判断文件的后缀/拓展名是否是允许上传文件后缀/拓展名
+            boolean containsSuffix = ArrayUtil.containsIgnoreCase(FileTypeUtil.DEFAULT_ALLOWED_SUFFIX, suffix);
+            if (!containsSuffix){
+                return BaseResponse.errorInstance(4004,
+                        "文件[" + originalFilename + "]后缀[" + suffix + "]不正确，请上传" +
+                                Arrays.toString(FileTypeUtil.DEFAULT_ALLOWED_SUFFIX) + "格式");
+            }
         }
 
         // 文件类型
