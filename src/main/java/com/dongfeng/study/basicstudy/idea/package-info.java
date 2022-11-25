@@ -4,7 +4,7 @@
  */
 package com.dongfeng.study.basicstudy.idea;
 
-/**
+/*
  * IDEA常用快捷键：
  * Ctrl+F ： 在本页查找
  * Ctrl+Shift+R : 全局搜索
