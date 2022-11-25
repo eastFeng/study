@@ -1,6 +1,6 @@
 package com.dongfeng.study.config.configuration;
 
-import com.dongfeng.study.basicstudy.servlet.SecondServlet;
+import com.dongfeng.study.basicstudy.servlet.SpringBootAndServlet_03;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,9 +14,9 @@ import org.springframework.context.annotation.Configuration;
 public class ServletConfig {
 
     @Bean
-    public ServletRegistrationBean<SecondServlet> registrationBean(){
-        ServletRegistrationBean<SecondServlet> bean =
-                new ServletRegistrationBean<>(new SecondServlet());
+    public ServletRegistrationBean<SpringBootAndServlet_03> registrationBean(){
+        ServletRegistrationBean<SpringBootAndServlet_03> bean =
+                new ServletRegistrationBean<>(new SpringBootAndServlet_03());
         bean.addUrlMappings("/secondServlet");
         return bean;
     }

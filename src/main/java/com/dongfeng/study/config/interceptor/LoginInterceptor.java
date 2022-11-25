@@ -43,7 +43,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         try {
 //            log.info("------登录拦截器 方法执行前------");
-            log.info("------登录拦截器 方法执行前,request请求地址path{},URI{}",request.getPathInfo(), request.getRequestURI());
+            log.info("------登录拦截器 方法执行前,path={},URL={}",request.getPathInfo(), request.getRequestURI());
 
             // 登录凭证根据业务而定。
             // 1.把用户token放入请求头中，根据用户token获取用户ID信息。

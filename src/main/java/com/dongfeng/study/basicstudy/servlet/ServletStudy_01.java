@@ -1,10 +1,13 @@
 package com.dongfeng.study.basicstudy.servlet;
 
+import com.dongfeng.study.util.IOUtil;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Servlet学习
@@ -64,9 +67,10 @@ public class ServletStudy_01 extends HttpServlet {
      * 根据不同的请求方式进行分发，分别调用了
      * {@link javax.servlet.http.HttpServlet#doGet(HttpServletRequest, HttpServletResponse)}，
      * {@link javax.servlet.http.HttpServlet#doPost(HttpServletRequest, HttpServletResponse)}，
-     * {@link javax.servlet.http.HttpServlet#doHead(HttpServletRequest, HttpServletResponse)}等方法。
+     * {@link javax.servlet.http.HttpServlet#doHead(HttpServletRequest, HttpServletResponse)}等方法处理请求。
      * 【因此】，我们一般情况下写Servlet接口实现类都是继承自HttpServlet抽象类的，在写请求处理逻辑时，
-     * 只需要重写HttpServlet抽象类的doGet和doPost等方法即可。
+     * 只需要重写HttpServlet抽象类的doGet和doPost等方法即可，并在doGet和doPost等方法中写请求处理逻辑（响应客户端请求）。
+     * 父类HttpServlet会决定何种情况下调用子类的doGet和doPost等方法。模板设计模式）
      * <p>
      * 所以开发步骤是：
      * <ol>
@@ -77,7 +81,16 @@ public class ServletStudy_01 extends HttpServlet {
      *     <li>将Servlet接口实现类信息【注册】到Tomcat服务器</li>
      * </ol>
      *
-     *
+     * <p> 如何将Servlet接口实现类信息【注册】到Tomcat服务器？ </p>
+     * <p> 注册就是通知的意思。如何通知？ </p>
+     * <p> web ——> WEB-INF ——> web.xml </p>
+     * 【注意】IDEA新建的springboot项目是默认没有web的，所以要自己添加配置出来。
+     * web要放在src/main/目录下。
+     * 教程:https://blog.csdn.net/weixin_46713508/article/details/119804112
+     * <p> 将Servlet实现类的信息写入web.xml就完成了注册/通知。
+     * 写法示例：{@link ServletStudy_01#registerServletShow()} 或者 直接看WEB-INF下的web.xml文件</p>
+     * <p></p>
+     * <p> 在SpringBoot项目中，xml形式配置方式已经被淘汰了，已经换成了JavaConfig或注解来配置进行注册。 </p>
      *
      *
      *
@@ -107,8 +120,52 @@ public class ServletStudy_01 extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("ServletStudy_01类针对客户端发送的GET请求进行处理");
+
+        PrintWriter writer = resp.getWriter();
+        writer.write("你好，GET请求，我是ServletStudy_01");
+        IOUtil.close(writer);
+    }
+
+    /**
+     * 重写父类doPost方法，处理Post请求
+     */
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("ServletStudy_01类针对客户端发送的POST请求进行处理");
+
+        PrintWriter writer = resp.getWriter();
+        writer.write("你好，GET请求，我是ServletStudy_01");
+        IOUtil.close(writer);
+    }
 
 
-        super.doGet(req, resp);
+
+    private void registerServletShow(){
+        /*
+         *
+         * 在web.xml写俩信息就可以将Servlet实现类的信息注册到（通知给）Tomcat服务器了。
+         * 第一步：
+         * <!--将Servlet接口实现类类路径地址交给Tomcat-->
+         * <servlet>
+         *    <!--将Servlet接口实现类类路径地址交给Tomcat-->
+         *    <!--声明一个变量存储servlet接口实现类类路径-->
+         * 	  <servlet-name>ServletStudy_01</servlet-name>
+         * 	  <!--Servlet接口实现类类路径-->
+         *    <servlet-class>com.dongfeng.study.basicstudy.servlet.ServletStudy_01</servlet-class>
+         * </servlet>
+         *
+         * 第二步：
+         * <!--声明一个映射：将一个servlet-name（也就是一个Servlet接口实现类）和一个请求路径映射起来。-->
+         * <!--也就是给Servlet接口实现类设置一个请求路径（url）-->
+         * <servlet-mapping>
+         *    <servlet-name>ServletStudy_01</servlet-name>
+         *    <!--设置简短请求别名（路径）,别名（路径）在书写时必须以"/"为开头-->
+         * 	  <url-pattern>/servletStudy/01</url-pattern>
+         * </servlet-mapping>
+         *
+         *
+         *
+         */
     }
 }
