@@ -1,8 +1,5 @@
 package com.dongfeng.study.basicstudy.algorithms;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author eastFeng
  * @date 2021-04-16 1:36
@@ -15,27 +12,27 @@ public class Test {
     }
 
     public static void priorityQueueTest(){
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
-        System.out.println("priorityQueue size: "+priorityQueue.size());
-        System.out.println("priorityQueue isEmpty: "+priorityQueue.isEmpty());
-        System.out.println("priorityQueue maxValue: "+priorityQueue.delMax());
+        PriorityQueue_04<Integer> priorityQueue04 = new PriorityQueue_04<>();
+        System.out.println("priorityQueue size: "+ priorityQueue04.size());
+        System.out.println("priorityQueue isEmpty: "+ priorityQueue04.isEmpty());
+        System.out.println("priorityQueue maxValue: "+ priorityQueue04.delMax());
 
-        priorityQueue.insert(3);
-        priorityQueue.insert(6);
-        priorityQueue.insert(1);
-        priorityQueue.insert(99);
+        priorityQueue04.insert(3);
+        priorityQueue04.insert(6);
+        priorityQueue04.insert(1);
+        priorityQueue04.insert(99);
 
-        priorityQueue.foreach(t -> System.out.println(t+", "));
+        priorityQueue04.foreach(t -> System.out.println(t+", "));
 
-        System.out.println("priorityQueue isSorted: "+priorityQueue.isSorted());
+        System.out.println("priorityQueue isSorted: "+ priorityQueue04.isSorted());
 
 //        System.out.println("priorityQueue maxValue: "+priorityQueue.delMax());
-        System.out.println("priorityQueue size: "+priorityQueue.size());
-        System.out.println("priorityQueue isEmpty: "+priorityQueue.isEmpty());
+        System.out.println("priorityQueue size: "+ priorityQueue04.size());
+        System.out.println("priorityQueue isEmpty: "+ priorityQueue04.isEmpty());
     }
 
     public static void bstTest(){
-        BinarySearchTree<String, String> bstTree = new BinarySearchTree<>();
+        BinarySearchTree_05<String, String> bstTree = new BinarySearchTree_05<>();
 
 //        System.out.println("size: " + bstTree.size());
 //        System.out.println("上海: " + bstTree.get("上海"));

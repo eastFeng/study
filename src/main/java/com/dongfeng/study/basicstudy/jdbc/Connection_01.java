@@ -26,7 +26,7 @@ import java.util.Properties;
  * @author eastFeng
  * @date 2020/4/18 - 14:52
  */
-public class ConnectionDemo {
+public class Connection_01 {
 
     /**
      * 获取数据库连接: 方式五最好
@@ -163,7 +163,7 @@ public class ConnectionDemo {
 
         // 1. 读取配置文件中的信息
         // 用当前类的类加载器(ConnectionDemo.class.getClassLoader()): 应用类加载器(Application ClassLoader)加载配置文件
-        final InputStream in = ConnectionDemo.class.getClassLoader().getResourceAsStream("jdbc.properties");
+        final InputStream in = Connection_01.class.getClassLoader().getResourceAsStream("jdbc.properties");
 
         Properties properties = new Properties();
         properties.load(in);

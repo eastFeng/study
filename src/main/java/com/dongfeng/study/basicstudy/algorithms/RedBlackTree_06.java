@@ -21,7 +21,7 @@ package com.dongfeng.study.basicstudy.algorithms;
  * @author eastFeng
  * @date 2021-04-18 20:05
  */
-public class RedBlackTree<K extends Comparable<K>,V> {
+public class RedBlackTree_06<K extends Comparable<K>,V> {
 
     // 红链接
     private static final boolean RED   = true;
@@ -55,7 +55,7 @@ public class RedBlackTree<K extends Comparable<K>,V> {
 
     private Node<K,V> root;
 
-    public RedBlackTree(){
+    public RedBlackTree_06(){
     }
 
     /**

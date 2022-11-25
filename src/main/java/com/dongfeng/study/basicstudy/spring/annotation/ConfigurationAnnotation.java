@@ -1,4 +1,4 @@
-package com.dongfeng.study.basicstudy.spring;
+package com.dongfeng.study.basicstudy.spring.annotation;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -13,7 +13,7 @@ import java.util.Date;
  * @author eastFeng
  * @date 2020/4/22 - 15:17
  */
-public class BlobDemo {
+public class Blob_04 {
     public static void main(String[] args) {
         test_query();
     }

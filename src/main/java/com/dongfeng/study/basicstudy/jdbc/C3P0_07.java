@@ -10,7 +10,7 @@ import java.sql.SQLException;
  * @author eastFeng
  * @date 2020/4/27 - 13:52
  */
-public class C3P0Demo {
+public class C3P0_07 {
     public static void main(String[] args) {
         test();
     }
@@ -23,7 +23,7 @@ public class C3P0Demo {
             comboPooledDataSource.setDriverClass("com.mysql.jdbc.Driver");
             comboPooledDataSource.setJdbcUrl("jdbc:mysql://localhost:3306/test");
             comboPooledDataSource.setUser("root");
-            comboPooledDataSource.setPassword("root");
+            comboPooledDataSource.setPassword("zdf123");
 
             // 设置初始时数据库连接池中的连接数
             comboPooledDataSource.setInitialPoolSize(10);

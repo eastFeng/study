@@ -6,7 +6,7 @@ package com.dongfeng.study.basicstudy.git;
  * @author eastFeng
  * @date 2022-11-23 9:28
  */
-public class DownloadAndInstall {
+public class DownloadAndInstall_01 {
 
 
     /*

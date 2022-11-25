@@ -121,13 +121,25 @@ public class FileUtil {
 
         // 获取文件后缀/拓展名
         String suffix = getSuffix(originalFilename);
-        // 判断文件的后缀/拓展名是否超出允许上传文件后缀/拓展名
-        boolean contains = ArrayUtil.containsIgnoreCase(FileTypeUtil.DEFAULT_ALLOWED_SUFFIX, suffix);
-        if (!contains){
+        // 判断文件的后缀/拓展名是否是允许上传文件后缀/拓展名
+        boolean containsSuffix = ArrayUtil.containsIgnoreCase(FileTypeUtil.DEFAULT_ALLOWED_SUFFIX, suffix);
+        if (!containsSuffix){
             return BaseResponse.errorInstance(4004,
                     "文件[" + originalFilename + "]后缀[" + suffix + "]不正确，请上传" +
                             Arrays.toString(FileTypeUtil.DEFAULT_ALLOWED_SUFFIX) + "格式");
         }
+
+        // 文件类型
+        String type = multipartFile.getContentType();
+        // 判断文件的类型是否是允许上传文件类型
+        boolean containsType = ArrayUtil.containsIgnoreCase(FileTypeUtil.DEFAULT_ALLOWED_SUFFIX, suffix);
+        if (!containsType){
+            return BaseResponse.errorInstance(4005,
+                    "文件[" + originalFilename + "]类型[" + type + "]不正确，请上传" +
+                            Arrays.toString(FileTypeUtil.DEFAULT_ALLOWED_SUFFIX) + "类型");
+        }
+        // 注意：其实可以只根据文件类型判断，不用判断文件名后缀/拓展名，因为有的程序会恶意篡改文件名后缀/拓展名
+
 
         log.info("----检查要上传的文件是否符合要求——检查结束----");
         return BaseResponse.successInstance(originalFilename);

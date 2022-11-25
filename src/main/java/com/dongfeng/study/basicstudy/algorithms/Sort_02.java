@@ -25,7 +25,7 @@ import java.util.List;
  * @author eastFeng
  * @date 2020/6/5 - 15:28
  */
-public class Sort {
+public class Sort_02 {
     public static void main(String[] args) {
         int[] arr = {4, 22, 1, 2, 7, 5, 2, 8, 77, 10};
 
@@ -1204,7 +1204,7 @@ public class Sort {
      * 但有了优先队列，你就只用一个能存储十个元素的队列即可。
      * 在其他的例子中，我们甚至无法同时获取所有的数据，因此只能先从优先队列中取出并处理一部分，然后再根据结果决定是否向优先队列中添加更多的数据。
      *
-     * @see PriorityQueue
+     * @see PriorityQueue_04
      * @param a list
      * @param <E> 泛型，参数类型
      */

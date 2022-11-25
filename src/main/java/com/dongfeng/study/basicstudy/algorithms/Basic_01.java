@@ -9,7 +9,7 @@ import java.util.List;
  * @author eastFeng
  * @date 2020/6/29 - 15:14
  */
-public class BasicAl {
+public class Basic_01 {
     public static void main(String[] args) {
     }
 

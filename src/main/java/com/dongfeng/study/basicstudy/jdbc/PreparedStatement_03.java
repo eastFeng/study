@@ -21,7 +21,7 @@ import java.util.List;
  * @date 2020/4/20 - 17:00
  */
 @Slf4j
-public class PreparedStatementDemo {
+public class PreparedStatement_03 {
 
     public static void main(String[] args) {
         test_select();

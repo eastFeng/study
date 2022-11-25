@@ -21,7 +21,7 @@ import java.sql.SQLException;
  * @author eastFeng
  * @date 2020/4/22 - 21:09
  */
-public class TransactionDemo {
+public class Transaction_08 {
     public static void main(String[] args) {
 
     }

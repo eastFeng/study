@@ -10,7 +10,7 @@ import java.util.Scanner;
  * @author eastFeng
  * @date 2020/4/20 - 17:00
  */
-public class StatementTest {
+public class Statement_02 {
 
 	// 使用Statement的弊端：需要拼写sql语句，并且存在SQL注入的问题
 	public void testLogin() {
@@ -42,7 +42,7 @@ public class StatementTest {
 		ResultSet rs = null;
 		try {
 			// 1.加载配置文件
-			InputStream is = StatementTest.class.getClassLoader().getResourceAsStream("jdbc.properties");
+			InputStream is = Statement_02.class.getClassLoader().getResourceAsStream("jdbc.properties");
 			Properties pros = new Properties();
 			pros.load(is);
 

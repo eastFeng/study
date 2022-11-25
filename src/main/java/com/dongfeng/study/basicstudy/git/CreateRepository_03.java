@@ -6,7 +6,7 @@ package com.dongfeng.study.basicstudy.git;
  * @author eastFeng
  * @date 2022-11-23 13:18
  */
-public class CreateRepository {
+public class CreateRepository_03 {
     /*
      * 教程：
      * 菜鸟教程 https://www.runoob.com/git/git-tutorial.html

@@ -1,9 +1,7 @@
 package com.dongfeng.study.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.StrUtil;
 import com.dongfeng.study.bean.base.BaseResponse;
-import com.dongfeng.study.bean.base.BizException;
 import com.dongfeng.study.bean.base.Constants;
 import com.dongfeng.study.bean.enums.ResponseCodeEnum;
 import com.dongfeng.study.util.FileUtil;
@@ -18,9 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 文件上传和下载功能

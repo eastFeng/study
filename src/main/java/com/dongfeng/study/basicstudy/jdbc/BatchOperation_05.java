@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
  * @author eastFeng
  * @date 2020/4/22 - 17:25
  */
-public class BatchOperationDemo {
+public class BatchOperation_05 {
     public static void main(String[] args) {
         batchInsert3();
     }

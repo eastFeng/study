@@ -6,7 +6,7 @@ package com.dongfeng.study.basicstudy.git;
  * @author eastFeng
  * @date 2022-11-23 12:14
  */
-public class EnvironmentConfiguration {
+public class EnvironmentConfiguration_02 {
     /*
      * 教程：
      * https://blog.csdn.net/apple_53947466/article/details/123455014?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_utm_term~default-1-123455014-blog-121108964.pc_relevant_multi_platform_whitelistv3&spm=1001.2101.3001.4242.2&utm_relevant_index=4

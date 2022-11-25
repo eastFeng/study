@@ -35,7 +35,7 @@ import java.util.function.BiConsumer;
  * @author eastFeng
  * @date 2021-04-16 20:49
  */
-public class BinarySearchTree<K extends Comparable<K>, V> {
+public class BinarySearchTree_05<K extends Comparable<K>, V> {
 
     /**
      * 二叉查找树节点

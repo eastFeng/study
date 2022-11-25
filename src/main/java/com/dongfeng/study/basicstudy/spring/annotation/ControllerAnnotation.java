@@ -1,4 +1,4 @@
-package com.dongfeng.study.basicstudy.spring;
+package com.dongfeng.study.basicstudy.spring.annotation;
 
 /**
  * {@link org.springframework.stereotype.Controller}注解学习

@@ -1,8 +1,6 @@
 package com.dongfeng.study.basicstudy.algorithms;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -24,7 +22,7 @@ import java.util.function.Consumer;
  * @author eastFeng
  * @date 2021-04-15 22:32
  */
-public class PriorityQueue<T extends Comparable<T>> {
+public class PriorityQueue_04<T extends Comparable<T>> {
 
     // 优先队列由一个基于堆的完全二叉树表示，存储于数组pq[1..N]中，pq[0]没有使用
 //    private Comparable<T>[] pq = (T[]) new Object[Integer.MAX_VALUE];
@@ -35,14 +33,14 @@ public class PriorityQueue<T extends Comparable<T>> {
 
     private final ArrayList<T> pq;
 
-    PriorityQueue(){
+    PriorityQueue_04(){
         pq = new ArrayList<>(16);
         // List需要先add，然后才能set，如果没有add就set会抛java.lang.IndexOutOfBoundsException异常
         // 索引为0的位置没用到，设为null
         pq.add(null);
     }
 
-    PriorityQueue(int capacity){
+    PriorityQueue_04(int capacity){
         pq = new ArrayList<>(capacity);
         // List需要先add，然后才能set，如果没有add就set会抛java.lang.IndexOutOfBoundsException异常
         // 索引为0的位置没用到，设为null

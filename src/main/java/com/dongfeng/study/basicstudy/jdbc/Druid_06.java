@@ -9,7 +9,7 @@ import java.util.Properties;
  * @author eastFeng
  * @date 2020/4/27 - 19:39
  */
-public class DruidDemo {
+public class Druid_06 {
     public static void main(String[] args) {
 
     }

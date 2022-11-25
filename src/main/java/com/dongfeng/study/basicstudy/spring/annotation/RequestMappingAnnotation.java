@@ -1,4 +1,4 @@
-package com.dongfeng.study.basicstudy.spring;
+package com.dongfeng.study.basicstudy.spring.annotation;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
