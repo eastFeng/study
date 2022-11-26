@@ -105,7 +105,7 @@ public class FileUploadAndDownloadController {
             delete = Boolean.FALSE;
         }
 
-        // 首先检测文件是否允许下载
+        // 1.首先检测文件是否允许下载
         BaseResponse<Boolean> allowDownloadResponse = FileUtil.checkAllowDownload(fileName);
 
         try {
@@ -113,18 +113,24 @@ public class FileUploadAndDownloadController {
                 throw new Exception(allowDownloadResponse.getMsg());
             }
 
-            // 存储路径+文件名
+            // 文件的绝对路径：存储路径+文件名
             String filePath = Constants.UPLOAD_FILE_STORAGE_PATH + fileName;
             log.info("filePath:{}", filePath);
-            // 告诉浏览器发送的数据属于什么文件类l型
+
+            // 2.设置响应头中content-type（响应体内容类型）属性值，告诉浏览器发送的响应体中的数据属于什么类型
+            // 从而指定浏览器使用对应编译器将响应体二进制数据编译为【文字，图片，视频，命令等】。
             response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+
             String contentDisposition = "attachment; filename=" + fileName;
-            // 设置响应头
+            // 3.告诉浏览器以下载方式打数据
             response.setHeader("Content-disposition", contentDisposition);
-            // 将文件写入响应的输出流中
+
+            // 4.将文件写入响应体
+            // 获取响应对象的输出流并往输出流中写入内容
             IOUtil.writeToStream(filePath, response.getOutputStream(), true);
 
             if (delete){
+                // 下载后删除原始文件，不推荐
                 FileUtil.deleteFile(filePath);
             }
         } catch (Exception e) {

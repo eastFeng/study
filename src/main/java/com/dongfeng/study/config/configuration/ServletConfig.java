@@ -17,7 +17,7 @@ public class ServletConfig {
     public ServletRegistrationBean<SpringBootAndServlet_03> registrationBean(){
         ServletRegistrationBean<SpringBootAndServlet_03> bean =
                 new ServletRegistrationBean<>(new SpringBootAndServlet_03());
-        bean.addUrlMappings("/secondServlet");
+        bean.addUrlMappings("/servlet/03");
         return bean;
     }
 }

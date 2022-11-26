@@ -134,9 +134,8 @@ public class ServletStudy_01 extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("ServletStudy_01类针对客户端发送的POST请求进行处理");
 
-        PrintWriter writer = resp.getWriter();
-        writer.write("你好，GET请求，我是ServletStudy_01");
-        IOUtil.close(writer);
+        resp.setCharacterEncoding("UTF-8");
+        resp.getWriter().write("你好，GET请求，我是ServletStudy_01");
     }
 
 

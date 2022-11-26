@@ -42,8 +42,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         try {
-//            log.info("------登录拦截器 方法执行前------");
-            log.info("------登录拦截器 方法执行前,path={},URL={}",request.getPathInfo(), request.getRequestURI());
+            log.info("------登录拦截器 preHandle方法执行前,请求URL={},请求方法={}",
+                    request.getRequestURI(),request.getMethod());
 
             // 登录凭证根据业务而定。
             // 1.把用户token放入请求头中，根据用户token获取用户ID信息。
@@ -57,6 +57,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                 setUnLoginJson(response);
                 return false;
             }
+            // 根据Token获取LoginUser对象
             LoginUser loginUser = getLoginUserByToken(token);
             if (null==loginUser || !checkAuth(loginUser.getUserId(),request.getRequestURI())){
                 // 无UserId 或者 权限校验不通过
@@ -116,7 +117,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     }
 
     /**
-     * 校验用户访问权限
+     * 检查用户访问权限
      *
      * @param userId 用户ID
      * @param requestURI request请求地址中的URI

@@ -40,8 +40,10 @@ public class RateLimitAspect {
 
         // 获取ARateLimiter注解
         final ARateLimiter limiter = AnnotationUtils.findAnnotation(method, ARateLimiter.class);
+        assert limiter != null;
         final String rateKey = limiter.value();
-        if (limiter!=null && limiter.qps()>ARateLimiter.NOT_RATE && StringUtils.isNotBlank(rateKey)){
+        if (limiter!=null && limiter.qps()>ARateLimiter.NOT_RATE
+                && StringUtils.isNotBlank(rateKey)){
             final double qps = limiter.qps();
             if (RATE_LIMITER_MAP.get(rateKey)==null){
                 // 使用qps初始化RateLimiter

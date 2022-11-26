@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 @Documented
 public @interface ARateLimiter {
     /**
-     * 默认每秒0个许可证
+     * 默认每秒10个许可证
      */
     int NOT_RATE = 10;
 

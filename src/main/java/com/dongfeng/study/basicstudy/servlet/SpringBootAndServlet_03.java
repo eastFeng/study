@@ -18,8 +18,8 @@ public class SpringBootAndServlet_03 extends HttpServlet {
     private static final long serialVersionUID = 5641127950925276950L;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        super.doGet(req, resp);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         System.out.println("Second Servlet...");
     }
 }

@@ -479,7 +479,7 @@ public class IOUtil {
      *
      * @param inputStream 字节输入流
      * @param isClose 是否关闭输入流
-     * @param charset 字符集
+     * @param charset 字符集 {@link StandardCharsets#UTF_8}
      * @throws IOException 如果发生IO异常
      * @return 内容（字符串）
      */
@@ -519,7 +519,7 @@ public class IOUtil {
             }
             return result;
         }
-        // 字节流是不是文件字节流
+        // 字节流不是文件字节流
         return read(input, isClose).toByteArray();
     }
 
@@ -562,7 +562,7 @@ public class IOUtil {
         }
 
         File file = new File(fullFilePath);
-        if (file == null || !file.exists()){
+        if (!file.exists()){
             throw new Exception("文件的绝对路径不正确，文件不存在");
         }
 
