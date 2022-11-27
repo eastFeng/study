@@ -36,12 +36,14 @@ package com.dongfeng.study.basicstudy.mysql;
  *
  * 三、成功登录MySQL并进入后
  * 注意：进入mysql之后所有的命令/语句都要以;结尾
- * SHOW databases;   # 查看所有数据库。SQL语句不区分大小写，show databases; 一样
- * show databases;   # SQL语句不区分大小写，不过建议大写
+ * SHOW databases;    # 查看所有数据库。SQL语句不区分大小写，show databases; 一样
+ * show databases;    # SQL语句不区分大小写，不过建议大写
  *
- * use dongfeng_test; # 选择（某个）数据库，该语句是选择dongfeng_test这个数据库
+ * use dongfeng_test; # 选择数据库，该语句是选择dongfeng_test这个数据库
  * show tables;       # 查看已经选择的数据库的所有数据表
  *
+ * describe tablename;  # 表的详细描述
+ * select version(),current_date;  # 显示当前mysql版本和当前日期
  *
  *
  *

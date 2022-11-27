@@ -11,7 +11,7 @@
         <!--声明一个变量存储servlet接口实现类类路径-->
         <servlet-name>ServletStudy_01</servlet-name>
         <!--Servlet接口实现类的类路径-->
-        <servlet-class>com.dongfeng.study.basicstudy.servlet.ServletStudy_01</servlet-class>
+        <servlet-class>com.dongfeng.study.basicstudy.servlet.Servlet_01</servlet-class>
     </servlet>
 
     <!--第二步：声明一个映射，将一个servlet-name（也就是一个Servlet接口实现类）和一个请求路径映射起来。-->

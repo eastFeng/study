@@ -55,7 +55,7 @@ public class RSAUtil {
             String encBase64 = Base64.encodeBase64String(encBytes);
 
             // 保存到文件
-            IOUtil.writeUtf8String(encBase64, keyFile);
+            IOUtil.overWriteStringUTF8(encBase64, keyFile);
         }catch (Exception e){
             log.error("saveKeyForEncodedBase64 error:{}",e.getMessage(),e);
         }

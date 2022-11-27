@@ -1,21 +1,22 @@
 package com.dongfeng.study.basicstudy.servlet;
 
 
+import com.alibaba.fastjson.JSON;
 import com.dongfeng.study.util.IOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 ;
-import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * {@link javax.servlet.http.HttpServletResponse} 和
@@ -27,13 +28,18 @@ import java.util.Enumeration;
 @Slf4j
 //@MultipartConfig
 @WebServlet(name = "ServletStudy_05", urlPatterns = "/servlet/05")
-public class ServletStudy_05 extends HttpServlet {
+public class RequestAndResponse_05 extends HttpServlet {
     private static final long serialVersionUID = -7522205658353885240L;
 
     // 公共接口HttpServletRequest继承自ServletRequest。
     // 客户端浏览器发出的请求被封装成为一个HttpServletRequest对象。
     // 服务器的响应被封装成为一个HttpServletResponse对象。
 
+    // Web服务器收到客户端的http请求，会针对每一次请求，
+    // 分别创建一个用于代表请求的request对象和代表响应的 response 对象。
+    // request和response对象代表请求和响应：
+    // 获取客户端数据，需要通过request 对象；
+    // 向客户端输出数据，需要通过 response 对象。
     // HttpServletRequest对象（接口实现类的对象）和HttpServletResponse在service方法中，
     // 都是由servlet容器传过来的，我们需要做的就是使用它们，取出对象中的数据进行分析、处理。
 
@@ -51,9 +57,9 @@ public class ServletStudy_05 extends HttpServlet {
      *
      * HttpServletResponse主要功能:
      * <ol>
-     *     <li>将执行结果以二进制形式写入到【响应体】。</li>
+     *     <li>将执行结果以二进制形式写入到【响应体】，响应体的数据到客户端被浏览器解析。</li>
      *     <li>
-     *     设置响应头中【content-type】属性值，告诉浏览器发送的响应体中的数据属于什么类型，
+     *     设置响应类型（设置响应头中【content-type】属性值），告诉浏览器发送的响应体中的数据属于什么类型，
      *     从而控制浏览器使用对应/正确的编译器将【响应体二进制数据】编译为【文字，图片，视频，命令】。
      *     content-type：发送到客户端的响应的内容类型。
      *     </li>
@@ -100,13 +106,13 @@ public class ServletStudy_05 extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         log.info("doGet start 请求URL:{}", req.getRequestURL());
-        // 1. 响应对象以二进制形式将执行结果写入响应体
-//        responseTest1(resp);
+        // 1. 响应对象将执行结果写入响应体，响应体的数据到客户端被浏览器解析。
+        responseTest1(resp);
 
-        // 2. 设置响应头中[content-type]属性值，告诉浏览器发送的响应体中的数据属于什么类型，
+        // 2. 设置响应类型（设置响应头中【content-type】属性值），告诉浏览器发送的响应体中的数据属于什么类型，
         // 从而指定浏览器使用对应编译器将响应体二进制数据编译为【文字，图片，视频，命令】。
         // content-type：发送到客户端的响应的内容类型
-//        responseTest2(resp);
+        responseTest2(resp);
 
         // 3. 设置响应头中【location】属性，将一个请求地址赋值给location。
         // 从而控制浏览器向指定服务器发送请求。【重定向】
@@ -154,105 +160,58 @@ public class ServletStudy_05 extends HttpServlet {
         log.info("doPost start ===============");
         req.setCharacterEncoding("UTF-8");
 
-        // http://localhost:8081/servlet/05?name=东东东&age=18
-        // 1. 获取【请求行】中【URL】信息 （从http开始到?前面结束 http://localhost:8081/servlet/05）
-        String Url = req.getRequestURL().toString();
-        // 获取【请求行】中【Method】信息
-        String method = req.getMethod();
-        // 获取【请求行】中【URI】信息
-        // URI: 资源文件精准定位地址（项目名称开始），在请求行中并没有URI这个属性，实际上是从URL中截取的一个字符串。
-        // URI作用: 让HTTP服务器对被访问的资源文件进行定位
-        String requestURI = req.getRequestURI();
-        // 获取【请求行】中【HTTP版本】信息
-        String protocol = req.getProtocol();
-
-        // 获取客户端IP
-        String remoteAddr = req.getRemoteAddr();
-        // 获取客户端完整主机名
-        String remoteHost = req.getRemoteHost();
-        System.out.println("客户端IP: "+remoteHost+"  客户端主机名称: "+remoteHost);
-
-        // 2. 获取此请求的所有【请求头Header】的name（名称）。如果请求没有请求头，则此方法返回空枚举。
-        Enumeration<String> headerNames = req.getHeaderNames();
-        System.out.println("HTTP请求中所有的请求头:");
-        while (headerNames.hasMoreElements()){
-            String headerName = headerNames.nextElement();
-            System.out.println(headerName + "=" + req.getHeader(headerName));
-        }
-        System.out.println();
-
-        String contentType = req.getContentType();
-        System.out.println("请求体内容类型: "+contentType);
-        if (contentType.contains(MediaType.MULTIPART_FORM_DATA_VALUE)){
-            System.out.println("请求体内容类型contentType: "+contentType);
-            // contentType是 multipart/form-data
-            ServletInputStream in = req.getInputStream();
-            InputStreamReader inputStreamReader = new InputStreamReader(in, StandardCharsets.UTF_8);
-            String read = IOUtil.read(inputStreamReader, false);
-            System.out.println(read);
-        }
-
-        // http://localhost:8081/servlet/05?name=东东东&age=18
-        // 3. 获取请求的【查询字符串】（从?后面所有的字符串。 name=东东东&age=18）
-        String queryString = req.getQueryString();
-        System.out.println("查询字符串: "+queryString);
-        System.out.println();
-
-        // 4. 获取此请求的所有参数（从?后面所有的字符串的key）
-        // 【注】getParameterNames方法不适用于contentType为multipart/form-data的情况
-        // multipart 多部分
-        Enumeration<String> parameterNames = req.getParameterNames();
-        System.out.println("All Parameters:");
-        while (parameterNames.hasMoreElements()){
-            String parameterName = parameterNames.nextElement();
-            System.out.println(parameterName + "=" + req.getParameter(parameterName));
-        }
-        System.out.println();
-
-
+        requestTest1(req);
+        requestTest2(req);
+        requestTest3(req);
+        requestTest4(req);
+//        requestTest5(req, resp);
+        requestTest6(req, resp);
 
         resp.setContentType(MediaType.TEXT_HTML_VALUE);
-        String result =  "URL="+Url+"<br/>method="+method+"<br/>URI="+requestURI+"<br/>protocol="+protocol;
-        // 写入响应体
-        resp.getWriter().write(result);
 
     }
 
     // ------------------------- HttpServletRequest Test Start ----------------------------------
-
-    private void responseTest1(HttpServletResponse resp)
+    private void responseTest1(HttpServletResponse response)
             throws ServletException, IOException {
-        // 1. 响应对象以二进制形式将执行结果写入响应体
+        // 1. 响应对象将执行结果写入【响应体】，响应体的数据到客户端被浏览器解析。
+
+        // HttpServletResponse对象将数据写入响应体，需要获取输出流。
+        // 有两种方法获取输出流：
+        // getWriter() 获取字符流(只能响应回字符)
+        // getOutputStream() 获取字节流(能响应一切数据)
+        // 注意：两者不能同时使用。
+
+        PrintWriter responseWriter = response.getWriter();
 
         // 解决浏览器中文乱码
-        resp.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         // 写入响应体
         // 获取响应对象的输出流并往输出流中写入内容
-        resp.getWriter().write("执行结果测试");
-        resp.getWriter().write(30);  // 浏览器接收到的数据不是30，
-                                        // 因为write方法将int类型的30当做ASCII码写入了
-        resp.getWriter().println(30);   // 换成println方法就行了，建议用这个方法
+        responseWriter.write("执行结果测试");
+        responseWriter.write(30);  // 浏览器接收到的数据不是30，
+                                      // 因为write方法将int类型的30当做ASCII码写入了
+        responseWriter.println(30);   // 换成println方法就行了，建议用这个方法
     }
-    private void responseTest2(HttpServletResponse resp)
+    private void responseTest2(HttpServletResponse response)
             throws ServletException, IOException {
-        // 2. 设置响应头中[content-type]属性值，从而控制/指定浏览器使用
-        // 对应编译器将响应体二进制数据编译为【文字，图片，视频，命令】
+        // 2. 设置响应类型（设置响应头中【content-type】属性值），
+        // 从而控制/指定浏览器使用对应编译器将响应体二进制数据编译为【文字，图片，视频，命令】
         // content-type：发送到客户端的响应体的内容类型
 
-        // 2.1 设置发送到客户端的响应体的内容类型，指定浏览器使用正确编译器。
+        // 2.1 设置响应类型
         // 这一步一定要在获取响应对象的输出流之前设置/执行/操作
-        resp.setContentType(MediaType.TEXT_HTML_VALUE);
+        response.setContentType(MediaType.TEXT_HTML_VALUE);
 
         // 解决浏览器中文乱码
-        resp.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         // 执行结果既有文字信息又有HTML标签命令
         String result1 = "Java<br/>MySQL<br/>HTML<br/>";
         String result2 = "河南省<br/>商丘市<br/>夏邑县";
-        // 2.2 获取响应对象的输出流并往输出流中写入内容
-        // (响应对象以二进制形式将执行结果写入响应体)
-        resp.getWriter().write(result1+result2);
+        // 2.2 响应对象将执行结果写入【响应体】
+        response.getWriter().write(result1+result2);
     }
 
     private void responseTest3(HttpServletResponse resp)
@@ -263,15 +222,140 @@ public class ServletStudy_05 extends HttpServlet {
         String result = "https://www.baidu.com";
 
         // 设置响应头中【location】属性，location="https://www.baidu.com"
+        // 浏览器会从新自动请求 location 属性的值https://www.baidu.com
         // 重定向
         resp.sendRedirect(result);
     }
 
 
     // ------------------------- HttpServletRequest Test Start ----------------------------------
-
     private void requestTest1(HttpServletRequest req){
+        // 1. 获取【请求行】中的信息
+
+        // http://localhost:8081/servlet/05?name=东东东&age=18
+        // 获取【请求行】中【URL】信息 （从http开始到?前面结束 http://localhost:8081/servlet/05）
+        String Url = req.getRequestURL().toString();
+        System.out.println("URL : "+Url);
+
+        // 获取【请求行】中【Method】信息
+        String method = req.getMethod();
+        System.out.println("method : "+method);
+
+        // 获取【请求行】中【URI】信息
+        // URI: 资源文件精准定位地址（项目名称开始），在请求行中并没有URI这个属性，实际上是从URL中截取的一个字符串。
+        // URI作用: 让HTTP服务器对被访问的资源文件进行定位
+        String requestURI = req.getRequestURI();
+        System.out.println("URI : "+requestURI);
+
+        // 获取【请求行】中【HTTP版本】信息
+        String protocol = req.getProtocol();
+        System.out.println("HTTP Protocol : "+protocol);
+
+        // 获取客户端IP
+        String remoteAddr = req.getRemoteAddr();
+        // 获取客户端完整主机名
+        String remoteHost = req.getRemoteHost();
+        System.out.println("客户端IP: "+remoteHost+"  客户端主机名称: "+remoteHost);
+
+        // http://localhost:8081/servlet/05?name=东东东&age=18
+        // 3. 获取请求的【查询字符串】（从?后面所有的字符串。 name=东东东&age=18）
+        String queryString = req.getQueryString();
+        System.out.println("查询字符串: "+queryString);
+        System.out.println();
+
+        String result =  "URL="+Url+"<br/>method="+method+"<br/>URI="+requestURI+"<br/>protocol="+protocol;
+    }
+
+    private void requestTest2(HttpServletRequest req){
+        // 2. 获取此请求的所有【请求头Header】的name（名称）。如果请求没有请求头，则此方法返回空枚举。
+        Enumeration<String> headerNames = req.getHeaderNames();
+        System.out.println("HTTP请求中所有的请求头:");
+        while (headerNames.hasMoreElements()){
+            String headerName = headerNames.nextElement();
+            System.out.println(headerName + "=" + req.getHeader(headerName));
+        }
+        System.out.println();
+    }
+    private void requestTest3(HttpServletRequest req) throws IOException {
+        // 4. 获取此请求的所有参数
+        // （拼接在URL后面的查询字符串的参数 + contentType为X-www-form-urlencoded时请求体传的参数）
+        // 【注】getParameterNames方法不适用于contentType为multipart/form-data的情况
+        // 也就是说contentType为multipart/form-data时，该方法获取不到请求体里面的参数。
+        // multipart/form-data类型不仅可传（字符串）参数，还可以传文件
+        Enumeration<String> parameterNames = req.getParameterNames();
+
+        System.out.println("All Parameters:");
+        while (parameterNames.hasMoreElements()){
+            String parameterName = parameterNames.nextElement();
+            System.out.println(parameterName + "=" + req.getParameter(parameterName));
+        }
+        System.out.println();
+    }
+
+    private void requestTest4(HttpServletRequest req) throws IOException {
+        // 获取请求体中请求参数信息
+
+        String contentType = req.getContentType();
+        System.out.println("请求体内容类型: "+contentType);
+
+        if (contentType.startsWith(MediaType.MULTIPART_FORM_DATA_VALUE)){
+            System.out.println("解析contentType为multipart/form-data的请求体中请求参数信息: ");
+
+            ServletInputStream in = req.getInputStream();
+            List<String> list = IOUtil.readLines(in);
+            System.out.println(list.toString());
+        }else if (contentType.startsWith(MediaType.APPLICATION_JSON_VALUE)){
+            System.out.println("解析contentType为application/json的请求体中请求参数信息: ");
+
+            ServletInputStream in = req.getInputStream();
+            String str = IOUtil.readUTF8(in, false);
+            HashMap hashMap = JSON.parseObject(str, HashMap.class);
+            hashMap.forEach((k,v) -> System.out.println(k +"="+v));
+        }
 
     }
+
+    private void requestTest5(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        // 请求转发，是服务器的一种行为，当客户端请求到达后，服务器进行转发，此时会将请求对象进行保
+        // 存，浏览器地址栏中的 URL 地址不会改变，得到响应后，服务器端再将响应发送给客户端，
+        // 浏览器从始至终只有一个请求发出（request数据可以共享）。
+
+        // 不仅可以转发到另一个servlet，也可以转发到jsp/html页面
+        req.getRequestDispatcher("/servlet/02").forward(req, resp);
+    }
+
+    private void requestTest6(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // request作用域（也叫域对象），通过该对象可以在一个请求中传递数据。
+        // 作用范围：在一次请求中有效，即服务器跳转有效。
+        // request域对象中的数据在一次请求中有效，则经过请求转发，request域中的数据依然存在，
+        // 则在请求转发的过程中可以通过request来传输/共享数据。
+        // 可以在多个servlet之间请求转发，多个servlet之间共享作用域。
+
+        // 设置域对象内容
+        request.setAttribute(REQUEST_ATTRIBUTE_1, "valueTest1");
+        // 获取域对象内容
+        Object attribute = request.getAttribute(REQUEST_ATTRIBUTE_1);
+        System.out.println("ServletStudy_05 doPost "+REQUEST_ATTRIBUTE_1 + "=" + attribute);
+
+        // 请求转发，会把Request作用域中数据也带过去
+        request.getRequestDispatcher("/servlet/02").forward(request,response);
+
+        // 删除域对象内容
+        request.removeAttribute(REQUEST_ATTRIBUTE_1);
+        Object attributeAgain = request.getAttribute(REQUEST_ATTRIBUTE_1);
+        System.out.println("ServletStudy_05 doPost 删除域对象内容之后 "+REQUEST_ATTRIBUTE_1 + "=" + attributeAgain);
+
+         // 【注意】
+        /**
+         *
+         */
+    }
+
+    public static String REQUEST_ATTRIBUTE_1 = "RequestAttribute1";
+
+
+
 
 }

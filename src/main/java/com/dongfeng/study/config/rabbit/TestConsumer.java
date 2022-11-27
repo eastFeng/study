@@ -1,7 +1,6 @@
 package com.dongfeng.study.config.rabbit;
 
 import cn.hutool.http.ContentType;
-import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.dongfeng.study.bean.base.Constants;

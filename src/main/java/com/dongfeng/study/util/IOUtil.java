@@ -1,12 +1,12 @@
 package com.dongfeng.study.util;
 
-import cn.hutool.core.io.IORuntimeException;
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.dongfeng.study.bean.base.Constants;
 import com.dongfeng.study.bean.base.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -76,24 +76,28 @@ public class IOUtil {
         return BaseResponse.successInstance("success");
     }
 
+
     //------------------------------------------------------------------------------------
-    //               将字符串写入文件 writeString start
+    //                        文件相关操作：将字符串写入文件，从文件中读取字符串
     // -----------------------------------------------------------------------------------
+    // ----------------------------  将字符串写入文件 end --------------------------------------------
     /**
      * 将String写入文件，追加模式，字符集（编码方式）为UTF-8
      * @param data 写入的内容
      * @param file 文件
      * @throws IOException IO异常
      */
-    public static void appendString(String data, File file) throws IOException{
+    public static void appendStringUTF8(String data, File file) throws IOException{
         writeString(data, file, StandardCharsets.UTF_8, true);
     }
 
     /**
      * 将String写入文件，追加模式
+     *
      * @param data 写入的内容
      * @param file 文件
-     * @param charset 字符集（编码方式）
+     * @param charset 字符集（编码方式），
+     *                可以为null（就是不指定编码，使用默认编码）
      * @throws IOException IO异常
      */
     public static void appendString(String data, File file, Charset charset) throws IOException{
@@ -107,7 +111,7 @@ public class IOUtil {
      * @param file 文件
      * @throws IOException IO异常
      */
-    public static void writeUtf8String(String data, File file) throws IOException{
+    public static void overWriteStringUTF8(String data, File file) throws IOException{
         writeString(data, file, StandardCharsets.UTF_8, false);
     }
 
@@ -115,37 +119,217 @@ public class IOUtil {
      * 将String写入文件，覆盖模式
      * @param data 写入的内容
      * @param file 文件
-     * @param charset 字符集（编码方式）
+     * @param charset 字符集（编码方式），
+     *                可以为null（就是不指定编码，使用默认编码）
      * @throws IOException IO异常
      */
-    public static void writeString(String data, File file, Charset charset) throws IOException{
+    public static void overWriteString(String data, File file, Charset charset) throws IOException{
         writeString(data, file, charset, false);
     }
 
     /**
-     * 将String写入文件
+     * 将字符串写入文件
+     *
      * @param data 写入的内容
      * @param file 文件
-     * @param charset 字符集（编码方式）
+     * @param charset 字符集（编码方式），可以为null（就是不指定编码，使用默认编码）
      * @param isAppend  是否追加
      * @throws IOException IO异常
      */
     public static void writeString(String data, File file, Charset charset, boolean isAppend) throws IOException{
         Objects.requireNonNull(data, "data is null");
-        Objects.requireNonNull(file, "Charset is null");
 
-        // BufferedWriter : 字符输出流，提供缓冲，以及按行写功能
+        /*
+         * InputStreamReader和OutputStreamWriter是适配器类，
+         * 能将InputStream/OutputStream转换为Reader/Writer。（字节流转换为字符流）
+         * InputStreamReader和OutputStreamWriter可以指定编码类型。
+         *
+         * FileReader/FileWriter的数据源和目的媒介是文件。
+         * FileReader/FileWriter不能指定编码类型，只能使用默认编码。
+         * FileWriter可以指定写入的字符是追加还是覆盖。
+         *
+         * 【所以，读取文件或往文件中写入数据时】，
+         * 需要指定编码类型，使用InputStreamReader和OutputStreamWriter，
+         * 不需要指定编码类型，使用FileReader/FileWriter。
+         */
+        // BufferedWriter : 字符输出流，提供缓冲，以及按行写功能。
         BufferedWriter bufferedWriter = null;
         try {
-            // OutputStreamWriter : 适配器类，能将OutputStream转换为Writer
-            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file, isAppend), charset);
-            bufferedWriter = new BufferedWriter(writer);
+            if (charset == null){
+                // 没有指定编码类型，使用FileWriter
+                FileWriter fileWriter = new FileWriter(file, isAppend);
+                bufferedWriter = new BufferedWriter(fileWriter);
+            }else {
+                // 指定了编码类型，使用OutputStreamWriter
+                // OutputStreamWriter : 适配器类，能将OutputStream转换为Writer
+                OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file, isAppend), charset);
+                bufferedWriter = new BufferedWriter(writer);
+            }
+
             bufferedWriter.write(data);
             bufferedWriter.flush();
         } finally {
             close(bufferedWriter);
         }
     }
+    // ----------------------------  将字符串写入文件 end --------------------------------------------
+
+
+    /*  ---------------- 从文件中读取每一行数据 start  -------------- */
+    /**
+     * 按照UTF-8编码，从文件中读取每一行数据，并保存到List集合中
+     * @param file 要读取的文件
+     * @return 保存每一行字符串的List集合
+     * @throws IOException 发生IO异常
+     */
+    public static List<String> readLines(File file) throws IOException {
+        return readLines(file, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * 从文件中读取每一行数据，并保存到List集合中
+     *
+     * @param file 要读取的文件
+     * @param charset 字符编码类型，可以为null（就是不指定编码，使用默认编码）
+     * @return List<String> 保存每一行字符串的List集合
+     * @throws IOException 发生IO异常
+     */
+    public static List<String> readLines(File file, Charset charset) throws IOException{
+        Objects.requireNonNull(file, "File is null");
+
+        List<String> list = new ArrayList<>();
+        readLines(file, charset, list);
+        return list;
+    }
+
+    /**
+     * 从文件中读取每一行数据 ,并保存到给定集合中
+     *
+     * @param file  要读取的文件
+     * @param charset 字符编码集
+     * @param collection 保存每一行字符串的集合
+     * @throws IOException 发生IO异常
+     */
+    public static void readLines(File file, Charset charset, Collection<String> collection) throws IOException {
+        Objects.requireNonNull(file, "File is null");
+        Objects.requireNonNull(collection, "Collection is null");
+        /*
+         * InputStreamReader和OutputStreamWriter是适配器类，
+         * 能将InputStream/OutputStream转换为Reader/Writer。（字节流转换为字符流）
+         * InputStreamReader和OutputStreamWriter可以指定编码类型。
+         *
+         * FileReader/FileWriter的数据源和目的媒介是文件。
+         * FileReader/FileWriter不能指定编码类型，只能使用默认编码。
+         * FileWriter可以指定写入的字符是追加还是覆盖。
+         *
+         * 【所以，读取文件或往文件中写入数据时】，
+         * 需要指定编码类型，使用InputStreamReader和OutputStreamWriter，
+         * 不需要指定编码类型，使用FileReader/FileWriter。
+         */
+        if (charset == null){
+            // 没有指定编码类型，使用FileReader
+            FileReader fileReader = new FileReader(file);
+            readLines(fileReader, collection);
+        }else {
+            // 指定了编码类型，使用InputStreamReader
+            FileInputStream fileInputStream = new FileInputStream(file);
+            readLines(fileInputStream, charset, collection);
+        }
+    }
+    /* ------------------------ 从文件中读取每一行数据 end --------------------------------------- */
+
+
+    /* ------------------------ 从文件中读取字符串 start ----------------------------------------- */
+    /**
+     * 从文件中读取字符串
+     * @deprecated 不建议使用，容易造成内存溢出。请使用 {@link #readFile(File, Charset)}
+     * @param file 文件
+     * @return String 字符串
+     * @throws IOException io异常
+     */
+    public static String readFile(File file) throws IOException {
+        Objects.requireNonNull(file, "File is null");
+
+        // 该方法不建议使用，字节数组流是基于内存的（内部动态数组），有大小限制，
+        // 如果写入的数据量非常多，容易造成内存溢出
+        // ByteArrayOutputStream内部是基于字节数组的
+
+        // 输入流：输入流和数据源相关，从数据源中读取数据
+        InputStream in = null;
+        // ByteArrayOutputStream：将数据写入到动态的字节数组中
+        ByteArrayOutputStream out = null;
+        try {
+            in = new FileInputStream(file);
+            out = new ByteArrayOutputStream();
+            copy(in, out, false, false);
+            byte[] bytes = out.toByteArray();
+            return new String(bytes, StandardCharsets.UTF_8);
+        } finally {
+            // 在这里关闭就行
+            close(in);
+            close(out);
+        }
+    }
+
+    /**
+     * 将文件全部内容读入到一个字符串 UFT-8编码
+     *
+     * @param file 文件
+     * @return 文件中的字符串
+     * @throws IOException IO异常
+     */
+    public static String readFileUTF8(File file) throws IOException {
+        Objects.requireNonNull(file, "File is null");
+
+        return readFile(file, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * 将文件全部内容读入到一个字符串
+     *
+     * @param file 文件
+     * @param charset 编码类型，可以不指定（可以为null）
+     * @return 文件中的字符串
+     * @throws IOException IO异常
+     */
+    public static String readFile(File file, Charset charset) throws IOException {
+        Objects.requireNonNull(file, "File is null");
+        /*
+         * InputStreamReader和OutputStreamWriter是适配器类，
+         * 能将InputStream/OutputStream转换为Reader/Writer。（字节流转换为字符流）
+         * InputStreamReader和OutputStreamWriter可以指定编码类型。
+         *
+         * FileReader/FileWriter的数据源和目的媒介是文件。
+         * FileReader/FileWriter不能指定编码类型，只能使用默认编码。
+         * FileWriter可以指定写入的字符是追加还是覆盖。
+         *
+         * 【所以，读取文件或往文件中写入数据时】，
+         * 需要指定编码类型，就使用InputStreamReader和OutputStreamWriter，
+         * 不需要指定编码类型，使用FileReader/FileWriter。
+         */
+        // 字符输入流
+        Reader reader = null;
+        // StringWriter : 字符输出流，输出目标媒介为内部的StringBuffer
+        StringWriter writer = new StringWriter();
+        try {
+            if (charset == null){
+                // 没有指定编码类型，使用FileReader
+                reader = new FileReader(file);
+//                reader = new InputStreamReader(new FileInputStream(file));
+            }else {
+                // 指定了编码类型，使用InputStreamReader
+                reader = new InputStreamReader(new FileInputStream(file), charset);
+            }
+            copy(reader, writer);
+        } finally {
+            close(reader);
+            close(writer);
+        }
+
+        return writer.toString();
+    }
+    /* ------------------------ 从文件中读取字符串 end ----------------------------------------- */
+
 
     // ----------------------------  将多部分内容写入到字节输出流OutputStream中 start ---------------------------------------
     /**
@@ -157,7 +341,10 @@ public class IOUtil {
      * @param collection   写入的多个对象，不包括不会自动换行
      * @throws IOException IO异常
      */
-    public static void write2(OutputStream outputStream, Charset charset, boolean isCloseOut, Collection<Object> collection) throws IOException {
+    public static void write2(OutputStream outputStream,
+                              Charset charset,
+                              boolean isCloseOut,
+                              Collection<Object> collection) throws IOException {
         Objects.requireNonNull(outputStream, "outputStream is null");
         Objects.requireNonNull(collection, "contents is null");
 
@@ -198,18 +385,21 @@ public class IOUtil {
      * @param outputStream 字节输出流
      * @param charset 写出的内容的字符集
      * @param isCloseOut 写入完毕是否关闭输出流
-     * @param str 字符串
+     * @param data 字符串
      * @throws IOException IO异常
      */
-    public static void write(OutputStream outputStream, Charset charset, boolean isCloseOut, String str) throws IOException {
+    public static void write(OutputStream outputStream,
+                             Charset charset,
+                             boolean isCloseOut,
+                             String data) throws IOException {
         Objects.requireNonNull(outputStream, "outputStream is null");
-        Objects.requireNonNull(str, "str is null");
+        Objects.requireNonNull(data, "str is null");
 
         // 根据outputStream创建一个OutputStreamWriter对象
         OutputStreamWriter outputStreamWriter = getOutputStreamWriter(outputStream, charset);
         try {
             // 写入字符串
-            outputStreamWriter.write(str);
+            outputStreamWriter.write(data);
             outputStreamWriter.flush();
         } finally {
             if (isCloseOut){
@@ -237,14 +427,16 @@ public class IOUtil {
     }
 
     /**
-     * 将多部分内容写到流中
+     * 将多部分内容写到字节输出流中
      *
      * @param outputStream 字节输出流
      * @param isCloseOut 写入完毕是否关闭输出流
      * @param contents 写入的内容
      * @throws IOException IO异常
      */
-    public static void writeObjects(OutputStream outputStream, boolean isCloseOut, Serializable... contents) throws IOException {
+    public static void writeObjects(OutputStream outputStream,
+                                    boolean isCloseOut,
+                                    Serializable... contents) throws IOException {
         ObjectOutputStream osw =
                 outputStream instanceof ObjectOutputStream ? (ObjectOutputStream) outputStream : new ObjectOutputStream(outputStream);
 
@@ -263,14 +455,16 @@ public class IOUtil {
     }
 
     /**
-     * 将多部分内容写到流中
+     * 将多部分内容写到字节输出流中
      *
      * @param outputStream 字节输出流
      * @param isCloseOut 写入完毕是否关闭输出流
      * @param collection 写入的内容
      * @throws IOException IO异常
      */
-    public static void writeObjects(OutputStream outputStream, boolean isCloseOut, Collection<Serializable> collection) throws IOException {
+    public static void writeObjects(OutputStream outputStream,
+                                    boolean isCloseOut,
+                                    Collection<Serializable> collection) throws IOException {
         /*
          * 对象操作流：ObjectInputStream 和 ObjectOutputStream
          * 该流可以将一个对象写出，或者读取一个对象到程序中，也就是执行了序列化和反序列化操作。
@@ -293,137 +487,7 @@ public class IOUtil {
     }
     // ----------------------------  将多部分写入到字节输出流OutputStream中 start ---------------------------------------
 
-
-
-    /* ---------------- 从文件中读取每一行数据 start  -------------- */
-    /**
-     * 从文件中读取每一行数据 ,并保存到List集合中
-     *
-     * @param file 文件
-     * @param charset 字符编码集
-     * @return List<String>
-     * @throws IOException 发生IO异常
-     */
-    public static List<String> readLines(File file, Charset charset) throws IOException{
-        Objects.requireNonNull(file, "File is null");
-
-        List<String> list = new ArrayList<>();
-        readLines(file, charset, list);
-        return list;
-    }
-
-    /**
-     * 从文件中读取每一行数据 ,并保存到给定集合中
-     *
-     * @param file  文件
-     * @param charset 字符编码集
-     * @param collection 要保存到的集合
-     * @throws IOException 发生IO异常
-     */
-    public static void readLines(File file, Charset charset, Collection<String> collection) throws IOException {
-        Objects.requireNonNull(file, "File is null");
-        Objects.requireNonNull(collection, "Collection is null");
-
-        // BufferedReader : 字符输入流，提供缓冲，以及按行读功能
-        BufferedReader bufferedReader = null;
-        try {
-            // InputStreamReader : 将字节输入流 转为 字符输入流
-            InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file), charset);
-            bufferedReader = new BufferedReader(inputStreamReader);
-
-            while (true){
-                // 每次读一行
-                String line = bufferedReader.readLine();
-                if (line == null){ // 已读完
-                    break;
-                }
-                collection.add(line);
-            }
-        } finally {
-            close(bufferedReader);
-        }
-
-    }
-    /* ------------------------ 从文件中读取每一行数据 end --------------------------------------- */
-
-
-    /* ------------------------ 从文件中读取字符串 start ----------------------------------------- */
-    /**
-     * 从文件中读取字符串
-     * @deprecated 不建议使用，容易造成内存溢出。请使用 {@link #readFile(File, Charset)}
-     * @param file 文件
-     * @return String 字符串
-     * @throws IOException io异常
-     */
-    public static String readFile(File file) throws IOException {
-        Objects.requireNonNull(file, "File is null");
-
-        ////  该方法不建议使用，字节数组流是基于内存的（内部动态数组），有大小限制，
-        // 如果写入的数据量非常多，容易造成内存溢出
-
-        // 输入流：输入流和数据源相关，从数据源中读取数据
-        InputStream in = null;
-        // ByteArrayOutputStream：将数据写入到动态的字节数组中
-        ByteArrayOutputStream out = null;
-        try {
-            in = new FileInputStream(file);
-            out = new ByteArrayOutputStream();
-            copy(in, out, false, false);
-            byte[] bytes = out.toByteArray();
-            return new String(bytes, StandardCharsets.UTF_8);
-        } finally {
-            // 在这里关闭就行
-            close(in);
-            close(out);
-        }
-    }
-
-    /**
-     * 将文件全部内容读入到一个字符串 UFT-8编码
-     *
-     * @param file 文件
-     * @return 文件中的字符串
-     * @throws IOException IO异常
-     */
-    public static String readUTF8File(File file) throws IOException {
-        Objects.requireNonNull(file, "File is null");
-        return readFile(file, StandardCharsets.UTF_8);
-    }
-
-    /**
-     * 将文件全部内容读入到一个字符串
-     *
-     * @param file 文件
-     * @param charset 编码类型
-     * @return 文件中的字符串
-     * @throws IOException IO异常
-     */
-    public static String readFile(File file, Charset charset) throws IOException {
-        Objects.requireNonNull(file, "File is null");
-
-        // InputStreamReader : 适配器类，将字节流转换为字符流；
-        InputStreamReader reader = null;
-        // StringWriter : 字符流，输出目标媒介为内部的StringBuffer
-        StringWriter writer = new StringWriter();
-        try {
-            if (charset == null){
-                reader = new InputStreamReader(new FileInputStream(file));
-            }else {
-                reader = new InputStreamReader(new FileInputStream(file), charset);
-            }
-            copy(reader, writer);
-        } finally {
-            close(reader);
-            close(writer);
-        }
-
-        return writer.toString();
-    }
-    /* ------------------------ 从文件中读取字符串 end ----------------------------------------- */
-
-
-
-    // ------------------------ 从输入流（字节输入流和字节输入流）中读取字符串  start ---------------------------------------
+    // ------------------------ 从输入流（字符输入流和字节输入流）中读取字符串  start ---------------------------------------
     /**
      * 从{@link Reader}中读取String
      *
@@ -450,56 +514,147 @@ public class IOUtil {
         return builder.toString();
     }
 
-    public static String read(InputStream inputStream) throws IOException {
+
+    /**
+     * 从字节输入流读取UTF-8编码的每一行数据
+     *
+     * @param inputStream 字节输入流
+     * @return 保存每一行字符串的List集合
+     * @throws IOException IO异常
+     */
+    public static List<String> readLines(InputStream inputStream) throws IOException {
+        return readLines(inputStream, StandardCharsets.UTF_8);
+    }
+
+
+    /**
+     * 从字节输入流读取每一行数据
+     *
+     * @param inputStream 字节输入流
+     * @param charset 字符编码集
+     * @return 保存每一行字符串的List集合
+     * @throws IOException IO异常
+     */
+    public static List<String> readLines(InputStream inputStream, Charset charset) throws IOException {
         Objects.requireNonNull(inputStream, "InputStream is null");
-        /*
-         * 缺点是不能自定义字符集，固定的UFT-8字符集
-         */
+
+        // InputStreamReader : 将字节输入流 转为 字符输入流
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream, charset);
+
+        return readLines(inputStreamReader);
+    }
+
+    /**
+     * 从字节输入流读取UTF-8编码的每一行数据
+     *
+     * @param inputStream 字节输入流
+     * @param collection 保存每一行字符串的集合
+     * @throws IOException IO异常
+     */
+    public static void readLines(InputStream inputStream, Collection<String> collection) throws IOException {
+        readLines(inputStream, StandardCharsets.UTF_8, collection);
+    }
+
+    /**
+     * 从字节输入流读取每一行数据
+     *
+     * @param inputStream 字节输入流
+     * @param charset 字符编码集
+     * @param collection 保存每一行字符串的集合
+     * @throws IOException IO异常
+     */
+    public static void readLines(InputStream inputStream, Charset charset, Collection<String> collection)
+            throws IOException {
+        Objects.requireNonNull(inputStream, "InputStream is null");
+        Objects.requireNonNull(charset, "Charset is null");
+        Objects.requireNonNull(collection, "Collection is null");
+
+        // InputStreamReader : 将字节输入流 转为 字符输入流
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream, charset);
+        readLines(inputStreamReader, collection);
+    }
+
+
+    /**
+     * 从字符输入流读取每一行数据 并保存到List集合
+     *
+     * @param reader 字符输入流
+     * @return 保存每一行字符串的List集合
+     * @throws IOException IO异常
+     */
+    public static List<String> readLines(Reader reader) throws IOException {
+        List<String> list = new ArrayList<>();
+        readLines(reader, list);
+        return list;
+    }
+
+
+    /**
+     * 从字符输入流Reader中读取每一行数据
+     *
+     * @param reader 字符输入流
+     * @param collection 保存每一行字符串的集合
+     * @throws IOException IO异常
+     */
+    public static void readLines(Reader reader, Collection<String> collection) throws IOException {
+        Objects.requireNonNull(reader, "Reader is null");
+        Objects.requireNonNull(collection, "collection is null");
+
+        // BufferedReader : 字符输入流，提供缓冲，以及按行读功能
+        BufferedReader bufferedReader =
+                reader instanceof BufferedReader ? (BufferedReader) reader : new BufferedReader(reader);
         try {
-            return new DataInputStream(inputStream).readUTF();
+            String line = null;
+            // 每次读一行，为null表示已读完
+            while ((line = bufferedReader.readLine())!=null){
+                collection.add(line);
+            }
         } finally {
-            close(inputStream);
+            close(bufferedReader);
         }
     }
 
+
     /**
-     * 从字节输入流中读取UTF-8编码的内容 读取之后关闭输入流
+     * 从字节输入流InputStream中读取UTF-8编码的内容（字符串）
      *
      * @param inputStream 字节输入流
+     * @param isClose 是否关闭输入流
      * @return 内容（字符串）
      * @throws IOException IO异常
      */
-    public static String readUTF8(InputStream inputStream) throws IOException{
+    public static String readUTF8(InputStream inputStream, boolean isClose) throws IOException{
         Objects.requireNonNull(inputStream, "InputStream is null");
-        return new String(readBytes(inputStream, true), StandardCharsets.UTF_8);
+
+        return new String(readByteArray(inputStream, isClose), StandardCharsets.UTF_8);
     }
 
     /**
-     * 从字节输入流中读取内容
+     * 从字节输入流InputStream中读取字符串
      *
      * @param inputStream 字节输入流
      * @param isClose 是否关闭输入流
      * @param charset 字符集 {@link StandardCharsets#UTF_8}
      * @throws IOException 如果发生IO异常
-     * @return 内容（字符串）
+     * @return 字符串
      */
     public static String read(InputStream inputStream, boolean isClose, Charset charset) throws IOException {
         Objects.requireNonNull(inputStream, "InputStream is null");
         Objects.requireNonNull(charset, "Charset is null");
 
-        return new String(readBytes(inputStream, isClose), charset);
+        return new String(readByteArray(inputStream, isClose), charset);
     }
     // ------------------------ 从输入流（字节输入流和字节输入流）中读取字符串  end ---------------------------------------
 
 
     /**
-     * 从字节输入流中读取bytes（字节数组）
+     * 从字节输入流（InputStream）中读取byte[]（字节数组）
      *
      * @param input 字节输入流
      * @throws IOException 如果发生IO异常
-     * @return 字节数组
+     * @return byte[]（字节数组）
      */
-    public static byte[] readBytes(InputStream input, boolean isClose) throws IOException {
+    public static byte[] readByteArray(InputStream input, boolean isClose) throws IOException {
         // 判断字节流是否是文件字节流
         // 文件字节流的长度是可预见的，此时直接读取效率更高
         if (input instanceof FileInputStream){
@@ -519,12 +674,14 @@ public class IOUtil {
             }
             return result;
         }
-        // 字节流不是文件字节流
+
+        // input不是文件字节流
         return read(input, isClose).toByteArray();
     }
 
     /**
-     * 从流中读取内容，读到输出流中，读取完毕后可选是否关闭输入流
+     * 从字节输入流（InputStream）中读取内容，
+     * 读到动态数组字节输出流（ByteArrayOutputStream）中，读取完毕后可选是否关闭输入流。
      *
      * @param inputStream 输入流
      * @param isClose 是否关闭输入流
@@ -533,7 +690,7 @@ public class IOUtil {
      */
     public static ByteArrayOutputStream read(InputStream inputStream, boolean isClose) throws IOException {
         ByteArrayOutputStream outputStream = null;
-        // 判断输入流是否是文件字节流
+        // 输入流是否是文件字节流
         if (inputStream instanceof FileInputStream){
             outputStream = new ByteArrayOutputStream(inputStream.available());
         }else {
@@ -546,7 +703,7 @@ public class IOUtil {
 
 
     /**
-     * 将路径对应文件写入流中
+     * 将路径对应文件写入字节输出流中
      *
      * @param fullFilePath 文件的绝对路径
      * @param outputStream 输出流
@@ -556,7 +713,6 @@ public class IOUtil {
      */
     public static long writeToStream(String fullFilePath, OutputStream outputStream,
                                      boolean isCloseOut) throws Exception {
-
         if (StrUtil.isBlank(fullFilePath)){
             throw new Exception("参数fullFilePath="+fullFilePath+"为空");
         }
@@ -578,7 +734,7 @@ public class IOUtil {
     }
 
     /**
-     * 将文件写入输出流中
+     * 将文件写入字节输出流（OutputStream）中
      *
      * @param file 文件
      * @param outputStream 输出流
@@ -591,15 +747,21 @@ public class IOUtil {
         Objects.requireNonNull(file, "source file is null");
         Objects.requireNonNull(outputStream, "outputStream is null");
 
-
         FileInputStream fileInputStream = new FileInputStream(file);
-        return copy(fileInputStream, outputStream, true, isCloseOut);
+
+        if (outputStream instanceof FileOutputStream){
+            // 拷贝文件字节流，使用NIO
+            return copy(fileInputStream, (FileOutputStream)outputStream);
+        }else {
+            // outputStream不是文件字节输出流FileOutputStream
+            return copy(fileInputStream, outputStream, true, isCloseOut);
+        }
     }
 
 
     // --------------------------------------- 字节流拷贝 start --------------------------------------
     /**
-     * 将流的内容写入文件
+     * 将字节输入流（InputStream）的内容写入文件
      * @param source 输入流
      * @param destination 目标文件
      * @param append 是否以追加的方式写入到文件，true是追加，false是覆盖
@@ -608,15 +770,21 @@ public class IOUtil {
      */
     public static long copyInputStreamToFile(InputStream source, File destination,
                                              boolean append, boolean isCloseIn) throws IOException {
-        Objects.requireNonNull(source, "source is null");
+        Objects.requireNonNull(source, "source InputStream is null");
         Objects.requireNonNull(destination, "destination File is null");
 
         // 文件输出流
         FileOutputStream output = null;
         try {
             output = new FileOutputStream(destination, append);
-            // 拷贝输入流的内容到输出流
-            return copy(source, output, isCloseIn, false);
+            if (source instanceof FileInputStream){
+                // 拷贝文件字节流，使用NIO
+                return copy((FileInputStream)source, output);
+            }else {
+                // source不是文件输入流
+                // 拷贝输入流的内容到输出流
+                return copy(source, output, isCloseIn, false);
+            }
         } finally {
             // 在这里关闭文件输出流就行
             close(output);
@@ -716,7 +884,24 @@ public class IOUtil {
     }
 
     /**
-     * 拷贝文件流，使用NIO
+     * 将source文件中的字节数据拷贝到target文件中
+     *
+     * @param source 源文件
+     * @param target 目标文件
+     * @return 拷贝的字节数
+     * @throws IOException 如果发生IO异常
+     */
+    public static long copy(File source, File target, boolean isAppend) throws IOException {
+        Objects.requireNonNull(source, "source File is NULL");
+        Objects.requireNonNull(target, "target File is NULL");
+
+        FileInputStream fileInputStream = new FileInputStream(source);
+        FileOutputStream fileOutputStream = new FileOutputStream(target, isAppend);
+        return copy(fileInputStream, fileOutputStream);
+    }
+
+    /**
+     * 拷贝文件字节流，使用NIO
      *
      * @param input 文件输入流
      * @param output 文件输出流
@@ -757,7 +942,7 @@ public class IOUtil {
     }
 
     /**
-     * 拷贝输入流的内容到输出流，拷贝后不关闭流
+     * 拷贝字节输入流的内容到字节输出流，拷贝后不关闭流
      *
      * @param reader 字符输入流（源）
      * @param writer 字符输出流（目的地）
@@ -786,6 +971,39 @@ public class IOUtil {
         writer.flush();
         return charCount;
     }
+
+    /**
+     * 按行拷贝字节输入流的内容到字节输出流：
+     * <p> 每次从字节输入流Reader读取一行，然后写入字节输出流Writer中，
+     * 然后字节输出流Writer换行，等着写入下一行。
+     *
+     * @param reader 字节输入流
+     * @param writer 字节输出流
+     */
+    public static void copyLines(Reader reader, Writer writer) throws IOException {
+        Objects.requireNonNull(reader, "Reader is null");
+        Objects.requireNonNull(writer, "Writer is null");
+
+        BufferedReader bufferedReader =
+                reader instanceof BufferedReader ? (BufferedReader) reader : new BufferedReader(reader);
+        BufferedWriter bufferedWriter =
+                writer instanceof BufferedWriter ? (BufferedWriter) writer : new BufferedWriter(writer);
+
+        try {
+            String line;
+            while ((line = bufferedReader.readLine()) != null){
+                bufferedWriter.write(line);
+                // 换行
+                bufferedWriter.newLine();
+            }
+        } finally {
+            close(bufferedReader);
+            close(bufferedWriter);
+        }
+    }
+
+
+
     // --------------------------------- 字符流拷贝 end-------------------------------------
 
 

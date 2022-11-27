@@ -15,7 +15,7 @@ import java.io.PrintWriter;
  * @author eastFeng
  * @date 2022-11-25 16:54
  */
-public class ServletStudy_01 extends HttpServlet {
+public class Servlet_01 extends HttpServlet {
 
     private static final long serialVersionUID = -7181578763212092521L;
 
@@ -88,7 +88,7 @@ public class ServletStudy_01 extends HttpServlet {
      * web要放在src/main/目录下。
      * 教程:https://blog.csdn.net/weixin_46713508/article/details/119804112
      * <p> 将Servlet实现类的信息写入web.xml就完成了注册/通知。
-     * 写法示例：{@link ServletStudy_01#registerServletShow()} 或者 直接看WEB-INF下的web.xml文件</p>
+     * 写法示例：{@link Servlet_01#registerServletShow()} 或者 直接看WEB-INF下的web.xml文件</p>
      * <p></p>
      * <p> 在SpringBoot项目中，xml形式配置方式已经被淘汰了，已经换成了JavaConfig或注解来配置进行注册。 </p>
      *

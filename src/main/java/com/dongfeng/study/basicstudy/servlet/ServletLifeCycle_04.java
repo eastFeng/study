@@ -15,7 +15,7 @@ import java.io.IOException;
  * @date 2022-11-26 2:05
  */
 @WebServlet(name = "ServletStudy_04", urlPatterns = "/servlet/04")
-public class ServletStudy_04 extends HttpServlet {
+public class ServletLifeCycle_04 extends HttpServlet {
 
     private static final long serialVersionUID = -6460868546878657349L;
 

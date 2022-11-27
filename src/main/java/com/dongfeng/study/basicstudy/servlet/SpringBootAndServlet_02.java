@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * SpringBoot整合Servlet不需要用xml方式进行配置，用javaConfig配置。
+ * 【推荐】
+ * <p> SpringBoot整合Servlet不需要用xml方式进行配置，用javaConfig配置。
  * <p> SpringBoot整合Servlet方式一：通过注解扫描完成Servlet组件的注册
  * <p> 1. 创建Servlet，并且在类上@WebServlet注解
  * <p> 2. 修改启动类 ：加上@ServletComponentScan注解
@@ -26,10 +27,22 @@ public class SpringBootAndServlet_02 extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        System.out.println("SpringBootAndServlet_02 Request URI="+req.getRequestURI());
-        System.out.println("SpringBootAndServlet_02 Request URL="+req.getRequestURL().toString());
+        System.out.println("SpringBootAndServlet_02 doGet URL="+req.getRequestURL().toString());
 
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write("你好，GET请求，我是Servlet_02");
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("SpringBootAndServlet_02 doPost URL="+req.getRequestURL().toString());
+
+        // 获取Request域对象内容
+        Object attribute = req.getAttribute(RequestAndResponse_05.REQUEST_ATTRIBUTE_1);
+        System.out.println("SpringBootAndServlet_02 doPost 获取Request域中的数据，"
+                +RequestAndResponse_05.REQUEST_ATTRIBUTE_1 + "=" + attribute);
+
+        resp.setCharacterEncoding("UTF-8");
+        resp.getWriter().write("你好，Post请求，我是Servlet_02");
     }
 }

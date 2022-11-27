@@ -15,6 +15,7 @@ public class CharacterStream {
          * 对于文本文件，字节流没有编码的概念，不能按行处理，使用不方便，更适合的是使用字符流。
          *
          * 写文件时，可以优先考虑PrintWriter，因为它使用方便，支持自动缓冲、指定编码类型、类型转换等。
+         *
          * 读文件时，如果需要指定编码类型，需要使用InputStreamReader；
          * 如果不需要指定编码类型，可使用FileReader，但都应该考虑在外面包上缓冲类BufferedReader。
          */
@@ -184,9 +185,9 @@ public class CharacterStream {
          * public FileWriter(String fileName) throws IOException
          * public FileWriter(String fileName, boolean append) throws IOException
          * public FileWriter(File file, boolean append) throws IOException
-         *
-         *
          * append参数指定是追加还是覆盖，如果没传，则为覆盖。
+         *
+         *
          * 需要注意的是，FileReader/FileWriter不能指定编码类型，只能使用默认编码，
          * 如果需要指定编码类型，可以使用InputStreamReader/OutputStreamWriter。
          */
