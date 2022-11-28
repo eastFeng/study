@@ -47,6 +47,7 @@ public enum ResponseCodeEnum {
 
 
     // 其他：4001-4999
+    NOT_FILE_UPLOAD(4000, "没有文件上传，表单必须包含 enctype=multipart/form-data"),
     FILE_UPLOAD_FIELD(4001, "文件上传失败"),
     FILE_NAME_IS_TOO_LONG(4002, "文件名太长"),
     FILE_IS_TOO_LARGE(4003, "文件太大"),

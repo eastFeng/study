@@ -3,10 +3,13 @@ package com.dongfeng.study.controller;
 import cn.hutool.core.collection.CollectionUtil;
 import com.dongfeng.study.bean.base.BaseResponse;
 import com.dongfeng.study.bean.base.Constants;
+import com.dongfeng.study.bean.base.LoginUser;
 import com.dongfeng.study.bean.enums.ResponseCodeEnum;
 import com.dongfeng.study.util.FileUtil;
 import com.dongfeng.study.util.IOUtil;
+import com.dongfeng.study.util.RequestContextHolderUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,8 +51,13 @@ public class FileUploadAndDownloadController {
     @PostMapping("/upload")
     public BaseResponse<String> uploadFile(HttpServletRequest request,
                                            @RequestParam("file") MultipartFile multipartFile){
-        String token = request.getHeader(Constants.TOKEN);
-        log.info("【文件开始上传, token:{}】", token);
+        LoginUser loginUser = RequestContextHolderUtil.getLoginUser();
+        log.info("【uploadFile 文件开始上传, loginUser:{}】", loginUser);
+
+        // 检测是否为多媒体上传（文件上传）
+        if (ServletFileUpload.isMultipartContent(request)) {
+            return BaseResponse.errorInstance(ResponseCodeEnum.NOT_FILE_UPLOAD);
+        }
 
         return FileUtil.uploadFile(multipartFile, Constants.UPLOAD_FILE_STORAGE_PATH);
     }

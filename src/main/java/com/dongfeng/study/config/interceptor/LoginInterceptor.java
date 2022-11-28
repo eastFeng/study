@@ -26,7 +26,7 @@ import java.util.Date;
 @Component
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
-    public static final String CURRENT_USER = "dongfeng.study.currentUser";
+    public static final String CURRENT_USER = "eastFeng.springBootStudy.currentUser";
 
     /**
      * <b> 方法执行前。

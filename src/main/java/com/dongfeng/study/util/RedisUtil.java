@@ -22,9 +22,15 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Component
 public class RedisUtil {
-
-    @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    /**
+     * Autowired  构造方法注入
+     */
+    @Autowired
+    public RedisUtil(StringRedisTemplate stringRedisTemplate){
+        this.stringRedisTemplate = stringRedisTemplate;
+    }
 
     /**
      * 获取redis分布式锁

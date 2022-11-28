@@ -55,10 +55,11 @@ public class FileUtil {
      * @return 返回上传成功后的文件名
      */
     public static BaseResponse<String> uploadFile(MultipartFile multipartFile, String filePath){
-
+        log.info("uploadFile start 文件开始上传, 上传成功之后文件所在目录filePath:{}", filePath);
         // 检查要上传的文件是否符合要求
         BaseResponse<String> checkResponse = checkMultipartFile(multipartFile);
         if (checkResponse.getCode() != ResponseCodeEnum.SUCCESS.getCode()){
+            log.info("要上传的文件不符合要求, {}", checkResponse.getMsg());
             return checkResponse;
         }
 
@@ -81,7 +82,7 @@ public class FileUtil {
             // 写入文件
             multipartFile.transferTo(file);
             // 上传成功
-            log.info("文件上传成功:{}",filePath+fileName);
+            log.info("uploadFile 文件上传成功, 文件位置:{}",filePath+fileName);
             return BaseResponse.successInstance(fileName);
         } catch (IOException e) {
             e.printStackTrace();
@@ -99,10 +100,9 @@ public class FileUtil {
      * @return 原始文件（要上传的文件）的完整名称（包括文件名称+文件拓展名）
      */
     public static BaseResponse<String> checkMultipartFile(MultipartFile multipartFile){
-        log.info("----开始检查要上传的文件是否符合要求----");
+        log.info("checkMultipartFile 开始检查要上传的文件是否符合要求----");
         // 首先判断上传的文件是否为空
         if (null == multipartFile || multipartFile.isEmpty()){
-            log.info(ResponseCodeEnum.FILE_IS_EMPTY.getMsg());
             return BaseResponse.errorInstance(ResponseCodeEnum.FILE_IS_EMPTY);
         }
 
@@ -148,7 +148,7 @@ public class FileUtil {
         // 注意：其实可以只根据文件类型判断，不用判断文件名后缀/拓展名，因为有的程序会恶意篡改文件名后缀/拓展名
 
 
-        log.info("----检查要上传的文件是否符合要求——检查结束----");
+        log.info("checkMultipartFile 检查要上传的文件符合要求,检查结束----");
         return BaseResponse.successInstance(originalFilename);
     }
 

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -216,14 +215,24 @@ public class RequestAndResponse_05 extends HttpServlet {
 
     private void responseTest3(HttpServletResponse resp)
             throws ServletException, IOException {
+
+        /*
+         * 重定向是一种服务器指导，客户端的行为。
+         * 客户端发出第一个请求，被服务器接收处理后，服务器会进行响应，在响应的同时，
+         * 服务器会给客户端一个新的地址（下次请求的地址response.sendRedirect(url);），
+         * 当客户端接收到响应后，会立刻、马上、自动根据服务器给的新地址发起第二个请求，
+         * 服务器接收请求并作出响应，重定向完成。
+         *
+         */
+
         // 3. 设置响应头中【location】属性，将一个请求地址赋值给location。
         // 从而控制浏览器向指定服务器发送请求。【重定向】
 
         String result = "https://www.baidu.com";
 
+        // 重定向
         // 设置响应头中【location】属性，location="https://www.baidu.com"
         // 浏览器会从新自动请求 location 属性的值https://www.baidu.com
-        // 重定向
         resp.sendRedirect(result);
     }
 

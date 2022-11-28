@@ -64,18 +64,6 @@ public class IOUtil {
         }
     }
 
-    public BaseResponse<String> uploadImage(MultipartFile file){
-        try {
-            InputStream inputStream = file.getInputStream();
-            File tempFile = File.createTempFile("hhhhh", ".jpg");
-            copyInputStreamToFile(inputStream, tempFile, false, true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-        }
-        return BaseResponse.successInstance("success");
-    }
-
 
     //------------------------------------------------------------------------------------
     //                        文件相关操作：将字符串写入文件，从文件中读取字符串

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * <b> 全局异常处理 : {@link ControllerAdvice} + {@link ExceptionHandler}</b>
+ * <b> 对controller层的全局异常处理 : {@link ControllerAdvice} + {@link ExceptionHandler}</b>
  *
  * @author eastFeng
  * @date 2021-04-22 17:15
