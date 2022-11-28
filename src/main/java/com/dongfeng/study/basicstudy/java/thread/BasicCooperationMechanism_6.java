@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  * @author eastFeng
  * @date 2021-05-06 16:13
  */
-public class BasicCooperationMechanism {
+public class BasicCooperationMechanism_6 {
     public static void main(String[] args) {
         /*
          * 多线程之间除了竞争访问同一个资源外，也经常需要相互协作的。

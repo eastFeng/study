@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2020-09-17 0:06
  */
 @Slf4j(topic = "----")
-public class CommonMethod {
+public class CommonMethod_3 {
     public static void main(String[] args) {
 //        startAndRun();
 //        sleep();
@@ -47,9 +47,9 @@ public class CommonMethod {
     public static void startAndRun(){
         Thread t1 = new Thread(() -> log.info("【running...】"));
 
-        log.info("【start方法之前 state:{}】", t1.getState());
+        log.info("【startAndRun start方法之前 state:{}】", t1.getState());
         t1.start();
-        log.info("【start方法之后 state:{}】", t1.getState());
+        log.info("【startAndRun start方法之后 state:{}】", t1.getState());
 
         // 直接调用run方法不会开启新线程 : 还是在main线程中执行
 //        t1.run();

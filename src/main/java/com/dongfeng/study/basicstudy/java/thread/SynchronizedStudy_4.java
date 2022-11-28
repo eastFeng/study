@@ -11,7 +11,7 @@ import java.util.List;
  * @date 2020-09-18 23:00
  */
 @Slf4j(topic = "----")
-public class SynchronizedStudy {
+public class SynchronizedStudy_4 {
     // 普通对象锁
     private final Object LOCK = new Object();
     // 静态对象锁

@@ -11,7 +11,7 @@ import java.util.concurrent.FutureTask;
  * @date 2020-09-16 22:21
  */
 @Slf4j(topic = "----")
-public class CreateAndRun {
+public class CreateAndRun_1 {
     public static void main(String[] args) {
 //        way1();
 //        way2();

@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
  * @author eastFeng
  * @date 2021-05-06 11:51
  */
-public class ThreadBasicConcept {
+public class ThreadBasicConcept_2 {
     public static void main(String[] args) {
         /*
          * 书《Java编程的逻辑》
@@ -110,17 +110,21 @@ public class ThreadBasicConcept {
             System.out.println("lambda thread");
         });
 
-        // 线程有一些基本属性和方法，包括id、name、优先级、状态、是否daemon线程、sleep方法、yield方法、join方法、过时方法等
+        // 线程有一些基本属性和方法，包括id、name、优先级、状态、是否daemon线程、
+        // sleep方法、yield方法、join方法、过时方法等
 
 
         // 1. 每个线程都有一个id和name。
         // id是一个递增的整数，每创建一个线程就加一。
-        // name的默认值是Thread-后跟一个编号，name可以在Thread的构造方法中进行指定，也可以通过setName方法进行设置，给Thread设置一个友好的名字，可以方便调试。
+        // name的默认值是Thread-后跟一个编号，name可以在Thread的构造方法中进行指定，也可以通过setName方法进行设置，
+        // 给Thread设置一个友好的名字，可以方便调试。
         t1.setName("t1");
 
         // 2. 线程有一个优先级的概念，在Java中，优先级从1到10，默认为5。
-        // 这个优先级会被映射到操作系统中线程的优先级，不过，因为操作系统各不相同，不一定都是10个优先级，Java中不同的优先级可能会被映射到操作系统中相同的优先级。
-        // 另外，优先级对操作系统而言主要是一种建议和提示，而非强制。简单地说，在编程中，不要过于依赖优先级。
+        // 这个优先级会被映射到操作系统中线程的优先级，不过，因为操作系统各不相同，不一定都是10个优先级，
+        // Java中不同的优先级可能会被映射到操作系统中相同的优先级。
+        // 另外，优先级对操作系统而言主要是一种建议和提示，而非强制。
+        // 简单地说，在编程中，不要过于依赖优先级。
         // 获取线程优先级
         int priority = t1.getPriority();
         // 设置线程优先级
@@ -129,7 +133,7 @@ public class ThreadBasicConcept {
         // 3. 线程有一个状态的概念，Thread有一个方法用于获取线程的状态：返回值类型为Thread.State，它是一个枚举类型
         Thread.State state = t1.getState();
         /*
-         * NEW：没有调用start的线程状态为NEW。
+         * NEW：创建后尚未启动，没有调用start的线程状态为NEW。
          * TERMINATED：线程运行结束后状态为TERMINATED。
          * RUNNABLE：调用start后线程在执行run方法且没有阻塞时状态为RUNNABLE，
          *          不过，RUNNABLE不代表CPU一定在执行该线程的代码，可能正在执行也可能在等待操作系统分配时间片，只是它没有在等待其他条件。
@@ -142,12 +146,12 @@ public class ThreadBasicConcept {
 
         // 4. 是否daemon（守护）线程
         // 当整个程序中剩下的都是daemon线程的时候，程序就会退出。
-        // daemon线程有什么用呢？它一般是其他线程的辅助线程，在它辅助的主线程退出的时候，它就没有存在的意义了
+        // daemon线程有什么用呢？它一般是其他线程的辅助线程，在它辅助的主线程退出的时候，它就没有存在的意义了。
         boolean daemon = t1.isDaemon();
         t1.setDaemon(false);
 
-        // 5. sleep方法：Thread有一个静态的sleep方法，调用该方法会让当前线程睡眠指定的时间，单位是毫秒
-        // sleep方法不会释放对象锁，也就是说当前线程持有某个对象的锁，即使调用sleep方法，其他线程也无法获取这个对象的锁
+        // 5. sleep方法：Thread有一个静态的sleep方法，调用该方法会让当前线程睡眠指定的时间，单位是毫秒。
+        // sleep方法不会释放对象锁，也就是说当前线程持有某个对象的锁，即使调用sleep方法，其他线程也无法获取这个对象的锁。
         try {
             // 睡眠期间，该线程会让出CPU
             // 睡眠期间，线程可以被中断，如果被中断，sleep会抛出InterruptedException
@@ -157,10 +161,10 @@ public class ThreadBasicConcept {
             e.printStackTrace();
         }
 
-        // 6. yield方法：Thread另外一个让出CPU的静态方法
+        // 6. yield方法：Thread另外一个让出CPU的静态方法。
         // 调用该方法，是告诉操作系统的调度器：我现在不着急占用CPU，你可以先让其他线程运行。
-        // 不过，这对调度器也仅仅是建议，调度器如何处理是不一定的，它可能完全忽略该调用
-        // 同样不会释放锁
+        // 不过，这对调度器也仅仅是建议，调度器如何处理是不一定的，它可能完全忽略该调用。
+        // 同样不会释放锁。
         Thread.yield();
 
         // 7. join方法：线程等待，Thread有一个join方法，可以让调用join的线程等待该线程结束
@@ -187,7 +191,8 @@ public class ThreadBasicConcept {
 
         /*
          * 1. 竞态条件
-         * 所谓竞态条件（race condition）是指，当多个线程访问和操作同一个对象时，最终执行结果与执行时序有关，可能正确也可能不正确。
+         * 所谓竞态条件（race condition）是指，
+         * 【当多个线程访问和操作同一个对象时，最终执行结果与执行时序有关，可能正确也可能不正确】。
          * 期望的结果是100万，但实际执行，发现每次输出的结果都不一样，一般都不是100万，经常是99万多。
          * 为什么会这样呢？因为counter++这个操作不是原子操作，它分为三个步骤：
          * 1）取counter的当前值；

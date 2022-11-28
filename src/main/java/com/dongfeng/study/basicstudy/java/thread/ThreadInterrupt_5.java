@@ -5,7 +5,7 @@ package com.dongfeng.study.basicstudy.java.thread;
  * @author eastFeng
  * @date 2021-05-06 18:22
  */
-public class ThreadInterrupt {
+public class ThreadInterrupt_5 {
     public static void main(String[] args) {
         /*
          * 如何在Java中取消或关闭一个线程？

@@ -9,7 +9,7 @@ import java.util.concurrent.*;
  * @author eastFeng
  * @date 2021-10-02 18:50
  */
-public class ThreadPool {
+public class ThreadPool_7 {
 
     public static void main(String[] args) {
         // 异步任务

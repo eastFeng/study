@@ -51,11 +51,11 @@ public class FileUtil {
      * 文件上传到本地
      *
      * @param multipartFile 原始文件（要上传的文件）
-     * @param filePath 上传成功之后文件所在目录
+     * @param directory 存储目录
      * @return 返回上传成功后的文件名
      */
-    public static BaseResponse<String> uploadFile(MultipartFile multipartFile, String filePath){
-        log.info("uploadFile start 文件开始上传, 上传成功之后文件所在目录filePath:{}", filePath);
+    public static BaseResponse<String> uploadFile(MultipartFile multipartFile, String directory){
+        log.info("uploadFile start 文件开始上传, 上传成功之后文件存储目录directory:{}", directory);
         // 检查要上传的文件是否符合要求
         BaseResponse<String> checkResponse = checkMultipartFile(multipartFile);
         if (checkResponse.getCode() != ResponseCodeEnum.SUCCESS.getCode()){
@@ -70,7 +70,7 @@ public class FileUtil {
         String fileName = "fileUpload-"+nowTimeString+"-"+checkResponse.getData();
 
         // 新建文件
-        File file = new File(filePath, fileName);
+        File file = new File(directory, fileName);
 
         // 判断上传目录/文件夹是否存在
         if (!file.getParentFile().exists()){
@@ -82,7 +82,7 @@ public class FileUtil {
             // 写入文件
             multipartFile.transferTo(file);
             // 上传成功
-            log.info("uploadFile 文件上传成功, 文件位置:{}",filePath+fileName);
+            log.info("uploadFile 文件上传成功, 文件位置:{}",directory+fileName);
             return BaseResponse.successInstance(fileName);
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,4 +1,4 @@
-package com.dongfeng.study.basicstudy.java.thread;
+package com.dongfeng.study.basicstudy.java.otherbasic;
 
 import com.dongfeng.study.basicstudy.java.otherbasic.InterfaceStudy;
 
