@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 @Slf4j
 //@WebFilter(filterName = "firstFilter", urlPatterns = {"*.do", "*.jsp"})
-@WebFilter(filterName = "firstFilter", urlPatterns = "/firstFilter")
+@WebFilter(filterName = "firstFilter", urlPatterns = "/*")
 public class FirstFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -29,9 +29,9 @@ public class FirstFilter implements Filter {
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        log.info("进入FirstFilter...");
+        log.info("进入FirstFilter过滤器...");
         chain.doFilter(request, response);
-        log.info("离开FirstFilter...");
+        log.info("离开FirstFilter过滤器...");
     }
 
     @Override
