@@ -1,0 +1,71 @@
+# SpringBoot是基于约定的，所以很多配置都有默认值，但如果想使用自己的配置替换默认配置的话，就可以使用
+# application.properties或者application.yml（application.yaml）进行配置。
+#
+# SpringBoot提供一个名称为application的全局配置文件，支持两种格式，
+# properties格式和YAML格式。YAML格式配置文件的扩展名可以是yaml或者yml。
+#
+# 配置文件存放位置：下面四个位置中其中之一均可以。
+# 1. 当前项目根目录中
+# 2. 当前项目下的一个/config子目录中
+# 3. 项目的resources即classpath根路径中
+# 4. 项目的resources即classpath根路径下的/config目录中
+#
+# 配置文件加载顺序：
+# 1. 不同格式的加载顺序
+#    如果同一个目录中，有application.yml也有application.properties，默认先读取application.properties。
+#    如果同一个配置属性，在多个配置文件中都配置了，默认使用第一个读取到的，后面读取的不覆盖前面读取的。
+# 2. 不同位置的的加载顺序
+#    当前项目根目录下的一个/config子目录中（加载级别最高）
+#    当前项目根目录中（次之）
+#    项目的resources即classpath根路径下的/config目录中（一般）
+#    项目的resources即classpath根路径中（最后）
+#
+# YAML全称是YAML Ain't Markup Language。
+# YAML是一种直观的能够被电脑识别的的数据数据序列化格式，并且容易被人类阅读，
+# 容易和脚本语言交互的，可以被支持YAML库的不同的编程语言程序导入，比如： C/C++, Ruby, Python, Java, Perl, C#, PHP等。
+# YML文件是【以数据为核心】的，比传统的xml方式【更加简洁】。
+# YAML文件的扩展名可以使用.yml或者.yaml
+#
+# YAML格式基本要求：
+# 1. 大小写敏感
+# 2. 使用缩进代表层级关系
+# 3. 相同部分只出现一次
+# 4. 数据值前边必须有空格，作为分隔符
+# 5. 缩进时不允许使用Tab键，只允许使用空格（各个系统 Tab对应的 空格数目可能不同，导致层次混乱）。
+# 6. 缩进的空格数目不重要，只要相同层级的元素左侧对齐即可。
+# 7. # 表示注释，从这个字符一直到行尾，都会被解析器忽略。
+
+# YAML的数据格式
+# 1. 对象(map)：键值对的集合。
+nationality: 中国
+personTest:
+    name: zhangDongFeng
+    age: 29
+    # 数组：一组按次序排列的值
+    address: [zhengzhou,beijing,shanghai,hangzhou,nanjing]
+    # 纯量：单个的、不可再分的值
+    msg1: 'hello \n world'  #单引忽略转义字符
+    msg2: "hello \n world"  #双引识别转义字符
+    # 引用上边定义的name值
+    nationality: ${nationality}
+
+# 读取application配置文件内容的三种方式
+# 1. @Value
+# 2. Environment
+# 3. @ConfigurationProperties
+
+
+
+server:
+  port: 8082  #端口（Tomcat监听端口）
+  tomcat:
+    uri-encoding: UTF-8  #编码格式
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 30MB  #单个文件最大值
+      max-request-size: 100MB  #一次请求所有文件最大值
+
+

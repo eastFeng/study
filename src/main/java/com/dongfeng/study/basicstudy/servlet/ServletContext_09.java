@@ -37,6 +37,7 @@ public class ServletContext_09 extends HttpServlet {
      * 在这个网站中OneServlet可以将一个数据存入到全局作用域对象，
      * 当前网站中其他Servlet此时都可以从全局作用域对象得到这个数据进行使用。
      * 【注】不建议存放过多数据，因为ServletContext中的数据一旦存储进去没有手动移除将会一直保存。
+     * 一般存放当前网站的核心关键数据。
      *
      * <p> 该对象有两大作用：
      * <ol>

@@ -5,9 +5,11 @@ import com.dongfeng.study.bean.base.BaseResponse;
 import com.dongfeng.study.bean.enums.ResponseCodeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @Order(-1)
-@ControllerAdvice
+@ControllerAdvice(annotations = {Controller.class, RestController.class})
 public class GlobalExceptionHandler {
 
     /*

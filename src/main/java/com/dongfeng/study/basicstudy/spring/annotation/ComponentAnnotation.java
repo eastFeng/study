@@ -3,7 +3,6 @@ package com.dongfeng.study.basicstudy.spring.annotation;
 /**
  * {@link org.springframework.stereotype.Component}注解学习
  *
- * 学习完{@link org.springframework.stereotype.Component}注解之后就可以学习一下注解：
  * <p>
  * 学习完{@link org.springframework.stereotype.Component}注解之后就可以学习一下注解：
  * <ol>

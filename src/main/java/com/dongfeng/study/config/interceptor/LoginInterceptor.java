@@ -33,17 +33,18 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
      * <p> 对客户端发过来的请求进行前置处理。
      * <p> 如果方法返回 true,继续执行后续操作，如果返回 false，执行中断请求处理，请求不会发送到Controller。
      *
-     * @param request HttpServletRequest 当前Http请求
-     * @param response HttpServletResponse 当前Http响应
+     * @param request HttpServletRequest 当前Http请求对象
+     * @param response HttpServletResponse 当前Http响应对象
      * @param handler 为类型和/或实例计算选择要执行的处理程序
      * @return true 用户已登录；false未登录，前端跳转到登录页面
      * @throws Exception 如果发生错误
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
         try {
             log.info("------登录拦截器 preHandle方法执行前,请求URL={},请求方法={}",
-                    request.getRequestURI(),request.getMethod());
+                    request.getRequestURL().toString(),request.getMethod());
 
             // 登录凭证根据业务而定。
             // 1.把用户token放入请求头中，根据用户token获取用户ID信息。

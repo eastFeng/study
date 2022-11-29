@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.sql.DataSource;
 
 /**
- * <p> {@link Configuration}: 指示一个类声明 一个或者多个{@link Bean}方法。
+ * <p> {@link Configuration}: 指示被该注解标注的类声明一个或者多个被{@link Bean}注解标注的方法。
  * <p> {@link Configuration}用于定义配置类，定义的配置类可以替换xml文件，一般和{@link Bean}注解联合使用。
  *
  * @author eastFeng
