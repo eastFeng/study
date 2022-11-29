@@ -77,11 +77,23 @@ public class RequestAndResponse_05 extends HttpServlet {
      * <p>浏览器根据服务器返回的HTTP响应状态码，就能知道这次HTTP请求的结果是成功还是失败了。
      * HTTP状态码由三个十进制数字组成: 第一个十进制数字定义了状态码的类型，后两个数字用来对状态码进行细分。
      * <ul>
-     *     <li>1** : 信息响应，服务器收到请求，需要请求者继续执行操作。</li>
-     *     <li>2** : 成功响应，操作被成功接收并处理。</li>
-     *     <li>3** : 重定向，需要进一步的操作以完成请求。</li>
-     *     <li>4** : 客户端响应，请求包含语法错误或无法完成请求。</li>
-     *     <li>5** : 服务器响应，服务器在处理请求的过程中发生了错误。</li>
+     *     <li>1** : 信息响应，服务器收到请求，需要请求者继续执行操作。
+     *               最有特征是100，通知浏览器本次返回的资源文件并不是一个独立的资源文件，
+     *               需要浏览器在接收响应包之后，继续向Http服务器所要依赖的其他资源文件。</li>
+     *     <li>2** : 成功响应，操作被成功接收并处理。
+     *               最有特征200，通知浏览器本次返回的资源文件是一个完整独立资源文件，
+     *               浏览器在接收到之后不需要所要其他关联文件。</li>
+     *     <li>3** : 重定向，需要进一步的操作以完成请求。
+     *               最有特征302，通知浏览器本次返回的不是一个资源文件内容而是一个资源文件地址，
+     *               需要浏览器根据这个地址自动发起请求来索要这个资源文件。</li>
+     *     <li>4** : 客户端响应，请求包含语法错误或无法完成请求。
+     *               404: 通知浏览器，由于在服务端没有定位到被访问的资源文件因此无法提供帮助。
+     *               405：通知浏览器，在服务端已经定位到被访问的资源文件（Servlet），
+     *               但是这个Servlet对于浏览器采用的请求方式（请求方法错误）不能处理。</li>
+     *     <li>5** : 服务器响应，服务器在处理请求的过程中发生了错误。
+     *               500:通知浏览器，在服务端已经定位到被访问的资源文件（Servlet），
+     * 			     这个Servlet可以接收浏览器采用请求方式，
+     * 			     但是Servlet在处理请求期间，由于Java异常导致处理失败。</li>
      * </ul>
      *
      * HTTP响应中的常用响应头:
@@ -167,11 +179,12 @@ public class RequestAndResponse_05 extends HttpServlet {
         requestTest6(req, resp);
 
         resp.setContentType(MediaType.TEXT_HTML_VALUE);
-
     }
 
+
+
     // ------------------------- HttpServletRequest Test Start ----------------------------------
-    private void responseTest1(HttpServletResponse response)
+    public void responseTest1(HttpServletResponse response)
             throws ServletException, IOException {
         // 1. 响应对象将执行结果写入【响应体】，响应体的数据到客户端被浏览器解析。
 
@@ -193,7 +206,7 @@ public class RequestAndResponse_05 extends HttpServlet {
                                       // 因为write方法将int类型的30当做ASCII码写入了
         responseWriter.println(30);   // 换成println方法就行了，建议用这个方法
     }
-    private void responseTest2(HttpServletResponse response)
+    public void responseTest2(HttpServletResponse response)
             throws ServletException, IOException {
         // 2. 设置响应类型（设置响应头中【content-type】属性值），
         // 从而控制/指定浏览器使用对应编译器将响应体二进制数据编译为【文字，图片，视频，命令】
@@ -213,7 +226,7 @@ public class RequestAndResponse_05 extends HttpServlet {
         response.getWriter().write(result1+result2);
     }
 
-    private void responseTest3(HttpServletResponse resp)
+    public void responseTest3(HttpServletResponse resp)
             throws ServletException, IOException {
 
         /*
@@ -238,7 +251,7 @@ public class RequestAndResponse_05 extends HttpServlet {
 
 
     // ------------------------- HttpServletRequest Test Start ----------------------------------
-    private void requestTest1(HttpServletRequest req){
+    public void requestTest1(HttpServletRequest req){
         // 1. 获取【请求行】中的信息
 
         // http://localhost:8081/servlet/05?name=东东东&age=18
@@ -275,7 +288,7 @@ public class RequestAndResponse_05 extends HttpServlet {
         String result =  "URL="+Url+"<br/>method="+method+"<br/>URI="+requestURI+"<br/>protocol="+protocol;
     }
 
-    private void requestTest2(HttpServletRequest req){
+    public void requestTest2(HttpServletRequest req){
         // 2. 获取此请求的所有【请求头Header】的name（名称）。如果请求没有请求头，则此方法返回空枚举。
         Enumeration<String> headerNames = req.getHeaderNames();
         System.out.println("HTTP请求中所有的请求头:");
@@ -285,7 +298,7 @@ public class RequestAndResponse_05 extends HttpServlet {
         }
         System.out.println();
     }
-    private void requestTest3(HttpServletRequest req) throws IOException {
+    public void requestTest3(HttpServletRequest req) throws IOException {
         // 4. 获取此请求的所有参数
         // （拼接在URL后面的查询字符串的参数 + contentType为X-www-form-urlencoded时请求体传的参数）
         // 【注】getParameterNames方法不适用于contentType为multipart/form-data的情况
@@ -301,7 +314,7 @@ public class RequestAndResponse_05 extends HttpServlet {
         System.out.println();
     }
 
-    private void requestTest4(HttpServletRequest req) throws IOException {
+    public void requestTest4(HttpServletRequest req) throws IOException {
         // 获取请求体中请求参数信息
 
         String contentType = req.getContentType();
@@ -324,7 +337,7 @@ public class RequestAndResponse_05 extends HttpServlet {
 
     }
 
-    private void requestTest5(HttpServletRequest req, HttpServletResponse resp)
+    public void requestTest5(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         // 请求转发，是服务器的一种行为，当客户端请求到达后，服务器进行转发，此时会将请求对象进行保
         // 存，浏览器地址栏中的 URL 地址不会改变，得到响应后，服务器端再将响应发送给客户端，
@@ -334,13 +347,17 @@ public class RequestAndResponse_05 extends HttpServlet {
         req.getRequestDispatcher("/servlet/02").forward(req, resp);
     }
 
-    private void requestTest6(HttpServletRequest request, HttpServletResponse response)
+    public void requestTest6(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // request作用域（也叫域对象），通过该对象可以在一个请求中传递数据。
         // 作用范围：在一次请求中有效，即服务器跳转有效。
-        // request域对象中的数据在一次请求中有效，则经过请求转发，request域中的数据依然存在，
+        // request域对象中的数据在一次请求中有效，则经过【请求转发】，request域中的数据依然存在，
         // 则在请求转发的过程中可以通过request来传输/共享数据。
         // 可以在多个servlet之间请求转发，多个servlet之间共享作用域。
+
+        // 在同一个网站中，如果两个Servlet之间通过【请求转发】方式进行调用，彼此之间共享同一个请求协议包。
+        // 而一个请求协议包只对应一个请求对象，因此servlet之间共享同一个请求对象，
+        // 此时可以利用这个请求对象在两个Servlet之间实现数据共享。
 
         // 设置域对象内容
         request.setAttribute(REQUEST_ATTRIBUTE_1, "valueTest1");
@@ -358,7 +375,7 @@ public class RequestAndResponse_05 extends HttpServlet {
 
          // 【注意】
         /**
-         *
+         * 重定向和请求转发不一样
          */
     }
 
