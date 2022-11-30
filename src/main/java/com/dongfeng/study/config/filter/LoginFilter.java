@@ -39,7 +39,7 @@ public class LoginFilter implements Filter {
             "/user/login"
     };
 
-    //
+    // 路径匹配器
     public static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
 
@@ -86,6 +86,7 @@ public class LoginFilter implements Filter {
 
 
     /**
+     * 路径匹配，检查本次请求是否需要放行
      * @param notCheckUrls 可以放行的url地址数组
      * @param requestURL 客户端传来的请求URL（要检查的URL）
      * @return true：放行，false：不放行

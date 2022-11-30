@@ -1,84 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <!-- POM(Project Object Mode, 项目对象模型)是Maven工程的基本工作单元，是一个XML文件，
-    包含了项目的基本信息，用于描述项目如何构建，声明项目依赖等等 -->
+    <!-- POM（Project Object Mode, 项目对象模型）
+     |   是Maven工程的基本工作单元，是一个XML文件，
+     |   包含了项目的基本信息，用于描述项目如何构建，声明项目依赖等等。
+    -->
 
-    <!--模型版本 ，声明项目描述符遵循哪一个POM模型版本-->
+    <!-- 模型版本
+     |   声明项目描述符遵循哪一个POM模型版本。
+     |   模型本身的版本很少改变，虽然如此，但它仍然是必不可少的，
+     |   这是为了当Maven引入了新的特性或者其他模型变更的时候，确保稳定性。
+    -->
     <modelVersion>4.0.0</modelVersion>
 
-    <!--属性-->
-    <!--通过properties元素用户可以自定义一个或多个Maven属性，然后在POM的其他地方使用**${属性名}**的方式引用该属性。
-    这种做法的最大意义在于消除重复和统一管理。
+    <!-- 属性
+     |   通过properties元素用户可以自定义一个或多个Maven属性，
+     |   然后在POM的其他地方使用**${属性名}**的方式引用该属性。
+     |   这种做法的最大意义在于消除重复和统一管理。
     -->
     <properties>
         <java.version>1.8</java.version>
     </properties>
 
-    <!--父项目的坐标。如果项目中没有规定某个元素的值，那么父项目中的对应值即为项目的默认值。
-     坐标包括groupID，artifactId和version  -->
+    <!-- 父项目的坐标。
+     |   如果项目中没有规定某个元素的值，那么父项目中的对应值即为项目的默认值。
+     |   坐标包括groupID、artifactId和version等等。
+    -->
     <!-- Springboot的父级依赖，只有继承它项目才是Springboot项目 -->
     <parent>
-        <!-- 父项目的groupId -->
         <groupId>org.springframework.boot</groupId>
-        <!-- 父项目的artifactId -->
-        <!-- spring-boot-starter-parent：是一个特殊的starter依赖，它用来提供相关的Maven默认依赖。
-             使用它之后，常用的依赖可以省去version标签 -->
-        <!--按住Ctrl键，鼠标左键点进去spring-boot-starter-parent
-            以此类推一直点进parent里的artifactId会进去到spring-boot-dependencies-->
+        <!-- spring-boot-starter-parent
+         |   是一个特殊的starter依赖，它用来提供相关的Maven默认依赖。
+         |   按住Ctrl键，鼠标左键点进去spring-boot-starter-parent，
+         |   以此类推一直点进parent里的artifactId会进去到spring-boot-dependencies
+        -->
         <artifactId>spring-boot-starter-parent</artifactId>
-        <!-- 父项目的version -->
+        <!-- 版本号 -->
         <version>2.3.3.RELEASE</version>
-        <!-- 父项目的pom.xml文件的相对路径。相对路径允许你选择一个不同的路径。默认值是../pom.xml。
-        Maven首先在构建当前项目的地方寻找父项目的pom，其次在文件系统的这个位置（relativePath位置），
-        然后在本地仓库，最后在远程仓库寻找父项目的pom。 -->
+        <!-- 父项目的pom.xml文件的相对路径
+         |   相对路径允许你选择一个不同的路径。默认值是../pom.xml。
+         |   Maven首先在构建当前项目的地方寻找父项目的pom，
+         |   其次在文件系统的这个位置（relativePath位置），
+         |   然后在本地仓库，最后在远程仓库寻找父项目的pom。
+        -->
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <!-- 公司或者组织的唯一标志，并且配置时生成的路径也由此生成。
-    maven会将该项目打成的jar包放在本地路径：/com/dongfeng-->
+    <!-- groupId（项目的全球唯一标识符）
+     |   公司或者组织的唯一标志（定义当前Maven项目隶属组织名称），并且配置时生成的路径也由此生成。
+     |   maven会将该项目打成的jar包放在本地路径：/com/dongfeng
+    -->
     <groupId>com.dongfeng</groupId>
-    <!-- 项目的唯一ID，一个groupId下面可能有多个项目，就是靠artifactId区分的-->
+    <!-- artifactId（项目的全球唯一标识符）
+     |   项目的唯一ID，一个groupId下面可能有多个项目，就是靠artifactId区分的。
+     |   构件的标识符，它和group ID一起唯一标识一个构件。
+    -->
     <artifactId>study</artifactId>
-    <!-- 工程的版本号 -->
+    <!-- 项目的版本号，格式为:主版本.次版本.增量版本-限定版本号 -->
     <version>0.0.1-SNAPSHOT</version>
     <!-- 项目的名称，Maven产生的文档用 -->
     <name>study</name>
-    <!-- 项目的详细描述, Maven 产生的文档用 -->
+    <!-- 项目的详细描述，Maven产生的文档用 -->
     <description>Demo project for Spring Boot</description>
 
     <!-- 项目开发者列表 -->
     <developers>
         <!-- 某一个项目开发者的信息 -->
         <developer>
+            <!-- SCM里项目开发者的唯一标识符 -->
             <id>DongFeng</id>
+            <!-- 项目开发者的全名 -->
             <name>eastFeng</name>
+            <!-- 项目开发者的email -->
             <email>460373645@qq.com</email>
         </developer>
     </developers>
 
-    <!-- 该元素描述了项目相关的所有依赖 -->
+    <!-- dependencies
+     |   该元素描述了当前项目的所有依赖（当前项目依赖的所有jar）
+    -->
     <dependencies>
-        <!-- 项目中手动加入的jar包（在resources中的lib目录下），需要添加的依赖， start-->
+        <!-- 设置具体的依赖 -->
+        <!-- 项目中手动加入的jar包（在resources中的lib目录下），需要添加相应的依赖。 start-->
         <dependency>
-            <!--依赖的group ID-->
+            <!-- 依赖的groupId-->
             <groupId>com.dongfeng.study</groupId>
-            <!--依赖的artifact ID-->
+            <!-- 依赖的artifactId -->
             <artifactId>sign</artifactId>
-            <!--依赖的版本号-->
+            <!-- 依赖的版本号 -->
             <version>1.4</version>
-            <!--依赖范围。
-            compile : 默认范围，用于编译
-            provided : 类似于编译，但支持你期待jdk或者容器提供，类似于classpath
-            runtime : 在执行时需要使用
-            test : 用于test任务时使用
-            system : 需要外在提供相应的元素。通过systemPath来取得
-            optional : 当项目自身被依赖时，标注依赖是否传递。用于连续依赖时使用
+            <!-- scope
+             |   依赖的jar默认情况下可以在任何地方使用，可以通过scope标签设定其作用范围。
+             |   compile： 默认范围，用于编译
+             |   provided：类似于编译，但支持你期待jdk或者容器提供，类似于classpath
+             |   runtime： 在执行时需要使用
+             |   test：    用于test任务时使用
+             |   system：  需要外在提供相应的元素。通过systemPath来取得
+             |   optional：当项目自身被依赖时，标注依赖是否传递。用于连续依赖时使用。
             -->
             <scope>system</scope>
-            <!--仅供system范围使用。
-            注意，不鼓励使用这个元素，并且在新的版本中该元素可能被覆盖掉。
-            该元素为依赖规定了文件系统上的路径。需要绝对路径而不是相对路径。推荐使用属性匹配绝对路径，例如${java.home}-->
+            <!-- 仅供system范围使用。
+             |   注意，不鼓励使用这个元素，并且在新的版本中该元素可能被覆盖掉。
+             |   该元素为依赖规定了文件系统上的路径。需要绝对路径而不是相对路径。
+             |   推荐使用属性匹配绝对路径，例如${java.home}
+            -->
             <systemPath>${project.basedir}/src/main/resources/lib/sign_v1.4.jar</systemPath>
         </dependency>
         <dependency>
@@ -110,9 +135,9 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/resources/lib/oos-sdk-6.5.0.jar</systemPath>
         </dependency>
-        <!-- 项目中手动加入的jar包（在resources中的lib目录下），需要添加的依赖， end-->
+        <!-- 项目中手动加入的jar包（在resources中的lib目录下），需要添加相应的依赖。 end -->
 
-        <!--天翼云oos 需要的依赖  start-->
+        <!-- 天翼云oos需要的依赖  start-->
         <!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
         <dependency>
             <groupId>joda-time</groupId>
@@ -131,9 +156,9 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.12</version>
         </dependency>
-        <!--天翼云oos 需要的依赖  end-->
+        <!-- 天翼云oos需要的依赖  end -->
 
-        <!-- PageHelper : MyBatis分页插件 -->
+        <!-- PageHelper：MyBatis分页插件 -->
         <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
@@ -146,25 +171,32 @@
             <artifactId>alipay-easysdk</artifactId>
             <version>2.2.0</version>
         </dependency>
-        <!--com.google.zxing 生成二维码-->
+        <!-- com.google.zxing 生成二维码 -->
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>core</artifactId>
             <version>3.4.1</version>
         </dependency>
-        <!--RabbitMQ Java客户端及其公共API-->
+        <!-- RabbitMQ Java客户端及其公共API -->
         <dependency>
             <groupId>com.rabbitmq</groupId>
             <artifactId>amqp-client</artifactId>
             <version>5.10.0</version>
         </dependency>
-        <!--spring默认使用yml中的配置，但有时候要用传统的xml或properties配置，就需要使用spring-boot-configuration-processor了-->
+        <!-- spring默认使用yml中的配置，但有时候要用传统的xml或properties配置，
+         |   就需要使用spring-boot-configuration-processor了
+        -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
+            <!-- optional（可选依赖）
+             |   可选依赖指对外隐藏当前所依赖的资源——不透明。
+             |   如果你在项目B中把C依赖声明为可选，你就需要在依赖于B的项目（例如项目A）中显式的引用对C的依赖。
+             |   可选依赖阻断依赖的传递性。
+            -->
             <optional>true</optional>
         </dependency>
-        <!--MyExcel-->
+        <!-- MyExcel -->
         <dependency>
             <groupId>com.github.liaochong</groupId>
             <artifactId>myexcel</artifactId>
@@ -175,82 +207,85 @@
             <artifactId>JustAuth</artifactId>
             <version>1.16.3</version>
         </dependency>
-        <!--sentinel：面向分布式服务架构的高可用流量防护组件，主要以流量为切入点，
-        从限流、流量整形、熔断降级、系统负载保护、热点防护等多个维度来帮助开发者保障微服务的稳定性。-->
+        <!-- sentinel
+         |   面向分布式服务架构的高可用流量防护组件，主要以流量为切入点。
+         |   从限流、流量整形、熔断降级、系统负载保护、热点防护等多个维度来帮助开发者保障微服务的稳定性。
+        -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
             <version>0.9.0.RELEASE</version>
         </dependency>
-        <!--lang3工具类库-->
+        <!-- lang3工具类库 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.11</version>
         </dependency>
-        <!--Hutool是一个小而全的Java工具类库，通过静态方法封装，降低相关API的学习成本，提高工作效率。-->
+        <!-- Hutool是一个小而全的Java工具类库，通过静态方法封装，降低相关API的学习成本，提高工作效率。 -->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>5.8.10</version>
         </dependency>
-        <!-- alibaba fastjson: 阿里巴巴的开源JSON解析库，
-        它可以解析JSON格式的字符串，
-        支持将Java Bean序列化为JSON字符串，
-        也可以从JSON字符串反序列化到JavaBean -->
+        <!-- alibaba fastjson
+         |   阿里巴巴的开源JSON解析库，它可以解析JSON格式的字符串，
+         |   支持将Java Bean序列化为JSON字符串，也可以从JSON字符串反序列化到JavaBean。
+        -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.73</version>
         </dependency>
-        <!--guava工具类库-->
+        <!-- guava工具类库 -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>29.0-jre</version>
         </dependency>
-        <!-- 图片处理工具: https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+        <!-- 图片处理工具 https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
         <dependency>
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
             <version>0.4.11</version>
         </dependency>
-        <!--Druid是Java语言中最好的数据库连接池。Druid能够提供强大的监控和扩展功能。-->
+        <!-- Druid是Java语言中最好的数据库连接池。Druid能够提供强大的监控和扩展功能。 -->
         <!-- https://mvnrepository.com/artifact/com.alibaba/druid-spring-boot-starter -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.2.6</version>
         </dependency>
-        <!--c3p0数据库连接池: https://mvnrepository.com/artifact/com.mchange/c3p0 -->
+        <!-- c3p0数据库连接池: https://mvnrepository.com/artifact/com.mchange/c3p0 -->
         <dependency>
             <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>
             <version>0.9.5.5</version>
         </dependency>
-        <!--org.apache.commons.dbutils-->
+        <!-- org.apache.commons.dbutils -->
         <dependency>
             <groupId>commons-dbutils</groupId>
             <artifactId>commons-dbutils</artifactId>
             <version>1.7</version>
         </dependency>
-
+        <!-- mongo数据库 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
 
-        <!-- Springboot的特性之一：提供starter依赖（starter dependence）来简化项目构建配置
-             starter依赖基于坐标（比如Maven的坐标）。
+        <!-- starter
+         |   SpringBoot的特性之一，提供starter依赖（starter dependence）来简化项目构建配置。
+         |   starter依赖基于坐标（比如Maven的坐标）。
+         |   SpringBoot将所有的功能场景都抽取出来，做成一个个的starter（启动器），
+         |   只需要在项目中引入这些starter相关场景的所有依赖都会导入进来，要用什么功能就导入什么场景，
+         |   在jar包管理上非常方便，最终实现一站式开发。
         -->
-        <!-- SpringBoot将所有的功能场景都抽取出来，做成一个个的starter（启动器），
-        只需要在项目中引入这些starter相关场景的所有依赖都会导入进来，要用什么功能就导入什么场景，
-        在jar包管理上非常方便，最终实现一站式开发。-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
-        <!--lombok-->
+        <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -283,7 +318,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <!--web启动类 ： 支持全栈式的web开发，包括Tomcat和SpringWebMVC-->
+            <!-- web启动类：支持全栈式的web开发，包括Tomcat和SpringWebMVC -->
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
@@ -306,9 +341,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <!--当计算传递依赖时，从依赖构件列表里，列出被排除的依赖构件集。
-            即告诉maven你只依赖指定的项目，不依赖项目的依赖。此元素主要用于解决版本冲突问题-->
+            <!-- exclusions
+             |   当计算传递依赖时，从依赖构件列表里，列出被排除的依赖构件集。
+             |   即告诉maven你只依赖指定的项目，不依赖项目的依赖。此元素主要用于解决版本冲突问题
+            -->
             <exclusions>
+                <!-- 排除依赖指主动断开依赖的资源（jar包）——不需要
+                 |   声明exclusion的时候只需要groupId和artifactId，
+                 |   不用指定version（版本）。
+                -->
                 <exclusion>
                     <groupId>org.junit.vintage</groupId>
                     <artifactId>junit-vintage-engine</artifactId>
@@ -319,6 +360,11 @@
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version>
+            <!--
+             |   依赖的jar默认情况下可以在任何地方使用，可以通过scope标签设定其作用范围。
+             |   main：主程序范围有效（main文件夹范围内）
+             |   test：测试程序范围有效（test文件夹范围内）
+            -->
             <scope>test</scope>
         </dependency>
 
@@ -326,6 +372,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
+            <!-- optional（可选依赖）
+             |   可选依赖指对外隐藏当前所依赖的资源——不透明。
+             |   如果你在项目B中把C依赖声明为可选，你就需要在依赖于B的项目（例如项目A）中显式的引用对C的依赖。
+             |   可选依赖阻断依赖的传递性。
+            -->
             <optional>true</optional>
             <scope>runtime</scope>
         </dependency>
@@ -340,40 +391,65 @@
     </dependencies>
 
 
+    <!-- dependencyManagement
+     |   继承自该项目的所有子项目的默认依赖信息。
+     |   这部分的依赖信息不会被立即解析，而是当子项目声明一个依赖（必须描述groupId和artifactId信息），
+     |   如果groupId和artifactId以外的一些信息没有描述，
+     |   则通过groupId和artifactId匹配到这里的依赖，并使用这里的依赖信息。
+    -->
+    <dependencyManagement>
+        <dependencies>
+        </dependencies>
+    </dependencyManagement>
+
+
     <!-- 构建项目需要的信息 -->
     <build>
+        <!--
+         |  1.插件与生命周期内的阶段绑定，在执行到对应生命周期时执行对应的插件功能
+         |  2.默认maven在各个生命周期上绑定有预设的功能
+         |  3.通过插件可以自定义其他功能
+        -->
         <!--使用的插件列表-->
         <plugins>
-            <!--plugin元素描述插件所需要的信息-->
-            <!-- 下面这个插件非常重要，是Springboot的打包插件-->
+            <!-- plugin元素描述插件所需要的信息 -->
+            <!-- 下面这个插件非常重要，是Springboot的打包插件 -->
             <plugin>
-                <!--插件在仓库的group ID-->
+                <!-- 插件在仓库的groupId -->
                 <groupId>org.springframework.boot</groupId>
                 <!--插件在仓库的artifact ID-->
-                <!-- spring-boot-maven-plugin：是将Springboot的应用程序打包诚jar包的插件。
-                     将所有应用启动运行所需要的jar包都包含进来，从逻辑上将具备独立运行的条件。
-                     当运行"mvn package"进行打包后，使用"java -jar"命令就可以直接运行。-->
+                <!--spring-boot-maven-plugin
+                 |  是将Springboot的应用程序打包诚jar包的插件。
+                 |  将所有应用启动运行所需要的jar包都包含进来，从逻辑上将具备独立运行的条件。
+                 |  当运行"mvn package"进行打包后，使用"java -jar"命令就可以直接运行。
+                -->
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <!--作为DOM对象的配置-->
+                <!-- 作为DOM对象的配置 -->
                 <configuration>
                     <mainClass>com.dongfeng.study.StudyApplication</mainClass>
-                    <!--includeSystemScope 设为true是指打包时包含scope为system的第三方jar包-->
+                    <!--includeSystemScope
+                     |  设为true是指打包时包含scope为system的第三方jar包
+                    -->
                     <includeSystemScope>true</includeSystemScope>
                 </configuration>
             </plugin>
 
-            <!--热部署配置-->
+            <!-- 热部署配置 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <!--fork:如果没有该项配置,整个devtools不会起作用-->
+                    <!-- fork:如果没有该项配置,整个devtools不会起作用 -->
                     <fork>true</fork>
                     <addResources>true</addResources>
                 </configuration>
             </plugin>
         </plugins>
 
+        <!--resources
+         |  这个元素描述了项目相关的所有资源路径列表，例如和项目相关的属性文件，
+         |  这些资源被包含在最终的打包文件里。
+        -->
         <resources>
         </resources>
     </build>

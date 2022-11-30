@@ -42,24 +42,31 @@ public class RedisUtil {
      * @return true: 获取分布式锁成功 ， false: 获取锁失败
      */
     public boolean getDistributedLock(String key, String value, long lockTime, long waitTime){
+        log.info("getDistributedLock 获取Redis分布式锁开始," +
+                        " key:{},value:{},lockTime:{},waitTime:{}",
+                key, value, lockTime, waitTime);
         if (StringUtils.isAnyBlank(key,value) || lockTime<=0 || waitTime<=0){
             return false;
         }
 
         // 获取redis分布式锁开始
         long start = System.currentTimeMillis();
-
         try {
-            // setIfAbsent : 将key的值设为value，当且仅当key不存在。设置成功返回true，否则返回false。
+            // setIfAbsent : 当且仅当key不存在，将key的值设为value。设置成功返回true，否则返回false。
             // 自旋的方式加锁
-            while (Boolean.FALSE.equals(stringRedisTemplate.opsForValue().setIfAbsent(key, value, lockTime, TimeUnit.SECONDS))) {
+            while (Boolean.FALSE.equals(
+                    stringRedisTemplate.opsForValue().setIfAbsent(key, value, lockTime, TimeUnit.SECONDS))) {
                 // 进入while循环，说明setIfAbsent方法返回false，没有获取到锁
 
                 // 睡眠2毫秒, 然后重新尝试获取锁
                 Thread.sleep(2);
+                // 已经等待的时间（已经尝试获取锁花费的时间）：当前时间-开始时间
+                // time单位是毫秒
                 long time = System.currentTimeMillis() - start;
-                // 如果超过waitTime秒，都没有获取到key，则获取失败
+                // 如果超过最长等待时间（waitTime，单位秒），都没有获取到key，则获取失败
                 if (time > (waitTime*1000)) {
+                    log.info("getDistributedLock 获取Redis分布式锁 超过最长等待时间," +
+                            "key:{},花费时间time:{}毫秒,waitTime:{}",key,time,waitTime);
                     return false;
                 }
             }
@@ -67,7 +74,8 @@ public class RedisUtil {
             // redis set成功（加锁成功）跳出循环
             return true;
         }catch (Exception e){
-            log.error("getDistributedLock Error key:{}, value:{}, error:{}", key, value, e.getMessage(), e);
+            log.error("getDistributedLock 获取Redis分布式锁发生异常Error " +
+                    "key:{}, value:{}, error:{}", key, value, e.getMessage(), e);
         }
 
         // 发生异常，获取失败

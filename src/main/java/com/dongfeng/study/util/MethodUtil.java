@@ -1,5 +1,6 @@
 package com.dongfeng.study.util;
 
+import cn.hutool.core.util.StrUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Method;
@@ -29,37 +30,43 @@ public class MethodUtil {
         }
         // 首先从map中获取
         String methodName = METHOD_NAME_MAP.get(method);
-        if (StringUtils.isBlank(methodName)) {
-            // map中没有
-            synchronized (LOCK) {
-                methodName = METHOD_NAME_MAP.get(method);
-                // 再次从map中获取并判断
-                if (StringUtils.isBlank(methodName)) {
-                    StringBuilder sb = new StringBuilder();
-                    // 方法所在类的全类名
-                    String className = method.getDeclaringClass().getCanonicalName();
-                    // 方法名称
-                    String name = method.getName();
-                    // 方法所有参数的类型
-                    Class<?>[] params = method.getParameterTypes();
 
-                    sb.append(className).append(":").append(name);
-                    sb.append("(");
+        if (!StrUtil.isBlank(methodName)){
+            // map中有，直接返回方法的全路径名称
+            return methodName;
+        }
 
-                    // 拼装参数类型全类名
-                    int paramPos = 0;
-                    for (Class<?> clazz : params) {
-                        sb.append(clazz.getCanonicalName());
-                        if (++paramPos < params.length) {
-                            sb.append(",");
-                        }
-                    }
-                    sb.append(")");
-                    methodName = sb.toString();
+        // map中没有
+        synchronized (LOCK) {
+            // 再次从map中获取并判断
+            methodName = METHOD_NAME_MAP.get(method);
+            if (!StrUtil.isBlank(methodName)){
+                return methodName;
+            }
 
-                    METHOD_NAME_MAP.put(method, methodName);
+            StringBuilder sb = new StringBuilder();
+            // 方法所在类的全类名
+            String className = method.getDeclaringClass().getCanonicalName();
+            // 方法名称
+            String name = method.getName();
+            // 方法所有参数的类型
+            Class<?>[] params = method.getParameterTypes();
+
+            sb.append(className).append(":").append(name);
+            sb.append("(");
+
+            // 拼装参数类型全类名
+            int paramPos = 0;
+            for (Class<?> clazz : params) {
+                sb.append(clazz.getCanonicalName());
+                if (++paramPos < params.length) {
+                    sb.append(",");
                 }
             }
+            sb.append(")");
+            methodName = sb.toString();
+            // 放入map
+            METHOD_NAME_MAP.put(method, methodName);
         }
         return methodName;
     }

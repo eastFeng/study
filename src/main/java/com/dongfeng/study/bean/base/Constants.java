@@ -13,6 +13,17 @@ public interface Constants {
      */
     String SYSTEM = "SYSTEM";
     /**
+     * 该项目groupId和artifactId组成的字符串
+     * <p> 可能/需要用到的地方：
+     * <ol>
+     *     <li>当多个不同项目连接同一个Redis（或其他工具），
+     *     为了区分不同的key（也是为了避免不同项目有相同的key），
+     *     把该字符当做该项目每个Redis的key的前缀。</li>
+     * </ol>
+     */
+    String GROUP_ID_ARTIFACT_ID = "com.dongfeng.study";
+
+    /**
      * 我方私钥
      */
     String MY_PRIVATE_KEY = "";
@@ -37,7 +48,8 @@ public interface Constants {
     /**
      * 上传到本地的文件存储路径
      */
-    String UPLOAD_FILE_STORAGE_PATH = "D:\\CodingStudy\\UploadFile\\springboot-study\\";
+    String UPLOAD_FILE_STORAGE_PATH = "D:\\CodingStudy\\notCodeFile\\UploadFile\\springboot-study";
+
 
     /* -------------  RabbitMQ相关, Start ----------------- */
     // Topic类型的Exchange的名字

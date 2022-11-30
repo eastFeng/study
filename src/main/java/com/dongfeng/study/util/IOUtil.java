@@ -741,7 +741,7 @@ public class IOUtil {
             // 拷贝文件字节流，使用NIO
             return copy(fileInputStream, (FileOutputStream)outputStream);
         }else {
-            // outputStream不是文件字节输出流FileOutputStream
+            // outputStream不是文件字节输出流（FileOutputStream）
             return copy(fileInputStream, outputStream, true, isCloseOut);
         }
     }

@@ -57,7 +57,7 @@ public class MD5WithRSAUtil {
         } catch (Exception e) {
             log.error("MD5withRSAUtil.getMd5Sign error:{}", e.getMessage(), e);
         }
-        return "";
+        return StringUtil.EMPTY;
     }
 
     /**

@@ -68,4 +68,3 @@ spring:
       max-file-size: 30MB  #单个文件最大值
       max-request-size: 100MB  #一次请求所有文件最大值
 
-
