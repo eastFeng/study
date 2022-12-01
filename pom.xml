@@ -36,6 +36,7 @@
         -->
         <artifactId>spring-boot-starter-parent</artifactId>
         <!-- 版本号 -->
+        <!-- 2.3.3.RELEASE -->
         <version>2.3.3.RELEASE</version>
         <!-- 父项目的pom.xml文件的相对路径
          |   相对路径允许你选择一个不同的路径。默认值是../pom.xml。
@@ -281,6 +282,8 @@
          |   只需要在项目中引入这些starter相关场景的所有依赖都会导入进来，要用什么功能就导入什么场景，
          |   在jar包管理上非常方便，最终实现一站式开发。
         -->
+
+        <!-- SpringBoot整合amqp的starter，amqp协议的默认实现是RabbitMQ -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
@@ -291,10 +294,11 @@
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
         </dependency>
+        <!-- SpringBoot整合Redis的starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-            <version>2.3.3.RELEASE</version>
+            <version>3.0.0</version>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.boot</groupId>-->
@@ -403,6 +407,14 @@
     </dependencyManagement>
 
 
+    <!-- 插件和依赖的区别：
+     |    依赖：项目运行时和开发时都需要用到的jar包。
+     |         比如项目中需要一个Json的jar包，就要添加一个依赖，
+     |         这个依赖在项目运行时也需要，因此在项目打包时需要把这些依赖也打包进项目里。
+     |    插件：在项目开的发时需要，但是在项目运行时不需要。
+     |         因此在项目开发完成后不需要把插件打包进项目中，比如有个可以自动生成getter和setter的插件，
+     |         该插件在编译时生成getter和setter，编译结束后就没用了，所以项目打包时并不需要把插件放进去。
+    -->
     <!-- 构建项目需要的信息 -->
     <build>
         <!--
@@ -444,6 +456,31 @@
                     <addResources>true</addResources>
                 </configuration>
             </plugin>
+
+            <!-- 导入一个Maven插件 -->
+            <!-- Maven周期和插件的学习在LifecycleAndPlugin_06类中 -->
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    &lt;!&ndash; 将该Maven插件的多个目标（goal）绑定到声明周期的某个阶段（phase） &ndash;&gt;
+                    <execution>
+                        &lt;!&ndash; goals
+                         |   该Maven插件的多个目标（goal）
+                         |   IDEA视图左侧Maven栏点开，项目名称study目录下的
+                         |   Plugins目录下可以看到导入的该Maven插件dependence，
+                         |   点开该dependence插件就可以看到该插件包含的所有目标（goal）
+                         |   dependence冒号（:）后面的就是目标（goal）的名称。
+                        &ndash;&gt;
+                        <goals>
+                            <goal>tree</goal>
+                        </goals>
+                        &lt;!&ndash; 指定声明周期的某个阶段 &ndash;&gt;
+                        <phase>post-clean</phase>
+                    </execution>
+                </executions>
+            </plugin>-->
         </plugins>
 
         <!--resources

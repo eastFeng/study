@@ -1,7 +1,7 @@
 package com.dongfeng.study.basicstudy.maven;
 
 /**
- * 依赖管理
+ * 依赖管理：依赖配置 依赖传递 依赖冲突 排除依赖
  *
  * @author eastFeng
  * @date 2022-11-30 22:17
@@ -14,10 +14,16 @@ public class DependencyManagement_05 {
      *    项目所需依赖在pom.xml文件中进行配置。
      *
      * <p> 二.依赖传递
-     * <p> 依赖具有传递性
+     * <p> 1.依赖具有传递性
      * <ul>
      *     <li>直接依赖：在当前项目中通过依赖配置建立的依赖关系</li>
      *     <li>间接依赖：被资源的资源如果依赖其他资源，当前项目间接依赖其他资源</li>
+     * </ul>
+     * 比如：在项目中导入了依赖A，而A内部依赖了B，则A自动出发B也被导入项目。
+     * <p> 2.传递性的好处和坏处
+     * <ul>
+     *     <li>好处：没必要导入所有依赖在项目中，传递性会自动导入一些依赖。简化依赖导入管理</li>
+     *     <li>坏处：依赖冲突（jar冲突）</li>
      * </ul>
      *
      * 三.依赖冲突
@@ -52,7 +58,9 @@ public class DependencyManagement_05 {
      * </ul>
      * Y(1.0)和Y(2.0)的依赖路径长度是一样的，都为2。如果B的依赖声明在D之前，那么Y（版本1.0）就会被解析使用。
      * <p>【注意】子pom内声明的依赖优先于父pom中的依赖。
-     * <p>第3种解决依赖的方法：【手动排除依赖】
+     *
+     * <p> 4.默认的两个选择原则明显是不能复合实际需求的，所以有其他设置可以改默认原则：</p>
+     * <p> 【排除依赖 exclusion】
      * <p> 在pom.xml文件中，exclusions可以包含一个或者多exclusion子元素，因此可以排除一个或者多个传递性依赖。
      * <p> 查看冲突：IDEA通过Maven Helper插件来检查依赖冲突。
      * Maven Helper插件安装成功之后，点开pom.xml文件，会在窗口下方看到Dependency Analyzer标志。
