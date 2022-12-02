@@ -6,19 +6,23 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.cglib.proxy.MethodInterceptor;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
 /**
- * <b> {@link org.springframework.web.servlet.HandlerInterceptor}拦截器接口源码学习 </b>
+ * <b> {@link HandlerInterceptor}拦截器接口源码学习 </b>
  *
  * <p> interceptor[ˌɪntəˈseptə(r)] : 拦截器。
  *
  * <p> spring中拦截器主要分两种，一个是HandlerInterceptor，一个是MethodInterceptor。
  *
- * <p> {@link org.springframework.web.servlet.HandlerInterceptor}是springMVC项目中的拦截器，它拦截的目标是请求的地址，
+ * <p> {@link HandlerInterceptor}是springMVC项目中的拦截器，它拦截的目标是请求的地址，
  * 比MethodInterceptor先执行。
- * {@link org.springframework.cglib.proxy.MethodInterceptor}
+ * {@link MethodInterceptor}
  *
- * <p> 实现一个HandlerInterceptor拦截器可以直接实现{@link org.springframework.web.servlet.HandlerInterceptor}接口，
- * 也可以继承{@link org.springframework.web.servlet.handler.HandlerInterceptorAdapter}类。
+ * <p> 实现一个HandlerInterceptor拦截器可以直接实现{@link HandlerInterceptor}接口，
+ * 也可以继承{@link HandlerInterceptorAdapter}类（推荐）。
  *
  * @author eastFeng
  * @date 2021-04-08 23:14

@@ -1,17 +1,26 @@
 package com.dongfeng.study.basicstudy.spring.annotation;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import org.springframework.http.MediaType;
 
 /**
- * {@link org.springframework.web.bind.annotation.RequestMapping}注解学习
+ * {@link RequestMapping}注解学习
  *
  * @author eastFeng
  * @date 2022-11-23 0:41
  */
-public class RequestMappingAnnotation {
+public class RequestMappingStudy {
 
     /*
      * 我们在实际的开发当中，一个控制器中不一定只有一个方法，而这些方法都是用来处理请求的，那么怎样才能将请求与处理方法一一对应呢，
@@ -24,31 +33,32 @@ public class RequestMappingAnnotation {
      */
 
     /**
-     * <p>{@link org.springframework.web.bind.annotation.RequestMapping}是SpringWeb应用程序中最常被用到的注解之一。
-     * 这个注解会将HTTP请求映射到MVC和REST控制器的处理方法上。</p>
+     * <p> 我们在实际的开发当中，一个控制器中不一定只有一个方法，而这些方法都是用来处理请求的，
+     * 那么怎样才能将请求与处理方法一一对应呢，
+     * 当然是通过{@link RequestMapping}注解来处理这些映射请求，也就是通过它来指定控制器可以处理哪些URL请求。
      *
-     * <p> @RequestMapping注解可以用在类定义处和方法定义处，就是来映射服务器访问的路径。
-     * <li>标注在类上：规定初步的请求映射，相对于web应用的根目录；</li>
-     * <li>标注在方法上：进一步细分请求映射，相对于类定义处的URL。
-     * 如果类定义处没有使用该注解，则方法标记的URL相对于根目录而言；</li>
+     * <p>1. {@link RequestMapping}是SpringWeb应用程序中最常被用到的注解之一。
+     * 这个注解会将HTTP请求映射到MVC和REST控制器的处理方法上。
+     *
+     * <p>2. {@link RequestMapping}注解可以用在类定义处和方法定义处，就是来映射服务器访问的路径。
+     *    <li>标注在类上：规定初步的请求映射，相对于web应用的根目录；</li>
+     *    <li>标注在方法上：进一步细分请求映射，相对于类定义处的URL。
+     *        如果类定义处没有使用该注解，则方法标记的URL相对于根目录而言；
+     *    </li>
      * </p>
      *
-     * <p>
-     *  RequestMapping注解有六个属性，分成三类进行说明：
-     *  <ol>
-     *      <li>
-     *      {@link RequestMapping#value()}：指定请求的实际地址，指定的地址可以是URI Template模式，该属性必须设值。
-     *      {@link RequestMapping#method()}：指定HTTP请求的method类型，GET、POST、PUT、DELETE等。
-     *      </li>
-     *      <li>
-     *      {@link RequestMapping#consumes()}：指定处理请求的提交内容类型（Content-Type），例如ext/plain,application/json,text/html等。
-     *      {@link RequestMapping#produces()}：指定返回的内容类型，仅当request请求头中的(Accept)类型中包含该指定类型才返回。
-     *      </li>
-     *      <li>
-     *      {@link RequestMapping#params()}：指定request中必须包含某些参数值时，才让该方法处理。
-     *      {@link RequestMapping#headers()}：指定request中必须包含某些指定的header值，才能让该方法处理请求
-     *      </li>
-     *  </ol>
+     * <p> 3. RequestMapping注解有六个属性，分成三类进行说明。
+     * <p> 第一组：
+     *    <li>{@link RequestMapping#value()}：指定请求的实际地址，指定的地址可以是URI Template模式，该属性必须设值。</li>
+     *    <li>{@link RequestMapping#method()}：指定HTTP请求的method类型，GET、POST、PUT、DELETE等。</li>
+     * </p>
+     * <p> 第二组：
+     *    <li>{@link RequestMapping#consumes()}：指定处理请求的提交内容类型（Content-Type），例如ext/plain,application/json,text/html等。</li>
+     *    <li>{@link RequestMapping#produces()}：指定返回的内容类型，仅当request请求头中的(Accept)类型中包含该指定类型才返回。</li>
+     * </p>
+     * <p> 第三组：
+     *    <li>{@link RequestMapping#params()}：指定request中必须包含某些参数值时，才让该方法处理。</li>
+     *    <li>{@link RequestMapping#headers()}：指定request中必须包含某些指定的header值，才能让该方法处理请求。</li>
      * </p>
      *
      */
@@ -68,9 +78,9 @@ public class RequestMappingAnnotation {
      * 只需要给value来指定一个包含多个路径的数组。
      * 这时的请求映射所映射的请求的请求路径为选择value数组中的任意一个都可以。</p>
      */
-    @RequestMapping("/test1")
+    @org.springframework.web.bind.annotation.RequestMapping("/test1")
     public void test1(){}
-    @RequestMapping(value = {"/aaa","/bbb","/ccc"})
+    @org.springframework.web.bind.annotation.RequestMapping(value = {"/aaa","/bbb","/ccc"})
     public void test11(){}
 
     /**
@@ -81,10 +91,10 @@ public class RequestMappingAnnotation {
      *
      * <p>例如，该映射方法中明确要求请求方式为get，所以post方式不被允许</p>
      */
-    @RequestMapping(value = "/test2"
+    @org.springframework.web.bind.annotation.RequestMapping(value = "/test2"
             ,method = RequestMethod.GET) // 只支持GET请求
     public void test2(){}
-    @RequestMapping(value = "/test21"
+    @org.springframework.web.bind.annotation.RequestMapping(value = "/test21"
             ,method = {RequestMethod.GET,RequestMethod.POST}) // 支持GET和POST请求
     public void test21(){}
 
@@ -100,7 +110,7 @@ public class RequestMappingAnnotation {
      * <li>“paramD!=value”： 要求请求映射的请求是必须包含paramD的请求参数，其值不能为value。</li>
      * </p>
      */
-    @RequestMapping(value = "/test3",params = {"name=A","age=6"})
+    @org.springframework.web.bind.annotation.RequestMapping(value = "/test3",params = {"name=A","age=6"})
     public void test3(){}
 
     /**
@@ -115,7 +125,7 @@ public class RequestMappingAnnotation {
      * </p>
      *
      */
-    @RequestMapping(value = "/test4",
+    @org.springframework.web.bind.annotation.RequestMapping(value = "/test4",
             method = RequestMethod.HEAD,
             headers = {"headerA=AAAAAAAA"})
     public void test4(){}
@@ -124,7 +134,7 @@ public class RequestMappingAnnotation {
      * {@link RequestMapping#consumes()}属性 ：
      * 指定处理请求的提交内容类型（Content-Type），例如application/json, text/html。
      */
-    @RequestMapping(value = "/test5",
+    @org.springframework.web.bind.annotation.RequestMapping(value = "/test5",
             method = RequestMethod.GET,
             consumes = MediaType.APPLICATION_JSON_VALUE) // 只接收json类型
     public void test5(){}
@@ -133,7 +143,7 @@ public class RequestMappingAnnotation {
      * {@link RequestMapping#produces()}属性:
      * 指定返回的内容类型，仅当request请求头中的(Accept)类型中包含该指定类型才返回。
      */
-    @RequestMapping(value = "/test6",method = RequestMethod.GET,
+    @org.springframework.web.bind.annotation.RequestMapping(value = "/test6",method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public void test6(){}
 

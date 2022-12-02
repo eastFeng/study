@@ -29,7 +29,6 @@ import java.util.List;
 @WebServlet(name = "ServletStudy_05", urlPatterns = "/servlet/05")
 public class RequestAndResponse_05 extends HttpServlet {
     private static final long serialVersionUID = -7522205658353885240L;
-
     // 公共接口HttpServletRequest继承自ServletRequest。
     // 客户端浏览器发出的请求被封装成为一个HttpServletRequest对象。
     // 服务器的响应被封装成为一个HttpServletResponse对象。
@@ -41,9 +40,6 @@ public class RequestAndResponse_05 extends HttpServlet {
     // 向客户端输出数据，需要通过 response 对象。
     // HttpServletRequest对象（接口实现类的对象）和HttpServletResponse在service方法中，
     // 都是由servlet容器传过来的，我们需要做的就是使用它们，取出对象中的数据进行分析、处理。
-
-
-
     /**
      * HttpServletResponse接口介绍:
      * <ol>
@@ -107,7 +103,7 @@ public class RequestAndResponse_05 extends HttpServlet {
      *     <li>Server: 服务器通过这个头，告诉浏览器服务器名字。Servlet一般不设置这个值，而是由Web服务器自己设置。</li>
      *     <li>Content-Encoding: 服务器通过这个头，告诉浏览器，响应体中数据的压缩格式。</li>
      *     <li>Content-Length: 服务器通过这个头，告诉浏览器回送数据（响应体中数据）的长度。</li>
-     *     <li>Content-Type: 服务器通过这个头，告诉浏览器响应体中的数据类型（字，图片，视频，命令...）。</li>
+     *     <li>Content-Type: 服务器通过这个头，告诉浏览器响应体中的数据类型（字符串，图片，视频，命令...）。</li>
      *     <li>Content-Disposition: 服务器通过这个头，告诉浏览器以下载方式打数据</li>
      *     <li>Refresh: 服务器通过这个头，告诉浏览器定时刷新，浏览器应该在多少时间之后刷新文档，以秒计。</li>
      * </ul>

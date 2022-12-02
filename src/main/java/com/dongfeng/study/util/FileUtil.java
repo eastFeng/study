@@ -26,10 +26,12 @@ import java.util.Map;
 @Slf4j
 public class FileUtil {
     public static void main(String[] args) {
-        String suffix = getSuffix("zlahgagh");
-        System.out.println(null == suffix);
-        System.out.println(StrUtil.isBlank(suffix));
-        System.out.println("suffix="+suffix+"======");
+//        String suffix = getSuffix("zlahgagh");
+//        System.out.println(null == suffix);
+//        System.out.println(StrUtil.isBlank(suffix));
+//        System.out.println("suffix="+suffix+"======");
+        File file = new File("D:\\CodingStudy\\notCodeFile");
+        listAllFiles(file);
     }
 
     /**
@@ -46,6 +48,28 @@ public class FileUtil {
      * 特殊的后缀
      */
     public static final CharSequence[] SPECIAL_SUFFIX = new CharSequence[]{"tar.bz2", "tar.Z", "tar.gz", "tar.xz"};
+
+    /**
+     * 遍历目录中的所有文件。
+     * <p> 会扫描子目录。
+     *
+     * @param dir 要遍历的目录
+     */
+    public static void listAllFiles(File dir){
+        if(dir == null || !dir.exists()){
+            return;
+        }
+        if (dir.isFile()){
+            // 是文件就打印出来文件名
+            System.out.println(dir.getAbsolutePath());
+            return;
+        }
+        // 是目录，遍历里面的内容
+        for (File file : dir.listFiles()) {
+            listAllFiles(file);
+        }
+    }
+
 
     /**
      * 文件上传到本地

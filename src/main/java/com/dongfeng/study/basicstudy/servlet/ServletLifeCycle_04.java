@@ -19,21 +19,19 @@ public class ServletLifeCycle_04 extends HttpServlet {
 
     private static final long serialVersionUID = -6460868546878657349L;
 
-    /*
+    /**
      *
      * Servlet对象（Servlet接口实现类的对象）生命周期
      *
-     * 1. 所有的Servlet接口实现类的实例对象，只能由Http服务器负责创建，
+     * <p>1. 所有的Servlet接口实现类的实例对象，只能由Http服务器负责创建，
      *    开发人员不能手动创建Servlet接口实现类的实例对象。
-     * 2. 在默认的情况下，Http服务器接收到对于当前Servlet接口实现类第一次请求时，
+     * <p>2. 在默认的情况下，Http服务器接收到对于当前Servlet接口实现类第一次请求时，
      *    自动创建这个Servlet接口实现类的实例对象。
-     *    可以手动配置，要求Http服务器在启动时自动创建某个Servlet接口实现类的对象。
-     * 3. 在Http服务器运行期间，一个Servlet接口实现类只能被创建出一个实例对象。（单例模式）
-     * 4. 在Http服务器关闭时刻，自动将所有的Servlet对象(Servlet接口实现类的对象)进行销毁。
-     *
+     *    也可以手动配置，要求Http服务器在启动时自动创建某个Servlet接口实现类的对象。
+     * <p>3. 在Http服务器运行期间，一个Servlet接口实现类只能被创建出一个实例对象。（单例模式）
+     * <p>4. 在Http服务器关闭时刻，自动将所有的Servlet对象（Servlet接口实现类的对象）进行销毁。
      *
      */
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

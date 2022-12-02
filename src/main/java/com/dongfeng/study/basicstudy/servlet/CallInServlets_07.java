@@ -96,7 +96,10 @@ public class CallInServlets_07 {
      * 		   这些Servlet接收的请求方式与浏览器发送的请求方式保持一致。</li>
      * </ol>
      *
-     * <p> 五.用法举例：{@link RequestAndResponse_05#requestTest6(HttpServletRequest, HttpServletResponse)}
+     * <p>
+     * 五.用法举例：{@link RequestAndResponse_05#requestTest6(HttpServletRequest, HttpServletResponse)}
+     * </p>
+     *
      *
      */
     public static void forward(){

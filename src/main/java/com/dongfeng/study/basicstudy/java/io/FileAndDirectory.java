@@ -9,19 +9,20 @@ import java.io.IOException;
  * @date 2021-05-01 19:48
  */
 public class FileAndDirectory {
+    /**
+     * <p>文件和目录操作最终是与操作系统和文件系统相关的，不同系统的实现是不一样的，
+     * 但Java中的java.io.File类提供了统一的接口，底层会通过本地方法调用操作系统和文件系统的具体实现。
+     *
+     * <p> File类中的操作大概可以分为三类：文件元数据、文件操作、目录操作。
+     *
+     * <p> File既可以表示文件，也可以表示目录。
+     * <p> File中的路径可以是已经存在的，也可以是不存在的。
+     * 通过new新建一个File对象，不会实际创建一个文件，只是创建一个表示文件或目录的对象，
+     * new之后，File对象中的路径是不可变的。
+     */
     public static void main(String[] args) throws IOException {
-        /*
-         * 文件和目录操作最终是与操作系统和文件系统相关的，不同系统的实现是不一样的，
-         * 但Java中的java.io.File类提供了统一的接口，底层会通过本地方法调用操作系统和文件系统的具体实现，
-         * File类中的操作大概可以分为三类：文件元数据、文件操作、目录操作。
-         *
-         * File既可以表示文件，也可以表示目录。
-         * File中的路径可以是已经存在的，也可以是不存在的。
-         * 通过new新建一个File对象，不会实际创建一个文件，只是创建一个表示文件或目录的对象，
-         * new之后，File对象中的路径是不可变的。
-         */
 
-        String path = "D:\\Wstudy\\ctest.dat";
+        String path = "";
         File file = new File(path);
 
         // 文件元数据
@@ -107,7 +108,7 @@ public class FileAndDirectory {
 
         // File还有两个静态方法，可以创建临时文件：
         File tempFile = File.createTempFile("dongfengTest", "txt");
-        File directory = new File("\\Wstudy");
+        File directory = new File("");
         File tempFile1 = File.createTempFile("createTempFileTest", "txt", directory);
         // 临时文件的完整路径名是系统指定的、唯一的，但可以通过参数指定前缀（prefix）、后缀（suffix）和目录（directory）。
         // prefix是必需的，且至少要三个字符;
@@ -120,6 +121,10 @@ public class FileAndDirectory {
         // delete删除文件或目录，删除成功返回true，否则返回false。
         // 如果File是目录且不为空，则delete不会成功，返回false，换句话说，要删除目录，先要删除目录下的所有子目录和文件。
         // deleteOnExit将File对象加入到待删列表，在Java虚拟机正常退出的时候进行实际删除。
+        // 一般删除代码如下：
+//        if (tempFile.exists()){
+//            tempFile.delete();
+//        }
     }
 
 

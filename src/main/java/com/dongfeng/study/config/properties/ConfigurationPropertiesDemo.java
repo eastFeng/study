@@ -4,6 +4,7 @@ import com.dongfeng.study.config.configuration.DemoConfiguration;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ import java.util.Map;
  * <p> 如果要绑定和验证一些外部属性（从.properties文件），可以将该注解添加到类上或者@Configuration类中的@Bean方法上。
  *
  * <p> 当该注解作用于类上时，如果想要有效的绑定配置，那么该类需要有@Component注解。并且类的实例字段要有对应的set方法。
- *     例如：{@link org.springframework.boot.autoconfigure.amqp.RabbitProperties}
+ *     例如：{@link RabbitProperties}
  *
  * <p> 当将该注解作用于方法上时，如果想要有效的绑定配置，那么该方法需要有@Bean注解 且 所属Class需要有@Configuration注解。
  *     例如：{@link DemoConfiguration#getTestVo()}

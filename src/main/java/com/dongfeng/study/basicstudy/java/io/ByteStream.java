@@ -16,11 +16,16 @@ import java.util.Arrays;
  * @date 2021-04-29 19:51
  */
 public class ByteStream {
+    /**
+     * <p> 字节流可以处理任意类型的数据
+     * <p> 字符流只能处理字符类型的数据
+     * <p> 编码就是把字符转换为字节，而解码是把字节重新组合成字符。
+     * <p> InputStreamReader：实现从字节流解码成字符流，所以InputStreamReader可以实现从字节流中读取字符。
+     * <p> InputStreamWriter：实现字符流编码成为字节流，所以InputStreamWriter可以实现向字节流中写入字符。
+     * <p> 推按使用hutool或者其他工具类：
+     * {@link cn.hutool.core.io.IoUtil} 、{@link cn.hutool.core.io.FileUtil}
+     */
     public static void main(String[] args) {
-        // IO操作，推按使用hutool或者其他工具类
-        /**
-         * {@link cn.hutool.core.io.IoUtil} 、{@link cn.hutool.core.io.FileUtil}
-         */
 
         File des = new File("D:\\MyFiles\\Pictures\\work\\textTest1.jpg");
         File source = new File("D:\\MyFiles\\Pictures\\work\\yellowGirl.jpg");
