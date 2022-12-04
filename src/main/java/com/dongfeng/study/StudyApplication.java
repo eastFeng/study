@@ -11,43 +11,64 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ImportSelector;
+import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.boot.autoconfigure.AutoConfigurationImportSelector;
+import org.springframework.core.io.support.SpringFactoriesLoader;
+import org.springframework.context.annotation.ComponentScan;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 /**
- * <b> Spring Boot 的启动类
- * <p> <b> {@link SpringBootApplication} 注解： 自动配置的实现，表示当前类是SpringBoot的启动类。
- * 此注解等同于：@Configuration + @EnableAutoConfiguration + @ComponentScan的组合。
- * <p> 配置：指的是javaConfig配置 而不是xml配置
- * <p> 自动配置：Spring Boot帮我们把那些配置类提前写好了
  *
- * <p> {@link org.springframework.boot.SpringBootConfiguration}注解：声明(标注)当前类是根配置类
- * 此注解是@Configuration注解的派生注解，跟@Configuration注解的功能一致，标注这个类是一个配置类。
- * 只不过@SpringBootConfiguration是SpringBoot的注解，@Configuration是Spring的注解。
+ * <b> SpringBoot的启动类 </b>
+ * <p> 1. <b>{@link SpringBootApplication} 注解： 自动配置的实现，表示当前类是SpringBoot的启动类。</b>
+ * <p> 此注解等同于：@Configuration + @EnableAutoConfiguration + @ComponentScan的组合。
+ * <p> 这里的配置指的是javaConfig配置 而不是xml配置。
+ * <p> 自动配置：SpringBoot帮我们把那些配置类提前写好了。
  *
- * <p> {@link org.springframework.context.annotation.Configuration}注解：通过对bean对象的操作替代Spring中的xml文件。
+ * <p> 2. <b>{@link SpringBootConfiguration}注解：声明（标注）当前类是根配置类。</b>
+ * <p> 此注解是{@link Configuration}注解的派生注解，
+ * 跟{@link Configuration}注解的功能一致，标注这个类是一个配置类。
+ * 只不过{@link SpringBootConfiguration}是SpringBoot的注解，{@link Configuration}是Spring的注解。
+ * <p> {@link Configuration}注解：用于定义配置类。
  *
- * <p> {@link org.springframework.boot.autoconfigure.EnableAutoConfiguration}注解：开启自动配置的核心。
- * Springboot自动配置：尝试根据添加的jar依赖自动配置Spring应用。是@AutoConfigurationPackage注解和@Import(AutoConfigurationImportSelector.class)
+ * <p> 3. <b>{@link EnableAutoConfiguration}注解：开启自动配置的核心。</b>
+ * <p> 是{@link AutoConfigurationPackage}注解和@Import(AutoConfigurationImportSelector.class)
  * 注解的组合。
+ * <p> SpringBoot自动配置：尝试根据当前项目依赖的所有jar自动配置Spring应用。
  *
- * <p> {@link org.springframework.boot.autoconfigure.AutoConfigurationPackage}注解：
- * 添加该注解的类所在的package作为自动配置package进行管理。自动注入主类所有包下所有的加了注解（@Controller，@Services等）的类，以及配置类（@Configuration）。
+ * <p> 4. <b>{@link AutoConfigurationPackage}注解：
+ * 添加该注解的类所在的package作为自动配置package进行管理。</b>
+ * <p> 自动注入主类所有包下所有的标注了{@link Controller}、{@link Service}等注解的类，
+ *     以及配置类（@Configuration）。
  *
- * <p> {@link org.springframework.context.annotation.Import}注解：导入类。
- * 1. 直接导入普通的类。 2. 导入实现了{@link org.springframework.context.annotation.ImportSelector}接口的类
- * 3. 导入实现了{@link org.springframework.context.annotation.ImportBeanDefinitionRegistrar}接口的类
+ * <p> 5. {@link Import}注解：导入类。
+ *   <ul>
+ *       <li>直接导入普通的类。</li>
+ *       <li>导入实现了{@link ImportSelector}接口的类。</li>
+ *       <li>导入实现了{@link ImportBeanDefinitionRegistrar}接口的类。</li>
+ *   </ul>
+ * </p>
  *
  * <p> @Import(AutoConfigurationImportSelector.class)
- * <p> {@link org.springframework.boot.autoconfigure.AutoConfigurationImportSelector}类：是自动配置的核心类
+ * <p> 6. <b>{@link AutoConfigurationImportSelector}类：是自动配置的核心类。</b>
  *
- * <p> {@link org.springframework.boot.autoconfigure.AutoConfigurationImportSelector#selectImports(AnnotationMetadata)}：
- * 是自动配置的核心方法。
+ * <p> <b>{@link AutoConfigurationImportSelector#selectImports(AnnotationMetadata)}：
+ * 是自动配置的核心方法。</b>
  * 该方法的返回值的String必须是java类路径，返回的类都会被加载到Spring容器中。
  * <p> selectImports方法实现步骤：
- * <p> 1. {@link org.springframework.boot.autoconfigure.AutoConfigurationImportSelector#getAutoConfigurationEntry(AnnotationMetadata)}：
+ * <p> 6.1. {@link AutoConfigurationImportSelector#getAutoConfigurationEntry(AnnotationMetadata)}：
  * 该方法是selectImports方法的和核心方法，会返回所有自动配置类
- * <p> 2. getAutoConfigurationEntry中会调用
- * {@link org.springframework.boot.autoconfigure.AutoConfigurationImportSelector#getCandidateConfigurations(AnnotationMetadata, AnnotationAttributes)}方法：
- * 该方法会调用 {@link org.springframework.core.io.support.SpringFactoriesLoader#loadFactoryNames(Class, ClassLoader)}方法，
+ * <p> 6.2. getAutoConfigurationEntry中会调用
+ * {@link AutoConfigurationImportSelector#getCandidateConfigurations(AnnotationMetadata, AnnotationAttributes)}方法：
+ * 该方法会调用 {@link SpringFactoriesLoader#loadFactoryNames(Class, ClassLoader)}方法，
  * 该方法会扫描org.springframework.boot:spring-boot-autoconfigure:2.3.3.RELEASE下的spring.factories配置文件并传入key。
  *
  * <p>loadSpringFactories {@link }: 加载整个配置文件并缓存
@@ -55,7 +76,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
  * <p> selectImports会过滤自动配置类:
  *    1.会移除exclude里面的配置类
  *    2.filter：根据自动配置类的条件---自动配置类上标注的一系列@ConditionalOnXXX注解
- * <p> {@link org.springframework.context.annotation.ComponentScan}注解：组件扫描，可自动发现和装配一些Bean。
+ * <p> {@link ComponentScan}注解：组件扫描，可自动发现和装配一些Bean。
  * @author eastFeng
  * @date 2020/8/15 - 12:49
  */

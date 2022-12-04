@@ -17,10 +17,10 @@ public class BeanStudy {
     /**
      * <p> 一. {@link Bean}注解基础概念
      *
-     * <p>1. Spring的Bean注解用于告诉方法，产生一个Bean对象，然后这个Bean对象交给Spring管理。
-     * 产生这个Bean对象的方法Spring只会调用一次，随后这个Spring将会将这个Bean对象放在自己的IOC容器中。
+     * <p> <b>1. Spring的Bean注解用于告诉方法，产生一个Bean对象，然后这个Bean对象交给Spring IoC管理。
+     * 产生这个Bean对象的方法Spring只会调用一次，随后这个Spring将会将这个Bean对象放在自己的IoC容器中。
      * <p>2. Bean是一个方法级别上的注解，主要用在{@link Configuration}注解的类里，也可以用在{@link Component}注解的类里。
-     *      添加的bean的id为方法名。
+     *      添加的bean的id为方法名。</b>
      * <p>3. 使用Bean时，即是把已经在xml文件中配置好的Bean拿来用，完成属性、方法的组装。
      * 比如Autowired注解、Resource注解，可以通过byTYPE（@Autowired）、byNAME（@Resource）的方式获取Bean。
      * <p>4. 注册Bean时，{@link Component}, {@link Controller}, {@link Service}, {@link Repository}, {@link Configuration}
