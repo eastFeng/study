@@ -1,5 +1,6 @@
 package com.dongfeng.study.basicstudy.spring.annotation;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -49,6 +50,14 @@ public class ConfigurationStudy {
      * </ul>
      */
     public static void main(String[] args) {
+        ApplicationContext context =
+                new AnnotationConfigApplicationContext(ConfigurationStudy.class);
+        // 从容器中获取bean
+        ConfigurationAndBeanTest test1 =
+                context.getBean("test1", ConfigurationAndBeanTest.class);
+        System.out.println("test1 = "+test1);
+        System.out.println(test1.msg);
+
     }
 
     /**
@@ -75,7 +84,7 @@ public class ConfigurationStudy {
      *
      */
     @Bean
-    public ConfigurationStudy.ConfigurationAndBeanTest test1(){
+    public ConfigurationAndBeanTest test1(){
         return new ConfigurationAndBeanTest("TEST");
     }
 

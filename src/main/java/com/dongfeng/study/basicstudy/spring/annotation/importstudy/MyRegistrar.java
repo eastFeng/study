@@ -14,7 +14,8 @@ public class MyRegistrar implements ImportBeanDefinitionRegistrar {
 
     /**
      * @param importingClassMetadata  annotation metadata of the importing class
-     *                                导入类的注解元数据
+     *                                导入类的注解元数据。
+     *                                能够获取到当前标注Import注解的类的所有注解信息。
      * @param registry                current bean definition registry
      *                                当前bean定义注册表
      * @param importBeanNameGenerator 不知道
@@ -24,10 +25,13 @@ public class MyRegistrar implements ImportBeanDefinitionRegistrar {
                                         BeanDefinitionRegistry registry,
                                         BeanNameGenerator importBeanNameGenerator) {
         // 把Person_03交给容器管理
+        // 1. importingClassMetadata做判断
 
-        // Person_03的BeanDefinition（Bean元数据）
+
+        // 创建BeanDefinition对象（bean元数据）
         RootBeanDefinition definition = new RootBeanDefinition(Person_03.class);
-        // 注册Person_03的BeanDefinition（Bean元数据）
+        // 注册BeanDefinition对象
         registry.registerBeanDefinition("person03", definition);
+
     }
 }

@@ -1,8 +1,7 @@
 package com.dongfeng.study.util;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
-
-import java.lang.reflect.Array;
 import java.util.Map;
 
 /**
@@ -13,19 +12,32 @@ import java.util.Map;
 public class AnnotationUtil {
 
     /**
-     * 获取注解某属性的值，并指定该值的类型。
+     * 获取注解某属性的值，并转换为指定/目标类型。
+     * <p> 如果参数异常或者强转不了，返回null </p>
      *
      * @param map 注解的所有属性（key是注解的属性名称，value是对应的属性值）
      * @param attributeName 属性名称
-     * @param specifyType 指定属性值的类型
-     * @param <T> 指定的类型
-     * @return （指定了类型的）属性的值
+     * @param targetType 指定属性值的目标类型
+     * @param <T> 目标类型
+     * @return （目标类型的）属性值
      */
     public static <T> T getSpecifyTypeAttribute(Map<String, Object> map,
                                                 String attributeName,
-                                                Class<T> specifyType){
-        log.info("getSpecifyTypeAttribute attributeName:{},specifyType:{}",
-                attributeName,specifyType);
+                                                Class<T> targetType){
+        log.info("getSpecifyTypeAttribute map:{},attributeName:{},targetType:{}",
+                map, attributeName, targetType);
+        if (map==null || map.isEmpty()){
+            log.info("getSpecifyTypeAttribute map is Null or Empty, map:{}", map);
+            return null;
+        }
+        if (StrUtil.isBlank(attributeName)){
+            log.info("getSpecifyTypeAttribute attributeName is Blank, attributeName:{}", attributeName);
+            return null;
+        }
+        if (targetType == null){
+            log.info("getSpecifyTypeAttribute targetType is NULL, targetType:{}", targetType);
+            return null;
+        }
 
         // 获取属性的值
         Object value = map.get(attributeName);
@@ -33,32 +45,13 @@ public class AnnotationUtil {
         if (value == null){
             return null;
         }
-        log.info("getSpecifyTypeAttribute value.getClass:{}",
-                value.getClass());
+        log.info("getSpecifyTypeAttribute value.getClass:{}", value.getClass());
         // 如果值是异常类
         if (value instanceof Throwable){
             return null;
         }
 
-        // value与该specifyType表示的对象不兼容 并且
-        // specifyType是数组类型 并且
-        // value与数组的组件类型表示的对象兼容。
-        // 意思就是：specifyType是数组，value不是数组，但是value的类型和数组的组件类型匹配，
-        // value就是数组的第一个值即可。
-        if (!specifyType.isInstance(value)
-                && specifyType.isArray()
-                && specifyType.getComponentType().isInstance(value)){
-            Object array = Array.newInstance(specifyType.getComponentType(), 1);
-            Array.set(array, 0, value);
-            value = array;
-        }
-
-        // 其他情况，直接判断value与该specifyType表示的对象是否兼容
-        if (!specifyType.isInstance(value)){
-            return null;
-        }
-
-        // 最后类型强转
-        return (T)value;
+        // 对属性的值value进行类型转换
+        return ObjectUtil.castType(value, targetType);
     }
 }

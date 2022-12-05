@@ -30,13 +30,19 @@ public class ImportStudy {
      * <p>1. Import注解能添加（标注）到类上，接口上，注解上，枚举上。({@link Import}注解Target类型是{@link ElementType#TYPE})
      *       不能放在方法上。
      *
-     * <p>2. Import注解作用：通过快速导入的方式把实例对象加入到Spring IoC容器当中，对于第三方的class来说尤其方便。
-     * <p> <b>被导入的bean无需使用注解声明为bean。
-     * <p> 使用{@link Import}注解加载bean可以有效的降低源代码与Spring技术的耦合度，
-     *     在Spring技术底层及诸多框架的整合中大量使用。</b>
+     * <p> 2. Import注解作用：通过快速导入的方式把实例对象加入到Spring IoC容器当中，对于第三方的class来说尤其方便。
+     * <ul>
+     *     <li>导入要注入的bean对应的字节码。</li>
+     *     <li>被导入的bean无需使用注解声明为bean。</li>
+     *     <li>
+     *         使用{@link Import}注解加载bean可以有效的降低源代码与Spring技术的耦合度，
+     *         在Spring技术底层及诸多框架的整合中大量使用。
+     *     </li>
+     *     <li>用{@link Import}注解的方式比使用{@link Configuration}注解+{@link Bean}注解更简单快捷。</li>
+     * </ul>
      *
      * <p>3. Import注解用法、可以导入三种类
-     * <p> 1) 直接导入普通类。
+     * <p> 1) 直接导入普通类（包括Configuration注解标注的配置类）。
      *
      * <p> 2) 导入{@link ImportSelector}接口的实现类，用于（个性化）动态批量加载Bean。
      * <p> 步骤：实现{@link ImportSelector}接口，在{@link ImportSelector#selectImports(AnnotationMetadata)}方法中
