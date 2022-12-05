@@ -12,7 +12,7 @@ import java.lang.annotation.ElementType;
  * {@link Component}注解学习
  *
  * <p>
- * 学习完{@link Component}注解之后就可以学习一下注解：
+ * 学习完{@link Component}注解之后就可以学习一下它的派生（衍生）注解：
  * <ol>
  *     <li>
  *         {@link Controller}注解，在{@link ConfigurationStudy}中。
@@ -29,7 +29,7 @@ public class ComponentStudy {
      * {@link Component}注解：
      * 标注Spring管理的Bean，使用{@link Component}注解标注在一个类上，
      * 表示将此类标记为Spring容器中的一个Bean，作用就是实现bean的注入。
-     * 相当于相当于xml配置中的：<bean id=" " class=" "></bean>
+     * 相当于相当于xml配置中的bean标签：<bean id=" " class=" "></bean>
      * </p>
      *
      * <p>
@@ -41,7 +41,7 @@ public class ComponentStudy {
      * </p>
      *
      * <p>
-     *  {@link Component}注解的三个派生注解：
+     *  {@link Component}注解的三个派生（衍生）注解：
      *  <ol>
      *      <li>{@link Controller}</li>
      *      <li>{@link Service}</li>

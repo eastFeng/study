@@ -24,7 +24,10 @@ public class MyRegistrar implements ImportBeanDefinitionRegistrar {
                                         BeanDefinitionRegistry registry,
                                         BeanNameGenerator importBeanNameGenerator) {
         // 把Person_03交给容器管理
+
+        // Person_03的BeanDefinition（Bean元数据）
         RootBeanDefinition definition = new RootBeanDefinition(Person_03.class);
+        // 注册Person_03的BeanDefinition（Bean元数据）
         registry.registerBeanDefinition("person03", definition);
     }
 }

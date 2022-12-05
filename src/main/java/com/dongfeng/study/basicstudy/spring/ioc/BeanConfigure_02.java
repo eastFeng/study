@@ -34,13 +34,14 @@ public class BeanConfigure_02 {
      *     不可能在第三方类上的源代码上标注{@link Component}、{@link Controller}等注解。
      *
      * <p> 3. javaConfig配置
-     * <p> 使用Java代码，主要是通过{@link Configuration}注解。（纯Java代码 + 注解）
-     * <p> 推荐使用。
+     * <p> 使用Java代码，主要是通过{@link Configuration}注解+{@link Bean}注解。（纯Java代码 + 注解）
+     * <p> 不存在前两种方式存在的缺点，推荐使用。
      *
      *
      * <p> 二. 配置/加载bean的其他扩展方式
      * <p> 4. bean的加载/配置方式 —— 扩展1
      * <p> 初始化实现{@link FactoryBean}接口的类，实现对bean加载到容器之前的批处理操作。
+     * <p> 【注】该方式主要用来创建复杂对象，简单的对象没必要使用这种方式。
      *
      * <p> 5. bean的加载方式——扩展2
      * <p> 加载配置类并加载配置文件（系统迁移）。 {@link ImportResource}注解

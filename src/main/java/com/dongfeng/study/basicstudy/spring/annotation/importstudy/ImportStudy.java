@@ -38,36 +38,32 @@ public class ImportStudy {
      * <p>3. Import注解用法、可以导入三种类
      * <p> 1) 直接导入普通类。
      *
-     * <p> 2) 导入{@link ImportSelector}接口的实现类。
+     * <p> 2) 导入{@link ImportSelector}接口的实现类，用于（个性化）动态批量加载Bean。
      * <p> 步骤：实现{@link ImportSelector}接口，在{@link ImportSelector#selectImports(AnnotationMetadata)}方法中
      *          返回要创建bean的类的全类名。然后使用{@link Import}注解指定{@link ImportSelector}接口的实现类。
      *
-     * <p> 3) 导入{@link ImportBeanDefinitionRegistrar}接口的实现类。
+     * <p> 3) 导入{@link ImportBeanDefinitionRegistrar}接口的实现类，用于个性化动态加载。
      *
      *
      *
      */
     public static void main(String[] args) {
         // ApplicationContext：Spring IoC容器
-        ApplicationContext applicationContext =
+        ApplicationContext context =
                 // 使用配置类方式加载bean
                 new AnnotationConfigApplicationContext(ImportStudyConfiguration.class);
 
-        String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
-        System.out.println("============================ start ==============================");
+        String[] beanDefinitionNames = context.getBeanDefinitionNames();
+        System.out.println("============================ Start ==============================");
         for (String name : beanDefinitionNames){
             System.out.println(name);
         }
-        System.out.println("============================ start ==============================");
+        System.out.println("============================ End ==============================");
 
-        Person_01 person_01 = applicationContext.getBean(Person_01.class);
+        // 根据类型获取bean
+        Person_01 person_01 = context.getBean(Person_01.class);
         person_01.say();
 
-        Person_02 person_02 = applicationContext.getBean(Person_02.class);
-        person_02.say();
-
-        Person_04 person_04 = applicationContext.getBean(Person_04.class);
-        person_04.say();
 
     }
 }
