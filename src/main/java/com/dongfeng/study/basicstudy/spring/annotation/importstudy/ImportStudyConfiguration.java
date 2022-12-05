@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Import;
  */
 
 
-@EnableTest_2(beanClass = {Person_06.class},
+@EnableImportTest_2(beanClass = {Person_06.class},
               beanClassName = {"com.dongfeng.study.basicstudy.spring.annotation.importstudy.Person_07"}
              )
-@EnableTest_1
+@EnableImportTest_1
 @Import(value = {
         Person_01.class,
         ImportSelector_Test_1.class,

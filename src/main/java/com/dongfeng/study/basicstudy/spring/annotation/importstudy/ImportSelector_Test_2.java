@@ -29,7 +29,7 @@ import java.util.Set;
 public class ImportSelector_Test_2 implements ImportSelector {
 
     // EnableTest_2注解的名称
-    private static final String ANNOTATION_CLASS_NAME = EnableTest_2.class.getName();
+    private static final String ANNOTATION_CLASS_NAME = EnableImportTest_2.class.getName();
 
     /**
      * 该返回要加载（到SpringIoC容器）的 配置类（{@link Configuration}注解标注的类）或者具体Bean 类的全限定名的String数组。
@@ -60,25 +60,18 @@ public class ImportSelector_Test_2 implements ImportSelector {
         // 因为AnnotationMetadata是Import注解所在的类属性，
         // 如果Import注解标注在注解上，则延伸至应用这个注解的类为止。
 
-
-        System.out.println("ImportSelector_Test_2 ANNOTATION_CLASS_NAME="+ANNOTATION_CLASS_NAME);
-        //
-        Set<MethodMetadata> annotatedMethods =
-                importingClassMetadata.getAnnotatedMethods(ANNOTATION_CLASS_NAME);
-        annotatedMethods.forEach(System.out::println);
-
         // 获取（标注@Import注解的）类的某个指定注解的所有属性
-        // 获取EnableTest_2注解的所有属性
+        // 获取EnableImportTest_2注解的所有属性
         Map<String, Object> map =
                 importingClassMetadata.getAnnotationAttributes(ANNOTATION_CLASS_NAME, true);
         assert map != null;
 
-        // 获取EnableTest_2注解中beanClass属性的值 并指定为String数组类型
+        // 获取EnableImportTest_2注解中beanClass属性的值 并指定为String数组类型
         String[] beanClasses =
                 AnnotationUtil.getSpecifyTypeAttribute(map,
                 "beanClass",
                 String[].class);
-        // 获取EnableTest_2注解中beanClassName属性的值
+        // 获取EnableImportTest_2注解中beanClassName属性的值
         String[] beanClassName = (String[])map.get("beanClassName");
 
         if (beanClasses==null && beanClassName==null){
@@ -91,7 +84,7 @@ public class ImportSelector_Test_2 implements ImportSelector {
             // beanClassName为null，beanClasses不为null
             return beanClasses;
         }else {
-            // 将两个数组组合在一起
+            // 都不为null，将两个数组 组合在一起
             return ArrayUtil.addAll(beanClassName, beanClasses);
         }
     }

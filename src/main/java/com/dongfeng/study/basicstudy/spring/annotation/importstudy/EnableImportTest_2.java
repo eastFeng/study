@@ -14,7 +14,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface EnableTest_2 {
+public @interface EnableImportTest_2 {
 
     /**
      * 要加载的 配置类（{@link Configuration}注解标注的类）或者具体Bean 类Class数组
