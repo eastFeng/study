@@ -43,7 +43,7 @@ public class BeanConfigure_02 {
      * <p> 1. javaConfig配置/加载bean —— 扩展1 —— @Bean定义{@link FactoryBean}接口
      * <p> 初始化实现{@link FactoryBean}接口的类，实现对bean加载到容器之前的批处理操作。
      * <p> 【注】该方式主要用来创建复杂对象，简单的对象没必要使用这种方式。
-     * <p> 该扩展的学习：{@link BookFactoryBean}和{@link BeanConfiguration}
+     * <p> 该扩展的学习：{@link BookFactoryBean}和{@link ConfigurationTest}
      *
      * <p> 2. javaConfig配置/加载bean —— 扩展2 —— {@link ImportResource}注解
      * <p> 加载配置类并加载配置文件（系统迁移）。
@@ -69,7 +69,7 @@ public class BeanConfigure_02 {
     public static void main(String[] args) {
         // 初始化容器
         AnnotationConfigApplicationContext context =
-                new AnnotationConfigApplicationContext(BeanConfiguration.class);
+                new AnnotationConfigApplicationContext(ConfigurationTest.class);
 
         // 五. 使用上下文对象在容器初始化完毕后注入bean
         context.register(Book_A.class);

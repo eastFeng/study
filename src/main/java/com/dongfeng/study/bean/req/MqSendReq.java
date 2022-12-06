@@ -1,6 +1,6 @@
 package com.dongfeng.study.bean.req;
 
-import com.dongfeng.study.sourcecode.java8.util.Map;
+import com.dongfeng.study.basicstudy.sourcecode.java8.util.Map;
 import lombok.Data;
 
 import java.io.Serializable;

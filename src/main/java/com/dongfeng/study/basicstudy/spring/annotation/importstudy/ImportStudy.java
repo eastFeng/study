@@ -54,9 +54,8 @@ public class ImportStudy {
      *
      */
     public static void main(String[] args) {
-        // ApplicationContext：Spring IoC容器
+        // 初始化容器
         ApplicationContext context =
-                // 使用配置类方式加载bean
                 new AnnotationConfigApplicationContext(ImportStudyConfiguration.class);
 
         String[] beanDefinitionNames = context.getBeanDefinitionNames();

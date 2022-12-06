@@ -6,5 +6,4 @@ package com.dongfeng.study.bean.entity;
 
 /*
  * 数据库中的表对应的实体类
- *
  */

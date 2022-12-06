@@ -52,7 +52,7 @@ public class TreeMapStudy<K,V> {
          * Entry是TreeMap的一个内部类
          */
         // 源码：
-        com.dongfeng.study.sourcecode.java8.util.TreeMap<Integer, String> integerStringTreeMap
-                = new com.dongfeng.study.sourcecode.java8.util.TreeMap<>();
+        com.dongfeng.study.basicstudy.sourcecode.java8.util.TreeMap<Integer, String> integerStringTreeMap
+                = new com.dongfeng.study.basicstudy.sourcecode.java8.util.TreeMap<>();
     }
 }

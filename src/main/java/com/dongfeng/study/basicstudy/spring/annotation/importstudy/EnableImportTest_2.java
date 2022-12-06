@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import java.lang.annotation.*;
 
 /**
+ *
+ * EnableXXX：使能够，开关的意思。
+ *
  * @author eastFeng
  * @date 2022-12-05 0:45
  */

@@ -426,36 +426,36 @@
         <plugins>
             <!-- plugin元素描述插件所需要的信息 -->
             <!-- 下面这个插件非常重要，是Springboot的打包插件 -->
-            <plugin>
-                <!-- 插件在仓库的groupId -->
-                <groupId>org.springframework.boot</groupId>
-                <!--插件在仓库的artifact ID-->
-                <!--spring-boot-maven-plugin
-                 |  是将Springboot的应用程序打包诚jar包的插件。
-                 |  将所有应用启动运行所需要的jar包都包含进来，从逻辑上将具备独立运行的条件。
-                 |  当运行"mvn package"进行打包后，使用"java -jar"命令就可以直接运行。
-                -->
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <!-- 作为DOM对象的配置 -->
-                <configuration>
-                    <mainClass>com.dongfeng.study.StudyApplication</mainClass>
-                    <!--includeSystemScope
-                     |  设为true是指打包时包含scope为system的第三方jar包
-                    -->
-                    <includeSystemScope>true</includeSystemScope>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                &lt;!&ndash; 插件在仓库的groupId &ndash;&gt;-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                &lt;!&ndash;插件在仓库的artifact ID&ndash;&gt;-->
+<!--                &lt;!&ndash;spring-boot-maven-plugin-->
+<!--                 |  是将Springboot的应用程序打包诚jar包的插件。-->
+<!--                 |  将所有应用启动运行所需要的jar包都包含进来，从逻辑上将具备独立运行的条件。-->
+<!--                 |  当运行"mvn package"进行打包后，使用"java -jar"命令就可以直接运行。-->
+<!--                &ndash;&gt;-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--                &lt;!&ndash; 作为DOM对象的配置 &ndash;&gt;-->
+<!--                <configuration>-->
+<!--                    <mainClass>com.dongfeng.study.StudyApplication</mainClass>-->
+<!--                    &lt;!&ndash;includeSystemScope-->
+<!--                     |  设为true是指打包时包含scope为system的第三方jar包-->
+<!--                    &ndash;&gt;-->
+<!--                    <includeSystemScope>true</includeSystemScope>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
 
             <!-- 热部署配置 -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <!-- fork:如果没有该项配置,整个devtools不会起作用 -->
-                    <fork>true</fork>
-                    <addResources>true</addResources>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash; fork:如果没有该项配置,整个devtools不会起作用 &ndash;&gt;-->
+<!--                    <fork>true</fork>-->
+<!--                    <addResources>true</addResources>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
 
             <!-- 导入一个Maven插件 -->
             <!-- Maven周期和插件的学习在LifecycleAndPlugin_06类中 -->

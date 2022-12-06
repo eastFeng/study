@@ -6,7 +6,8 @@ import org.slf4j.MDC;
 import java.io.Serializable;
 
 /**
- * 方法返回基类
+ * API接口层方法返回基类
+ *
  * @author eastFeng
  * @date 2020/8/15 - 12:49
  */
@@ -23,11 +24,13 @@ public class BaseResponse<T> implements Serializable {
      */
     private String msg = ResponseCodeEnum.SUCCESS.getMsg();
     /**
-     * 用户一次请求，打印的日志traceId相同，即跟踪id，方便定位问题。该值可有可无。
+     * traceId
+     * <p> 用户一次请求，打印的日志traceId相同，即跟踪id，方便定位问题。
+     * <p> 该值不是必须要有的。
      */
     private String traceId;
     /**
-     * 返回数据
+     * 返回的具体数据
      */
     private T data;
 

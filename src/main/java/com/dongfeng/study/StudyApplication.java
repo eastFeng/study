@@ -83,36 +83,32 @@ import org.springframework.stereotype.Service;
 @Slf4j
 //@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @ServletComponentScan // 在SpringBoot启动时会扫描有@WebServlet、@WebFilter注解的类，并将该类实例化
-@MapperScan(basePackages = "com.dongfeng.study.bean.mapper") // Mybatis:扫描mapper接口
+@MapperScan(basePackages = "com.dongfeng.study.dao.mapper") // Mybatis:扫描mapper接口
 @SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 public class StudyApplication {
 
     /**
-     * {@link SpringApplication} :
-     * <p> 该类用于从main方法引导(bootstrap)和启动(launch)Spring应用程序。
-     * <p> 默认情况下，该类将执行以下步骤来引导应用程序:
-     * <ol>
-     * <li> 创建适当的ApplicationContext实例（取决于类路径）
-     * <li> 注册一个CommandLinePropertySource，将命令行参数作为Spring属性公开
-     * <li> 刷新应用程序上下文，加载所有单例bean
-     * <li> 触发任何CommandLineRunner bean
-     * </ol>
+     * Springboot的启动类的作用是启动Springboot项目，是基于main方法来运行的。
+     *
+     * <p> 一. SpringBoot启动流程
+     * <p> 1. 初始化各种属性，加载成对象。
+     * <ul>
+     *     <li>读取环境属性（Environment）</li>
+     *     <li>系统配置（spring.factories）</li>
+     *     <li>参数（Arguments、application.properties）</li>
+     * </ul>
+     * <p> 2. 创建Spring容器对象ApplicationContext，加载各种配置。
+     * <p> 3. 在容器创建前，通过监听器机制，应对不同阶段加载数据、更新数据的需求。
+     * <p> 4. 容器初始化过程中追加各种功能，例如统计时间、输出日志等。
+     *
      * @param args 启动参数
      */
     public static void main(String[] args) {
-
-        /*
-         * Springboot的启动类的作用是启动Springboot项目，是基于main方法来运行的。
-         * 注意：启动类在启动时会做注解扫描（@Controller、@Service、@Repository...），
-         * 扫描位置为同包或者子包下的注解，所以启动类的位置应该放在包的根下。
-         */
         try {
-            // 启动Tomcat  生命周期
             SpringApplication.run(StudyApplication.class, args);
         } catch (Exception e) {
             // 查看项目启动报错信息
-//            e.printStackTrace();
-            log.error("SpringBoot启动报错 error:{}", e.getMessage(), e);
+            log.error("SpringBoot启动报错",e);
         }
     }
 

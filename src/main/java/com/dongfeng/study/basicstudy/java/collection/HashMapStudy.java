@@ -90,7 +90,7 @@ public class HashMapStudy {
          */
 
         // HashMap源码学习
-        com.dongfeng.study.sourcecode.java8.util.HashMap<String, Integer> map
-                = new com.dongfeng.study.sourcecode.java8.util.HashMap<>(16);
+        com.dongfeng.study.basicstudy.sourcecode.java8.util.HashMap<String, Integer> map
+                = new com.dongfeng.study.basicstudy.sourcecode.java8.util.HashMap<>(16);
     }
 }

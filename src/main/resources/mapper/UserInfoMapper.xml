@@ -7,7 +7,7 @@
 <!-- UserInfoMapper.xml文件名称必须与数据处理层的接口名称一致 -->
 
 <!-- namespace:该mapper.xml映射文件的唯一标识,并且必须和数据处理层的接口的路径相同, 此处与接口类地址对应 -->
-<mapper namespace="com.dongfeng.study.bean.mapper.UserInfoMapper">
+<mapper namespace="com.dongfeng.study.dao.mapper.UserInfoMapper">
 
     <!--自定义映射（的结果集） : 解决实体类属性名和数据表列名不一致问题-->
     <resultMap id="userInfoResultMap" type="com.dongfeng.study.bean.entity.UserInfo">

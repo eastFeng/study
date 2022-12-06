@@ -20,7 +20,7 @@ import java.util.Enumeration;
  * @date 2022-11-29 19:35
  */
 @Slf4j
-@WebServlet(name = "HttpSession_11", urlPatterns = "servlet/11")
+@WebServlet(name = "HttpSession_11", urlPatterns = "/servlet/11")
 public class HttpSession_11 extends HttpServlet {
     private static final long serialVersionUID = -4306953010499005088L;
 

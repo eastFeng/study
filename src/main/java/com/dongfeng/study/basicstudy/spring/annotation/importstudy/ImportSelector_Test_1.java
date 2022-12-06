@@ -18,7 +18,7 @@ import org.springframework.core.type.AnnotationMetadata;
  */
 public class ImportSelector_Test_1 implements ImportSelector {
     /**
-     * 该返回要加载（到SpringIoC容器）的
+     * 返回要加载（到SpringIoC容器）的
      * 配置类（{@link Configuration}注解标注的类）或者具体Bean
      * 类的全限定名的String数组。
      * <p> 可以是配置类（{@link Configuration}注解标注的类），也可以是具体的Bean类的全限定名称。
