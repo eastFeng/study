@@ -1,15 +1,12 @@
-package com.dongfeng.study.basicstudy.spring.springboot.autoconfiguration;
+package com.dongfeng.study.basicstudy.spring.springboot;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.boot.context.TypeExcludeFilter;
 import org.springframework.context.annotation.*;
 import org.springframework.core.Ordered;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.core.io.support.SpringFactoriesLoader;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Indexed;
 
@@ -19,8 +16,6 @@ import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.EnvironmentAware;
 
-import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
-
 import java.lang.annotation.Inherited;
 
 /**
@@ -29,7 +24,7 @@ import java.lang.annotation.Inherited;
  * @author eastFeng
  * @date 2022-12-07 13:18
  */
-public class Study_01 {
+public class AutoConfiguration_01 {
     /**
      * <b> 一. 自动配置原理</b>
      * <p> 1. 收集Spring开发者的编程习惯，整理开发过程使用的【常用技术列表。——>（技术集A）】

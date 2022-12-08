@@ -62,18 +62,17 @@
     <!-- 项目的名称，Maven产生的文档用 -->
     <name>study</name>
     <!-- 项目的详细描述，Maven产生的文档用 -->
-    <description>Demo project for Spring Boot</description>
+    <description>Knowledge Has No Limit</description>
 
     <!-- 项目开发者列表 -->
     <developers>
         <!-- 某一个项目开发者的信息 -->
         <developer>
-            <!-- SCM里项目开发者的唯一标识符 -->
-            <id>DongFeng</id>
             <!-- 项目开发者的全名 -->
-            <name>eastFeng</name>
+            <name>风从东来</name>
             <!-- 项目开发者的email -->
             <email>460373645@qq.com</email>
+            <url>https://gitee.com/zhangpopo</url>
         </developer>
     </developers>
 
